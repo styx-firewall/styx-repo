@@ -1,0 +1,1 @@
+deb [signed-by=/etc/apt/trusted.gpg.d/styx-repo.gpg] https://styx-firewall.github.io/styx-repo ./
