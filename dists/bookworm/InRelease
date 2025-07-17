@@ -8,38 +8,38 @@ Codename: bookworm
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Thu, 17 Jul 2025 08:53:56 +0000
-Date: Thu, 17 Jul 2025 08:53:56 +0000
+Date: Thu, 17 Jul 2025 08:54:15 +0000
+Date: Thu, 17 Jul 2025 08:54:15 +0000
 MD5Sum:
- 6daf66ee268edb982125a82bf91feecd              230 Release
+ f839b625a8138b7e26ae2b6adc6c4761              230 Release
  772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
- c6940e2c5a32e5c7845c347c89d25bc2              615 main/binary-amd64/Packages.gz
+ 30d738abe4f8d3ab3f1a44fd896f7c5c              615 main/binary-amd64/Packages.gz
 SHA1:
- bd1c1cd22d4e46a6b3faccd6f991b3337f8bf02b              230 Release
+ 726d3d0d22c2acf855702ad73f493a04c8470572              230 Release
  54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
- 40945cffbc8ac6f3b3f4c6e94eb649a991b1b657              615 main/binary-amd64/Packages.gz
+ cd375d6f46b41130fbb95f9456d2a8f2dab3dc78              615 main/binary-amd64/Packages.gz
 SHA256:
- 50dfd3f097318d1532fb5f104517f30916280f704923eda9037ff529a98d98a8              230 Release
+ 08683bbfa982dea41e0ffedc37f27b60d7135a1472f395e42ea39c3bd345560a              230 Release
  6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
- 0277ccad44ebe4d1600c6cd4fede5e5ba7d603327ecd0f553af6d1f88db28c7e              615 main/binary-amd64/Packages.gz
+ 24aca03d1906ea4e3f332fa06f75cdab33e4cf813a59a74358a0585431cddbb0              615 main/binary-amd64/Packages.gz
 SHA512:
- 045b834b08dac25f201ffa02283376ef3d54f3ff78f40ad164a691a5910db868bb126b4868a4cb6b706884e94ddb5637509c4eb740a5df95a669687e71cdd606              230 Release
+ c811681854f2172d4965f8718382a96b6655ec3802c5d646b2593d8b0348f37949fe3b64c3912039e4f22d423d7c41445d2658279832449a2f6f969d68c65a09              230 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
- 9a132f1eb4691a092e06c3304263e56ebcf52712de527953359ec732a4713cb81bda87cf8e2dfcecd5dd1a35fbc2b2529788afbb40ffd5e1c62b73df238f09f7              615 main/binary-amd64/Packages.gz
+ 7fae3770b37f2bd0c72395102925fa1fbbf51959880745b73fcb0903bd5b7095e3047cc55b3547a12b64b5c05b203bdbb465ad34820063806fc0ee3ceaef1ff9              615 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4uiQUHGRpZWdhcmdv
-bkBnbWFpbC5jb20ACgkQa4KgdbTSDbV52w/9HoNhGAJ0wBaEfEaZLc15DjYSwtrM
-GrcHfTdrjartyV4y+WpmL3Q7tAoT+nVlP9DHEsF2ucoYb22QkSMBpIJ7JFuwZ9P0
-vtAf3aIRQwI4ia7ti5HbW93SkLOF2Lyw5CEVRLrz9c+CqlZJLQS4EtLUQbNSRJDI
-IfxSPJkTbt5SI12vSD6pDLK9UrQl9zTZBq4XuZbb185Sv1esrCbCjF88FGOVpsvU
-c/1f+kl+kbWj02o7dn9erSbWRe0rUzWeGVWJdctfMN/jNhXNLvSaLaCKp2RSxJNu
-4n70VuqMnkd2Iz+BcWo8wCpkxVRnM0XCkKViFsVXBWFt6ZxWQgndSnp/0YU1vrs8
-4DCbu/IPy9rrjdasLoELUvS4BKavhvi+++PHqxbu/ekgroZz7hsbMg9fjRazB7BD
-xBPHJ+HUW9bdN2O7JkWcmJX+J33AM7Sfol8UtCwUttjpSgAq8DCLbZZxfpp7OqTN
-+CWqlgtYW7qrKkQhRoip3GU1niu2YvTHpZwNZeoiKJ3GMg7M59cEbkaCrsFfGgnK
-QyXNceWpSJuEghQc76udu1aIvzcEFl3aPEHL9PJ6smxd45hS0m73+0z/4tFcCRW5
-MXeaFOXW3/CuSDDig5fPD4ndAeHLhFBAIxRMFrTAAtm30GtLOjzJlBhKfhoJGRsh
-PlDzI0hWB3VT5oY=
-=THbD
+iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4ujgUHGRpZWdhcmdv
+bkBnbWFpbC5jb20ACgkQa4KgdbTSDbWeWQ//d5IQnAjtzucsFLLrrNjVrWt9xCvO
+puJzO+O04KkADZVVgMa+b4dglCDzKt2r3qbZEcVAG+4fGMgT7m8iEcE9h7bp5IJ3
+rUnpqyMTF6qrP3At30+nEJj45RLeN/vXMG9pMbFlWc6DBKPTwomPSIaeYoLMZjYq
+XbcmWve4v9GIPIZpmXb4dWHOusagtHrOcT0Ll7mcX4b7iBHb2ShcAbTeF6QkPK4U
+w21X7jjsNkt0uJYgOPIfaaJmp4N3goM0znAmj8gzakSDtiQd4gaxwhxIUFDl5th/
+Q1dGWFAaBj2vek+InuOiQpcNYwvyzSXNOx/zvtVmppDPr3C4GxM+NUcSiF/av2Rm
+XyrZjHvuKx3OmEISzmEE9QAtC/CrA3jsEE1ugTPXe01kihTs8FxSSvQIAP5pDT29
+Vj7w+7UbQACmO5LzoYd8/iuzgmXpou7fIk1gqaF/ukBf9knAdGQfg539iWiigAaO
+Vz8znLqlSlUI3o59LCmvYPzUdS0PAjjM+pPlqGYzWkgglUhXEsicDmitu5J04UqE
+TC7xuIjePZxfLSHLtoxjmqhuDRAJcGB6q71KWq/YnSaaUH9LNrsW3no1qppoO2Wj
+4NDK3lRdRzCzVGxUjnq0wL31M87wB3B40gT80lJmiLxp5M1+iwbmIjKNPgn6Xntu
+lzqa+VKfy9X+a7U=
+=o2GR
 -----END PGP SIGNATURE-----
