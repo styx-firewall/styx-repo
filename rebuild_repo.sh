@@ -4,7 +4,7 @@
 GPG_KEY_ID="diegargon@"
 KEY_FILENAME="styx-firewall-keyring.gpg"
 REPO_BASE="."
-DIST_NAME="bookworm"  # Usamos bookworm consistentemente en todo el script
+DIST_NAME="bookworm"
 POOL_DIR="$REPO_BASE/pool/main"
 DIST_DIR="$REPO_BASE/dists/$DIST_NAME/main/binary-amd64"
 
