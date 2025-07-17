@@ -1,25 +1,25 @@
 Origin: STYX Firewall
 Label: STYX Repository
-Suite: bookworm
-Codename: bookworm
+Suite: stable
+Codename: stable
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Thu, 17 Jul 2025 08:07:16 +0000
-Date: Thu, 17 Jul 2025 08:07:16 +0000
+Date: Thu, 17 Jul 2025 08:10:32 +0000
+Date: Thu, 17 Jul 2025 08:10:32 +0000
 MD5Sum:
- 43140498c6124e279c9c807c30aad6f9              230 Release
+ 3f1635dd0e59e4caeb481c6a12a5f44a              226 Release
  772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
- 4b19997d344478939c7a85d09e000647              615 main/binary-amd64/Packages.gz
+ f8f171fd74ae8a7d83a0bcf2f3360770              615 main/binary-amd64/Packages.gz
 SHA1:
- 806546f1294169061eaf57be09bc94435169b937              230 Release
+ 980f5725c5cefde0d9dbaa7f94824dfa096e5f1b              226 Release
  54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
- 7ed01e37eb3351eaa641461001cae811091700b1              615 main/binary-amd64/Packages.gz
+ 6f9bf27affe6172377939191d6240b6a2cdbde54              615 main/binary-amd64/Packages.gz
 SHA256:
- 6772e919d992e53ec573a6fcb932d42715e85ea70cfa70eee6c869763204f621              230 Release
+ fa607a4d67de28662227cfc3795d5304e045c1ab9da640e3569b4d9eb13b48c5              226 Release
  6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
- f4457c774500c4cb303ea9c4e6a50c52c955684b0bd23a36a30195cc8945ec62              615 main/binary-amd64/Packages.gz
+ c32d3a0f73e664bacfc5566e0acebda85c0c4faa903f38239f18f391c1c4c313              615 main/binary-amd64/Packages.gz
 SHA512:
- 2d94dbf36c2a87b4763bae2d865cb57ce380a258f9dec6d78b4094b8d7c6963d02cfd107ba8108d657d34c62a1b00a9e811080660ce1eddc2c873938c43a24d8              230 Release
+ 8860d0e7552cf724ea639efa9251f5e38eedf410827f8db160d812a7ed7a54aa653b65228613b17adf76a862748c89bc0d32c4cd2c1e8dfa41c1f9e517a29b6f              226 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
- fe7d1c2936648fd7693a1d34102589aae01b319eb7fe0a4b946ac520bd9cafcb8aa479aefc26fa90ec2254e146cd5628eb5a1eaa66ac7b26dfb57e42698bab8b              615 main/binary-amd64/Packages.gz
+ fe572f211c33ff473b373368e98e8232bb3bbf06bd8b2f044424997113c61c8fc77f78fe06edfc2af91e50832ef46a7df1b5c73a88357806ba4e48e88264876f              615 main/binary-amd64/Packages.gz
