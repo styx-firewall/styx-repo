@@ -1,3 +1,6 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
 Origin: STYX Firewall
 Label: STYX Repository
 Suite: bookworm
@@ -23,3 +26,20 @@ SHA512:
  780ae8670803017c0afc7b705598aa8b267a7db1d0bfd0398290ccbd85a75bcf9d3d42d6f30811a4f6db5ebe84d8abeae19a8c3d016061f124f919d4419fcb5f              230 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
  0db35a87c748995ed1beab22d42d78950f835671e6dcec63a5918dfeaa70eda4b1a5e83391c0eeaf255ce39b3ad6612fcaa9ac0635df0e035c5485ee294a5eb7              615 main/binary-amd64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4t30UHGRpZWdhcmdv
+bkBnbWFpbC5jb20ACgkQa4KgdbTSDbXx5A//QhbYB/ew06wjEpnKHfKsmCqzZDl4
+2Ppm0Nu82rWBmmSIUmr427N5ThkNHnrGccPgXpvKeS5G/xE6iuaBIytdsbDR9oL6
+8kHs04OpaomRkkNsuOvQBi8yVs3kuTu8EsUHvsQ+fYHfS4vH9lKHRl/3VqIS+zBa
+ilH5p1EZkED7Tx+ybsd63KqrMabeu0y668TK/igRZhC/6Cz5ZkcfHjaaQWu7ALxT
+K2ZxoP4tqfhNCvIi+jKjQa2wR8A8jZlQQ9b3SmUj85noeYDTOl2JMyJnz/SD9PJO
+LZNMfLzjnkdX4dU5stQGrHm8YyeyF9Ljqh6mH24trbueWf+F6xndNJmThX6On+on
+MK6MVo8Xgpaaa1EkDzWwvbaRmEY+QOXOioU6rK4OW9/IZHILYDSWme6dtc0h4TRe
+jBhDydg8Eo6aTu6qFZn7WpP4jwFQ0FL3JbN9RQWg048CHE0RBBRnYAC18OOzbz+F
+huquHL8V4860PGsHc5CKRkcOHd6s+tu/pct5oBSMWawOVvHA0U3K7DE6reu+5ILK
+k/j1FZeHz3BlgUHOihLQMVFNm5+Qseqgz2+lfBit5+v3PYoXrF3KaEf7ad1LTYD7
+/QU7hy1c8/y9LDvhILeuq+OYl09KbKsoxSABU+xWwKMLpUvhGyqD0JiXh0pCvBnt
+TV9iXPxYN8UAz+A=
+=6ImM
+-----END PGP SIGNATURE-----
