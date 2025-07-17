@@ -22,6 +22,9 @@ echo "[+] Generando Packages..."
 dpkg-scanpackages --multiversion "$POOL_DIR" > "$DIST_DIR/Packages"
 gzip -k -f "$DIST_DIR/Packages"
 
+# Eliminar archivos de Release anteriores
+rm -f "$REPO_BASE/dists/stable/Release.gpg" "$REPO_BASE/dists/stable/InRelease" "$REPO_BASE/dists/stable/Release"
+
 # Paso 2: Crear archivo Release
 echo "[+] Generando Release..."
 cat > "$REPO_BASE/dists/$DIST_NAME/Release" <<EOF
