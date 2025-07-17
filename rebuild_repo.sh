@@ -27,8 +27,8 @@ echo "[+] Generando Release..."
 cat > "$REPO_BASE/dists/$DIST_NAME/Release" <<EOF
 Origin: STYX Firewall
 Label: STYX Repository
-Suite: $DIST_NAME
-Codename: $DIST_NAME
+Suite: stable
+Codename: stable
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
@@ -39,8 +39,8 @@ apt-ftparchive release "$REPO_BASE/dists/$DIST_NAME" >> "$REPO_BASE/dists/$DIST_
 
 # Paso 3: Firmar Release
 echo "[+] Firmando Release..."
-gpg --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$DIST_NAME/Release.gpg" "$REPO_BASE/dists/$DIST_NAME/Release"
-gpg --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$DIST_NAME/InRelease" "$REPO_BASE/dists/$DIST_NAME/Release"
+gpg --yes --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$DIST_NAME/Release.gpg" "$REPO_BASE/dists/$DIST_NAME/Release"
+gpg --yes --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$DIST_NAME/InRelease" "$REPO_BASE/dists/$DIST_NAME/Release"
 
 # Paso 4: Exportar clave pública SOLO si no existe o se fuerza su regeneración
 FORCE_REGENERATE_KEY=false  # Cambiar a 'true' si quieres forzar la regeneración
