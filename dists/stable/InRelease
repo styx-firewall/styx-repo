@@ -1,0 +1,44 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: STYX Firewall
+Label: STYX Repository
+Suite: stable
+Codename: stable
+Architectures: amd64
+Components: main
+Description: STYX Firewall packages
+Date: Thu, 17 Jul 2025 08:27:38 +0000
+Date: Thu, 17 Jul 2025 08:27:38 +0000
+MD5Sum:
+ 2259514a571e302806fb124fa5992279              226 Release
+ 772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
+ 078f364a56d38bd17d97f1459602f6f1              615 main/binary-amd64/Packages.gz
+SHA1:
+ 8556effb9cb8e39961c5d0326e9806bb68c64d03              226 Release
+ 54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
+ 954517cb5507878f2fdac20b31430477bd22f431              615 main/binary-amd64/Packages.gz
+SHA256:
+ 68b223810f03a0cdde5589ea59fbae0d4bac3919143dfa9ba9f0ee2d407e9e72              226 Release
+ 6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
+ f98a2cba8c609106cb35f7d89589f3c3987251aae3e81d037cb398537863a22c              615 main/binary-amd64/Packages.gz
+SHA512:
+ 487c6f93ad57a5f96e0c7363690b1c4fb6faae274bedfc372c5577bb3ff74466d808a365d1adeeb2ae9ccd1083f3c436b4a3d5d7519149e7fd1cbc2e50b3e08e              226 Release
+ 12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
+ 326dbd9e444c8f7b3b8bbd84261db35af861841f19e1efba357f350ff85b8618b816f5093e432b1ff6d24abb4f1aea23e88baf636125e21fb8bcf4343faf27fb              615 main/binary-amd64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4s/sACgkQa4KgdbTS
+DbW/IRAAh7Ucw5/QeJP6zBibozTjvN+Td+GnuXlGxydpmHXZ04oVTGgcBtjyp6JC
+1q3KNuwXUC65jty+PESgc7GCXYNBYxpRa7D8E4Y3MWDQ+2E518BdkUpN8yP6im+s
+IuJLOJRoTI1Wpxxi0PWIu+kAKaDWVaHkZmkfrIralCL1KdTzyFZdUIdMzANybOVK
+7visNbTnfzI27WEY/4Gv7aXI2ubkJQRusNQlkE6kLkUSpf7cb9c84Twxuxx3TCG1
+B1rkwgGL62SyinL5RvOMS3V9UUB7Bta2YYN07SfwKZBD6FRZyhIuImlYv3Xyq7oE
+Nw/DLMNV8uOJ3iuuXKPNqr6Km2AKXhbOezAE6vrtPz5dHD7TRtGFMN9koYCZhGO/
+sZGdFdZaBUHn5lzKnCM1lbfC8AkO8BMPtF61+yiMd5usEeiaxFdQ7ZvaXjC+b0Fm
+neP/s4nUsHin+qadeMTcZVCCKz5AY8MImROsoTUuu2YTOEpK4udLiV062kxEdEl/
+qaL4tVQoZtb2TrlSJfSGffRRtDtbHf3QuA8QVii1D/lEepz8bnYMBGZZAGkp6XAx
+iP53CH7aEudKkPcEHCNE8qj1aUTG4e/RBGT2qqWJyP0ZKW3Mt/LJ9e/gBpQVIF97
+jn22R4gFzvCVylNhWPf0aayjfZKCfNMY1nakaHFGkmkk2+VwMrM=
+=1NJ/
+-----END PGP SIGNATURE-----
