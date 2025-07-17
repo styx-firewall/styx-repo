@@ -5,21 +5,21 @@ Codename: bookworm
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Thu, 17 Jul 2025 08:54:15 +0000
-Date: Thu, 17 Jul 2025 08:54:15 +0000
+Date: Thu, 17 Jul 2025 08:55:51 +0000
+Date: Thu, 17 Jul 2025 08:55:51 +0000
 MD5Sum:
- f839b625a8138b7e26ae2b6adc6c4761              230 Release
+ 54c18ec23b5a9992b7c6ab91abd4f5d7              230 Release
  772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
- 30d738abe4f8d3ab3f1a44fd896f7c5c              615 main/binary-amd64/Packages.gz
+ 9e7a6350f542eeb70748dc8a7da827e7              615 main/binary-amd64/Packages.gz
 SHA1:
- 726d3d0d22c2acf855702ad73f493a04c8470572              230 Release
+ 4c2a8cff9841e6a75f2479453a57b6067ee3fb56              230 Release
  54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
- cd375d6f46b41130fbb95f9456d2a8f2dab3dc78              615 main/binary-amd64/Packages.gz
+ f964c5e5ec40d48fd6b410e007c754249d291951              615 main/binary-amd64/Packages.gz
 SHA256:
- 08683bbfa982dea41e0ffedc37f27b60d7135a1472f395e42ea39c3bd345560a              230 Release
+ e5fc42423b8eb4db98aaa66dadbb0eddaf56318bcd6cee3f8c7144ea1512d2fe              230 Release
  6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
- 24aca03d1906ea4e3f332fa06f75cdab33e4cf813a59a74358a0585431cddbb0              615 main/binary-amd64/Packages.gz
+ 38150bb4048dd2b53eb76774004c0544208022f293046c5856f6a6dddbd0d448              615 main/binary-amd64/Packages.gz
 SHA512:
- c811681854f2172d4965f8718382a96b6655ec3802c5d646b2593d8b0348f37949fe3b64c3912039e4f22d423d7c41445d2658279832449a2f6f969d68c65a09              230 Release
+ 9bb7a55d70bb4b9a584eff96811b5b5c1a22a03e5e9f831a135b4fc7512c35ec074dc09feaffee40fb7b653e0a1bec796eae25990420ea43f6669ff42f142d72              230 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
- 7fae3770b37f2bd0c72395102925fa1fbbf51959880745b73fcb0903bd5b7095e3047cc55b3547a12b64b5c05b203bdbb465ad34820063806fc0ee3ceaef1ff9              615 main/binary-amd64/Packages.gz
+ cb28fa98510ada86d090e56dc493b8711189c92f62cada204fbf2745728fa6620de94f6cbcc573d31357eee6c9ba0a088df9d6bdcbcec0c63438c1e2728c089d              615 main/binary-amd64/Packages.gz
