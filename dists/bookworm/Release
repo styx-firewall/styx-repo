@@ -5,21 +5,21 @@ Codename: stable
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Thu, 17 Jul 2025 08:10:32 +0000
-Date: Thu, 17 Jul 2025 08:10:32 +0000
+Date: Thu, 17 Jul 2025 08:10:57 +0000
+Date: Thu, 17 Jul 2025 08:10:57 +0000
 MD5Sum:
- 3f1635dd0e59e4caeb481c6a12a5f44a              226 Release
+ 31c315d3a663c61850d456f616b720d3              226 Release
  772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
- f8f171fd74ae8a7d83a0bcf2f3360770              615 main/binary-amd64/Packages.gz
+ 1bf37b6d880a038be6b4ac86e7dec7e3              615 main/binary-amd64/Packages.gz
 SHA1:
- 980f5725c5cefde0d9dbaa7f94824dfa096e5f1b              226 Release
+ 3cff4c6ee4500464031a313a700ca0ccb4a7fa71              226 Release
  54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
- 6f9bf27affe6172377939191d6240b6a2cdbde54              615 main/binary-amd64/Packages.gz
+ 2feb8cdb4c81e410309057f5879d2be5195175ba              615 main/binary-amd64/Packages.gz
 SHA256:
- fa607a4d67de28662227cfc3795d5304e045c1ab9da640e3569b4d9eb13b48c5              226 Release
+ 0976dde58f94da594da120dbbab13a5f8fb3b3918f08a2f366d9f34b15c606f5              226 Release
  6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
- c32d3a0f73e664bacfc5566e0acebda85c0c4faa903f38239f18f391c1c4c313              615 main/binary-amd64/Packages.gz
+ e98da34ba42ddb62e73914232737da4e1353984570f70a0085c8515715fd134e              615 main/binary-amd64/Packages.gz
 SHA512:
- 8860d0e7552cf724ea639efa9251f5e38eedf410827f8db160d812a7ed7a54aa653b65228613b17adf76a862748c89bc0d32c4cd2c1e8dfa41c1f9e517a29b6f              226 Release
+ db99f6debc904408509fc6ce1e0bab18afdef1b5b1302bd9ff761c5864c6c05476b617b0c1919d0017c194a2db0689a8bf5e78e6eb14af19292b675044fb23b2              226 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
- fe572f211c33ff473b373368e98e8232bb3bbf06bd8b2f044424997113c61c8fc77f78fe06edfc2af91e50832ef46a7df1b5c73a88357806ba4e48e88264876f              615 main/binary-amd64/Packages.gz
+ caa232b04b1869e94f16d160242671443078ebb74c1a6207aa7cbb52a2e8125cea3f59de66fd03acbe705cd71c7276ec52c1551145e1705c7e80bb21adf58be4              615 main/binary-amd64/Packages.gz
