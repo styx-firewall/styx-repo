@@ -39,6 +39,6 @@ echo "✔ Repositorio actualizado correctamente."
 echo
 echo "📦 Instrucciones para usuarios:"
 echo
-echo "  curl -fsSL https://TU_REPO_URL/$KEY_FILENAME -o /usr/share/keyrings/$KEY_FILENAME"
-echo "  echo \"deb [signed-by=/usr/share/keyrings/$KEY_FILENAME] https://TU_REPO_URL/debian stable main\" | sudo tee /etc/apt/sources.list.d/styx.list"
+echo "  curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME -o /usr/share/keyrings/$KEY_FILENAME"
+echo "  echo \"deb [signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo stable main\" | sudo tee /etc/apt/sources.list.d/styx.list"
 echo "  sudo apt update"
