@@ -8,38 +8,38 @@ Codename: bookworm
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Thu, 17 Jul 2025 08:54:15 +0000
-Date: Thu, 17 Jul 2025 08:54:15 +0000
+Date: Thu, 17 Jul 2025 08:55:51 +0000
+Date: Thu, 17 Jul 2025 08:55:51 +0000
 MD5Sum:
- f839b625a8138b7e26ae2b6adc6c4761              230 Release
+ 54c18ec23b5a9992b7c6ab91abd4f5d7              230 Release
  772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
- 30d738abe4f8d3ab3f1a44fd896f7c5c              615 main/binary-amd64/Packages.gz
+ 9e7a6350f542eeb70748dc8a7da827e7              615 main/binary-amd64/Packages.gz
 SHA1:
- 726d3d0d22c2acf855702ad73f493a04c8470572              230 Release
+ 4c2a8cff9841e6a75f2479453a57b6067ee3fb56              230 Release
  54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
- cd375d6f46b41130fbb95f9456d2a8f2dab3dc78              615 main/binary-amd64/Packages.gz
+ f964c5e5ec40d48fd6b410e007c754249d291951              615 main/binary-amd64/Packages.gz
 SHA256:
- 08683bbfa982dea41e0ffedc37f27b60d7135a1472f395e42ea39c3bd345560a              230 Release
+ e5fc42423b8eb4db98aaa66dadbb0eddaf56318bcd6cee3f8c7144ea1512d2fe              230 Release
  6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
- 24aca03d1906ea4e3f332fa06f75cdab33e4cf813a59a74358a0585431cddbb0              615 main/binary-amd64/Packages.gz
+ 38150bb4048dd2b53eb76774004c0544208022f293046c5856f6a6dddbd0d448              615 main/binary-amd64/Packages.gz
 SHA512:
- c811681854f2172d4965f8718382a96b6655ec3802c5d646b2593d8b0348f37949fe3b64c3912039e4f22d423d7c41445d2658279832449a2f6f969d68c65a09              230 Release
+ 9bb7a55d70bb4b9a584eff96811b5b5c1a22a03e5e9f831a135b4fc7512c35ec074dc09feaffee40fb7b653e0a1bec796eae25990420ea43f6669ff42f142d72              230 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
- 7fae3770b37f2bd0c72395102925fa1fbbf51959880745b73fcb0903bd5b7095e3047cc55b3547a12b64b5c05b203bdbb465ad34820063806fc0ee3ceaef1ff9              615 main/binary-amd64/Packages.gz
+ cb28fa98510ada86d090e56dc493b8711189c92f62cada204fbf2745728fa6620de94f6cbcc573d31357eee6c9ba0a088df9d6bdcbcec0c63438c1e2728c089d              615 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4ujgUHGRpZWdhcmdv
-bkBnbWFpbC5jb20ACgkQa4KgdbTSDbWeWQ//d5IQnAjtzucsFLLrrNjVrWt9xCvO
-puJzO+O04KkADZVVgMa+b4dglCDzKt2r3qbZEcVAG+4fGMgT7m8iEcE9h7bp5IJ3
-rUnpqyMTF6qrP3At30+nEJj45RLeN/vXMG9pMbFlWc6DBKPTwomPSIaeYoLMZjYq
-XbcmWve4v9GIPIZpmXb4dWHOusagtHrOcT0Ll7mcX4b7iBHb2ShcAbTeF6QkPK4U
-w21X7jjsNkt0uJYgOPIfaaJmp4N3goM0znAmj8gzakSDtiQd4gaxwhxIUFDl5th/
-Q1dGWFAaBj2vek+InuOiQpcNYwvyzSXNOx/zvtVmppDPr3C4GxM+NUcSiF/av2Rm
-XyrZjHvuKx3OmEISzmEE9QAtC/CrA3jsEE1ugTPXe01kihTs8FxSSvQIAP5pDT29
-Vj7w+7UbQACmO5LzoYd8/iuzgmXpou7fIk1gqaF/ukBf9knAdGQfg539iWiigAaO
-Vz8znLqlSlUI3o59LCmvYPzUdS0PAjjM+pPlqGYzWkgglUhXEsicDmitu5J04UqE
-TC7xuIjePZxfLSHLtoxjmqhuDRAJcGB6q71KWq/YnSaaUH9LNrsW3no1qppoO2Wj
-4NDK3lRdRzCzVGxUjnq0wL31M87wB3B40gT80lJmiLxp5M1+iwbmIjKNPgn6Xntu
-lzqa+VKfy9X+a7U=
-=o2GR
+iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4upcUHGRpZWdhcmdv
+bkBnbWFpbC5jb20ACgkQa4KgdbTSDbUoog/8Dakf0+DRmIi88OHA3zfTphLk6+yt
+5j27Xqtk5OYN3aoppcOEPtuDya0tM7AiZOR9F6EY6u3cpF3dDpsVnIB+rViVD9n2
+Mnv6RJ2HrC6iuc/A+HFD1jJPmKqbna+QkW0uvL0d8nSXel1hrGKF9BPrpp0gZKRf
+32c1Rk0l08I9nWa09/h73kawdfbQXH1dQ/lYTXIgijRax9syCW6SkF0B7FOLsUhb
+rDGJ74Jm0MdWD46WjAVoIQkNS0iK+IoU+o9qsAujee1yvdPAoUbLKBYGpQpgSZLg
+bPdz2pdwvY40FnaoK9VJfLU794P0Tu/95iu+c3gYDvI1YHQhZ7sy/WHYIVg1zeGt
+vhkMEeUhRIMJ2bgdaz1G7bZpx3r6JWT801HGnnM1va5Hdldxu+dS4JF2G82xJ7g7
+f243xesmSFfClxOqnSzUwJUuhPcfuVKBRkrdfMujDXltkTM2bfHVW5pO9ZymA896
+SMi9Z+5MsNo1iNS4QofTLK5RwQEo7IncB7v63gH2x06mqY8sHkFW6f1qggyQLvGd
+w8OYBF2sE+Aoe+gJ4NX2n8cvjfeTfSY0HZ2JtzOH5406A7kJPTsL8LP1cOZXuIJH
+2pvgvkJbSgPcYqHWaw01DXgdQghVq4sxM9Mc0LBkqcImuOT2kMfyTrylsapXpiml
+TDC3aHmvj4ym8bI=
+=+jST
 -----END PGP SIGNATURE-----

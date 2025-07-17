@@ -3,8 +3,16 @@
 # Usage
 
 ```
-curl -fsSL https://styx-firewall.github.io/styx-repo/styx-firewall-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/styx-firewall-keyring.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/styx-firewall-keyring.gpg] https://styx-firewall.github.io/styx-repo bookworm main" | sudo tee /etc/apt/sources.list.d/styx.list```
+1. Opción binario:
+   curl -fsSL https://styx-firewall.github.io/styx-repo/styx-firewall-keyring.gpg | sudo tee /usr/share/keyrings/styx-firewall-keyring.gpg >/dev/null
+   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/styx-firewall-keyring.gpg] https://styx-firewall.github.io/styx-repo bookworm main" | sudo tee /etc/apt/sources.list.d/styx.list
+   sudo apt update
+
+2. Opción alternativa (si prefieres verificar el ASCII primero):
+   curl -fsSL https://styx-firewall.github.io/styx-repo/styx-firewall-keyring.gpg.asc | sudo gpg --dearmor -o /usr/share/keyrings/styx-firewall-keyring.gpg
+   # Verifica el fingerprint con: 
+   gpg --show-keys /usr/share/keyrings/styx-firewall-keyring.gpg
+```
 
 # Rebuild
 
