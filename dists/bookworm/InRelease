@@ -8,38 +8,38 @@ Codename: stable
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Thu, 17 Jul 2025 08:13:25 +0000
-Date: Thu, 17 Jul 2025 08:13:25 +0000
+Date: Thu, 17 Jul 2025 08:20:00 +0000
+Date: Thu, 17 Jul 2025 08:20:00 +0000
 MD5Sum:
- 6cb56181c26071af30e6ab78fc76a210              226 Release
+ 95608c867d4b488d9e6cf40478497b8d              226 Release
  772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
- 368b927973157185b139a85abff0d93a              615 main/binary-amd64/Packages.gz
+ af816d3c53c165b890d23d1a5e1a4f45              615 main/binary-amd64/Packages.gz
 SHA1:
- 478f386a03183407c71c382ccbd164a8a58ea2fe              226 Release
+ 72ecac8a49522eb23b1405021f48305e8c0f7e95              226 Release
  54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
- a6cc46c08398f43017bc3f99897b3a6fa334c006              615 main/binary-amd64/Packages.gz
+ 3922cd40d4566e58e4d43ceca3893966620c5ff3              615 main/binary-amd64/Packages.gz
 SHA256:
- 5826bf403ae35846f557baf8a51ea5a336029e2908ada3045d8e292224e67219              226 Release
+ 85ddeb62bc95ed7de9464b3d1e16db7db8d6d8ca02a7ba3ba4411782d63882d1              226 Release
  6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
- e0a9440154f9293d46a78c62abb02bd50d159c131ba2e76f6923cf346e54b1f2              615 main/binary-amd64/Packages.gz
+ dd09198d848411de248d03f5aa76d5dadae6337096e4fb88652045e50f0d3ca5              615 main/binary-amd64/Packages.gz
 SHA512:
- 341b3e7ad11d14b803b857a648e1687d24677d7890f929802533f4e76772567ba7660ebb03fccc2eb33978735a0bbbc86dc601e633146ec3960e692cfe9972ce              226 Release
+ 4c866045c7dd43fa8482629a9731942a85b2d8a41cf6e0c45a1945cf088dd41a8a8d680f553a8df045ab7faee15434b89247d6a02f2e5afcd1c9a8d8e53b8a6a              226 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
- ca0480ba52e81591b77a869971e3d77c7d68717dc1d8658cff36841978c8f3c855b4a32d717766e18040fdffa29876555c571c08a6ae377ab65e8f26928b0d52              615 main/binary-amd64/Packages.gz
+ 8e08d7ac045f739dc19296c8bcfb79e18ac4d3f26d19edd474cba905394bb7908d5f0a2933ce7aa88695cfc46c68c2238f6e31952d6698ba4aaed10215a8b8f1              615 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4sKUUHGRpZWdhcmdv
-bkBnbWFpbC5jb20ACgkQa4KgdbTSDbWXEQ/7BC6yHK5y5+bK7F7nqEHFCRiNu1DX
-53Oor0LrgHUeFh6tSnXK6UnlTcYaXMhsz90DVxZyFnLSIAIQfem2jQuvS1MxQvSM
-DCck8xCTsLU7gWqfsmgbdnwkzqIDHWZX9CtIoK6rg7mfiaV9xmLzYTNDwIzcOcro
-PbLJ1Zvb/QKRq1UfFbH+CaV0OkZrYqYi34c9zNN1v+0Y/o9x+JWue5WJHG2UXG3p
-nSW6RM/B6FjxAxQ3eDs09CcbKMw4a0RCCLfBD64tHzC8A9kngI60RPfMlKZFl5Ky
-w+N2i7o1JUpnC7GiLjyGl4ddmElHi52XEBtPbLYRFgRgfCqqYfavMUPMW9y4CQ5y
-Olotzx/gDwEVmxtG674CZrLOZevd8iYpqjQfWzTDWOes4pcH/S90zwfaUuykqRSw
-1OHcoPb3Ynji8kutTfy3VMfPTDZXSMnoPyFIxW2XuChFMzkPEa0yTdmFSKo8Awo9
-HRYvR6edrr4xCLz/xvLy5Ef7NNrDxEPCuqPz72TRK8WGmZO0hWrMwAWrBnwV+EAc
-DQ/+yWqdrJ9G0FgcdgzTspSMDEsEyOQZS7GdPoSAkAHs/+mzOCohDUZaoSWuA5hy
-7Sdq1Ys6Eq7lcUjnC0sSSsEdPD5uJltOazZKQ17bpy1eB3aUHibyTa8S8S71qmuW
-mYVAdKatYXPwp6I=
-=0a/R
+iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmh4sjAUHGRpZWdhcmdv
+bkBnbWFpbC5jb20ACgkQa4KgdbTSDbXgExAAomdJtvTL2g5blmqrHc3snEeSuCtF
+tFsPUjh+pnkxMUoEQJ2sEqfl1tOLkm3Y8mC2TQRv9itbJH3Ux4JicOtaBR0cgWQ2
+Bfxcq0UE6GFdwXfVkC8BXUtdrFiKLbuJ9xsJkcR+uHFyQslllKpynCNTZkzCOv0C
+UFY31fXZMrub7j8GHdhuHgn0EOABqQVCw7tgc06tkwihsIJQBBydsEbDmSizyisL
+3m8MRloxVfdNC874i4eBDXWpJiIwKUCS4kHeRo0ahlEbZJHhOdwiYaK5cibi4kV5
+Qgu9OwxNgSb/Dc3rEvuesHJNoLHwTwaHh8qW3URQWtJpAEUcjdOLMiWnFozEmCxj
+m8UGoaQVfd+gGwegLMAKJcmhCvB4wHTNwkc3fVzIIwMsBTLp0HT6ACZmqMkqjECd
+qT5ZCZLWFn6NGjhqDIhup5QClxDdLDgrf8WPdZ628efgkSNHEbDL1myH6bG3MwHS
+Y8gAHfw9pPDgVK/mCAg0wAvazM0hsNEukJW1620TAwrKE+J9lisYVkl4FVpJYb5A
+/VzKBWkGzmFmQLoVqMM0hAoWDkr2/nMQCPPfJRhiaompI+UTRYiD5/b6Eqg0Wyea
+JbLUYn5ttayJjTu2Y6nD06RcInxTjHs5Nm9G9bdxQrdVmlp1ytgopOtnT+L6grZc
+5D5nPlvArzpdvPE=
+=17jK
 -----END PGP SIGNATURE-----
