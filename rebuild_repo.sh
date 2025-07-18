@@ -56,13 +56,13 @@ gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$
 FORCE_REGENERATE_KEY=false
 if [ "$FORCE_REGENERATE_KEY" = true ] || [ ! -f "$REPO_BASE/$KEY_FILENAME" ]; then
     echo "[+] Exportando clave GPG..."
-    gpg --export --armor "$GPG_KEY_ID" > "$REPO_BASE/$KEY_FILENAME"
-    # Formato ASCII (.asc) - para verificación manual (NUEVO)
+    # Exporta en formato ASCII (para verificación manual)
     gpg --export --armor "$GPG_KEY_ID" > "$REPO_BASE/$KEY_FILENAME.asc"
-    
-    # Mostrar fingerprint para verificación (NUEVO)
+    # Exporta en formato binario (dearmored, recomendado para APT)
+    gpg --export "$GPG_KEY_ID" | gpg --dearmor > "$REPO_BASE/$KEY_FILENAME"
+    # Mostrar fingerprint para verificación
     echo -e "\n🔑 Fingerprint de la clave (verifícalo):"
-    gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}"    
+    gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}"
 fi
 
 # --- Git ---
@@ -75,11 +75,11 @@ git push
 echo -e "\n✔ Repositorio actualizado correctamente.\n"
 echo "📦 Instrucciones para usuarios:"
 echo
-echo "1. Opción binario:"
+echo "1. Opción recomendada (binario, para APT):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME | sudo tee /usr/share/keyrings/$KEY_FILENAME >/dev/null"
 echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $DIST_NAME main\" | sudo tee /etc/apt/sources.list.d/styx.list"
 echo "   sudo apt update"
 echo
-echo "2. Opción alternativa (si prefieres verificar el ASCII primero):"
+echo "2. Opción alternativa (verificación manual):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME.asc | sudo gpg --dearmor -o /usr/share/keyrings/$KEY_FILENAME"
-echo "   # Verifica el fingerprint con: gpg --show-keys /usr/share/keyrings/$KEY_FILENAME" 
+echo "   # Verifica el fingerprint con: gpg --show-keys /usr/share/keyrings/$KEY_FILENAME"
