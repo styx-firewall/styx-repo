@@ -53,7 +53,7 @@ gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$DIST_NA
 gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$DIST_NAME/InRelease" "$REPO_BASE/dists/$DIST_NAME/Release"
 
 # --- Clave Pública ---
-FORCE_REGENERATE_KEY=true
+FORCE_REGENERATE_KEY=false
 if [ "$FORCE_REGENERATE_KEY" = true ] || [ ! -f "$REPO_BASE/$KEY_FILENAME" ]; then
     echo "[+] Exportando clave GPG..."
     # Exporta en formato ASCII (para verificación manual)
