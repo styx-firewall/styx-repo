@@ -1,3 +1,31 @@
+Package: iproute2
+Version: 6.15.0-1~bpo12+1
+Architecture: amd64
+Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
+Installed-Size: 3729
+Depends: debconf (>= 0.5) | debconf-2.0, libbpf1 (>= 1:0.6.0), libbsd0 (>= 0.0), libc6 (>= 2.34), libcap2 (>= 1:2.10), libdb5.3, libelf1 (>= 0.131), libmnl0 (>= 1.0.3-4~), libselinux1 (>= 3.1~), libtirpc3 (>= 1.0.2), libxtables12 (>= 1.6.0+snapshot20161117), libcap2-bin
+Suggests: python3:any
+Conflicts: arpd
+Breaks: iproute2-doc
+Replaces: iproute2-doc
+Provides: arpd
+Filename: ./pool/main/iproute2_6.15.0-1~bpo12+1_amd64.deb
+Size: 1080392
+MD5sum: f5494d9dcd806e676e019914b7c74cf5
+SHA1: c1e268714937942a348db933d8a263215a23506b
+SHA256: 270e82b98798adab0832eb23f96b697f3d9f9a72256b9d545041f276d7e3c9e8
+Section: net
+Priority: important
+Multi-Arch: foreign
+Homepage: https://wiki.linuxfoundation.org/networking/iproute2
+Description: networking and traffic control tools
+ The iproute2 suite is a collection of utilities for networking and
+ traffic control.
+ .
+ These tools communicate with the Linux kernel via the (rt)netlink
+ interface, providing advanced features not available through the
+ legacy net-tools commands 'ifconfig' and 'route'.
+
 Package: linux-headers-6.12.32-10-styx
 Source: linux-upstream
 Version: 10-styx
