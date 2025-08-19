@@ -3,8 +3,8 @@ Hash: SHA512
 
 Origin: STYX Firewall
 Label: STYX Repository
-Suite: bookworm
-Codename: bookworm
+Suite: trixie
+Codename: trixie
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages

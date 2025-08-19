@@ -1,0 +1,45 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: STYX Firewall
+Label: STYX Repository
+Suite: trixie
+Codename: trixie
+Architectures: amd64
+Components: main
+Description: STYX Firewall packages
+Date: Tue, 19 Aug 2025 11:42:42 +0000
+Date: Tue, 19 Aug 2025 11:42:42 +0000
+MD5Sum:
+ 4ebb124b3220f4153b3d3f38e4466379              226 Release
+ 772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
+ 6accf1be602c733fe4219c1b0eae6fdf              615 main/binary-amd64/Packages.gz
+SHA1:
+ bdc0bf137dd390ffe67431480003ac342b23f29f              226 Release
+ 54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
+ 189adacd0855a741fae81d113d570216f116fbb4              615 main/binary-amd64/Packages.gz
+SHA256:
+ aea0c132d3dc53d1049f668a90897438d62e5e1475904785595427dc097b3728              226 Release
+ 6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
+ e566fad3b5b7f9878ad7486caedbc790f21faae746aa57c947dbc521c2479870              615 main/binary-amd64/Packages.gz
+SHA512:
+ 4643bb6d7fadae949f91efe05aaa00d9813580f8fb1c66c6fb98ad4d87368e879178a9f231d0e7b6d7d57593afe36265954566ee285763da89438c18ec0dc75f              226 Release
+ 12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
+ 099cbebe2b1931c39f57a73a93ee3d109ccc685d2efd9b5d3e539c0e50a31e6d45ac3c6756d1fb647f7d5a3335ac80098d80120ba07d396efb78938c174f0551              615 main/binary-amd64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmikY0kUHGRpZWdhcmdv
+bkBnbWFpbC5jb20ACgkQa4KgdbTSDbVTvw/+PTuB36Vm6uPvDkuGYgUmy/KbLzlQ
+mh74Z5DCe5054b8RrpxIWgNN6gebz9UHaNuKUJB65ieqVM/6rMRt7u8yPjrSIuiC
+zDoG7VtJgRQm2nhn0z1KAhtJWbIWDty+2GyjsKgVY03iRe94uXB8S2ik4eLhAsvu
+xm1L6wH2kgHkoNy+lc1BmuX74gug3BRGqiQe+e5k1+BwLfy2z/Ophvgre38e52GL
+ewcIxRp2DkXUG8TWW/qc/nEgbD7boAUYxJDJvqOi61bqKURytBM6wLRkE8dwsOIr
+NBBtyXryw8F3WxG1fr9Yb6yyMtM+8D0hBvkm8NXeBcPk9yT4axVHhxJ+kIL43eiN
++fP4keY36QJOcY+UY7EhlE3TCwcROF1jxieqCNkmEEKUT3y3Om3n/0gpBhQZXTMJ
+mcKNWiXUSwhuWwVK3gu31oyWzlPo4/T/IQyuo6+DoP75PG95Q4bmgaIpklwXNAiA
+Kt6pGrTbjfy0yfKFjAAtyIAjtQpxV0sr1WqUkWKaabqWN9gJ/JCv5xvzesGVVfgJ
+vmizspogU1M5w5KsyIzsshptlDA431TG/WzsRs9mtHikbLQXCeTm+7f9g1FKkoGa
+8bbxbivH1IK7e8Kkna2/g97fcDgcubbiYSeWHLBGFHaD0tKobk77wQ4WrM8qGeYw
+V5Dzl0TyyIWPJCY=
+=4lp1
+-----END PGP SIGNATURE-----
