@@ -8,38 +8,38 @@ Codename: trixie
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Tue, 19 Aug 2025 11:48:54 +0000
-Date: Tue, 19 Aug 2025 11:48:54 +0000
+Date: Tue, 19 Aug 2025 11:51:54 +0000
+Date: Tue, 19 Aug 2025 11:51:54 +0000
 MD5Sum:
- f6c86b774c937e26d1c2f9fb3c9273a0              226 Release
+ 205fa02ffae4a95c08502bee01b7699d              226 Release
  772fdaa4d6f54f610bb9a55b047d7521             1314 main/binary-amd64/Packages
- 151b5be498a7fc23068611d29153107b              615 main/binary-amd64/Packages.gz
+ 5f81bf0ba6fed30d8e672d2e933f48f1              615 main/binary-amd64/Packages.gz
 SHA1:
- a99a695e0ccc348bf8d0702cd7ffef977fcf81cb              226 Release
+ b2241e5138a322da287215abbd94fec78ff9ad45              226 Release
  54407a037cee96d8c9c24114300a783064ae0978             1314 main/binary-amd64/Packages
- 290874cd2bf1f9afea8b356bb5a445949dc749b3              615 main/binary-amd64/Packages.gz
+ cc3c313a59a1675c9d63e8da134f6906b3207d2f              615 main/binary-amd64/Packages.gz
 SHA256:
- f65bd3917e62713b301e000bee786c73899a2d646d2ac605d1169fd64d69d41a              226 Release
+ 82c5da63e4a2f018a5c9d581319b7521bf337367b1bf0b2bd950f6d7daa2b122              226 Release
  6c9bec55131f0d41e049c589b5a19f0c46c66a1c9a86447845e9be3010dfd694             1314 main/binary-amd64/Packages
- 7a1575f4e346701ecbd90fc843222acfb85d3fd4bf45b9b7cb07e7e7c40a59ad              615 main/binary-amd64/Packages.gz
+ e021870d76c311d6362fdc0772fc1adf49e0e7b4e3a29ae8b9d5191e245627df              615 main/binary-amd64/Packages.gz
 SHA512:
- ae4c0a68c38f9ea02c639e6ee1fe9cf27180a0e64048704a827d22a7678f65e0da79aa2b281a90d150dfd1846ae0076e169b138332c975952b4afabf4ccdffc2              226 Release
+ 8a4b2742ca68c23e74ff95b84ec3e49a7be610f3323cf2581340effb54869faed9f82a46599c99ecd9f1299d56ca3960efca4eedfb8f5a54002a7a8c5ef9e78f              226 Release
  12ea2a92f4c3d8c545f5ec894309fc1bdba3044deb21ebfb2a0aeecfae864ed6dd5d5454d0014b9513e285d5aac80e249e5556ff2512602c746a728215fa2107             1314 main/binary-amd64/Packages
- c77a43ba32f78b43d536fa1ceb828c473c39a865803234090a911030b28ec05f24cf53a70e2e42f8e243fcda90c79a768936ad24ca03879e34222123bf438a0c              615 main/binary-amd64/Packages.gz
+ 653e4a21b4dc44875095e0075fcd41cb348bea3d079fb91448fe062b184af0033ad3a6581af4ed7a4c79d681c55675788c5c9a324c8a5dd8831e27bd0d03b29d              615 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmikZKYUHGRpZWdhcmdv
-bkBnbWFpbC5jb20ACgkQa4KgdbTSDbW3HA/+LZmOhILcbJhWHtdOd3cTmpXf84Kb
-5XaZYpKF5e2R/hUPAf3tX1jCWKHpr1Qln3qa1zqigPloD69t4t7HaBihm1bCTSOS
-fRpwd1hljpGZcTrJogjlbcm9MRpcWP75U4Jqeh9yZprX/auXGw5k5fdUlsGxdydy
-zlXquIxb5nDrKVMqMrr4nEHsxr4WpMaI7NdWBa/261gEg5ya40BxxC896v5Pt2CK
-NA8JNXqFxHVIhcsDsFP9MhxmAujjRG1+499RRYjmfU9DvGCfMKnl69P/CRyJMMB7
-J14smSB6lmMAWZF017sJc4RaHJVGAkNc/TB/oL1FzVyFY0y3/EOZFtHLOSIDS4cd
-l6xDHf/M7bIoKWnwlsnPU1Ul1WynMNw/7jkjo01MgGzplFc+JoJjVts/ZWBy/vAG
-jYr0KqRvlb3YBpVe+/3le6qE8aSNsF/3qxZjgn6HNx5FV5Rt3PqDz3ruCAnIYrPr
-Z6TcBE3w0rEwHHGIw0GqPok8TkdmcHdypG18DYkqWfJx4ck++I1QO/QXbpdQVVSo
-7gOYrHKbGAibRuxICTd5a6SpkjfwISvDKY6fIuRRLmnVjd5l8IlAgkpsul5bAiIr
-1VvSKn28RIfrFOgCn8OXBcqXb2TqhUaLtQGg3cDLSSFUdn70SFw1bVeU0gL2LlLq
-gDpAR6Z6biwLzuE=
-=xgmt
+iQJIBAEBCgAyFiEE26zrkn7b+LyqdOUQa4KgdbTSDbUFAmikZVoUHGRpZWdhcmdv
+bkBnbWFpbC5jb20ACgkQa4KgdbTSDbUMXA//Qh8w5SSFl8oCc2kOqf3WNxIzp95N
+RMGyGrp1TPCCXXTcfsw1Lx1CvR4y7kuu453IhcPJeqwKDuC3i/p6YZ5izzCikK9A
+089DguPp+96v6XyVcwIjAySf/iT9mgyRxpt3J5jcFS3PJ0GeDFnsW7q9Otw0aNGm
+4wZsNOcSvTC2R405TZSWXX4WynSmqDcUDf7YpRG4bT7UA96DaMHOAcCYwqXKvdUe
+YwAnys78sdFxLYH+nQkB+3/E7ISlgXAu2LVA447/tcoMOy8lxFBWvdfg9mI8oFrD
+a5ek1KOdJKhQRarO1oc/QQKaOwKPW/n7qyhfkOyWnjLoWL7El3OjeeF7ZOYcPmn4
+ZSpv8Hph8Kz24DNBe62Bo7gc+em4JZG2I4NW0aacBBvd5S6ZqaFrWRyjDtG/nrda
+nx6Kvc3rUOL9xJs7X8Rp9SkkGcMyJjb4rLC9qNrA6EdTXpGZGXdicCqVZNHcBIYd
+1Ja4ycaK48RJoNXz+2/PyBeznUhW+MypZr0f3vprYtOqaYLeKsMkRgvTU+ptVXoL
+6oHdjuwqkmFwikfzcxdkmz4xVvHIaVYMu6mLIhaRkKqFY/DKKrhAikHsUm92i1TH
+RI+gocP/eug4ImYl53tkd9yQi+Yhy6drcUa7eiRRgXXCUGmH5lPb+LGYW7B8TuVX
+QJvEfTzgsybVWBs=
+=KK3r
 -----END PGP SIGNATURE-----
