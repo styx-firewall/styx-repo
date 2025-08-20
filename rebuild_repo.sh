@@ -8,6 +8,24 @@ DIST_NAME="trixie"
 POOL_DIR="$REPO_BASE/pool/main"
 DIST_DIR="$REPO_BASE/dists/$DIST_NAME/main/binary-amd64"
 
+
+# --- Variables comunes para metapaquetes ---
+META_VERSION="1.6"
+META_ARCH="amd64"
+# --- Creación de metapaquete linux-headers-styx ---
+META_HEADERS_DIR="meta-linux-headers-styx"
+META_HEADERS_DEBIAN_DIR="$META_HEADERS_DIR/DEBIAN"
+META_HEADERS_CONTROL_FILE="$META_HEADERS_DEBIAN_DIR/control"
+
+META_HEADERS_DEPENDS="linux-headers-6.12.42-12-styx"
+
+# --- Creación de metapaquete linux-image-styx ---
+META_DIR="meta-linux-image-styx"
+META_DEBIAN_DIR="$META_DIR/DEBIAN"
+META_CONTROL_FILE="$META_DEBIAN_DIR/control"
+## Usar las variables comunes META_VERSION y META_ARCH
+META_DEPENDS="linux-image-6.12.42-12-styx"
+
 # --- Verificación de clave GPG ---
 echo "[+] Verificando clave GPG..."
 if ! gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
@@ -20,6 +38,32 @@ fi
 # --- Estructura de directorios ---
 mkdir -p "$POOL_DIR"
 mkdir -p "$DIST_DIR"
+
+# --- Creación de metapaquete linux-image-styx ---
+rm -rf "$META_DIR"
+mkdir -p "$META_DEBIAN_DIR"
+cat > "$META_CONTROL_FILE" <<EOF
+Package: linux-image-styx
+Version: $META_VERSION
+Architecture: $META_ARCH
+Depends: $META_DEPENDS
+Description: Metapaquete para instalar el kernel Linux Styx
+EOF
+dpkg-deb --build "$META_DIR"
+mv -v "$META_DIR.deb" .
+
+# --- Creación de metapaquete linux-headers-styx ---
+rm -rf "$META_HEADERS_DIR"
+mkdir -p "$META_HEADERS_DEBIAN_DIR"
+cat > "$META_HEADERS_CONTROL_FILE" <<EOF
+Package: linux-headers-styx
+Version: $META_VERSION
+Architecture: $META_ARCH
+Depends: $META_HEADERS_DEPENDS
+Description: Metapaquete para instalar los headers del kernel Linux Styx
+EOF
+dpkg-deb --build "$META_HEADERS_DIR"
+mv -v "$META_HEADERS_DIR.deb" .
 
 # Mover .deb a pool/main
 if ls *.deb 1> /dev/null 2>&1; then
