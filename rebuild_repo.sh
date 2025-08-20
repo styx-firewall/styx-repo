@@ -46,11 +46,15 @@ cat > "$META_CONTROL_FILE" <<EOF
 Package: linux-image-styx
 Version: $META_VERSION
 Architecture: $META_ARCH
+Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: $META_DEPENDS
 Description: Metapaquete para instalar el kernel Linux Styx
 EOF
 dpkg-deb --build "$META_DIR"
-mv -v "$META_DIR.deb" .
+# Solo mover si el archivo no está ya en el destino
+if [ -f "$META_DIR.deb" ] && [ ! "$META_DIR.deb" -ef "$REPO_BASE/$META_DIR.deb" ]; then
+    mv -v "$META_DIR.deb" "$REPO_BASE/"
+fi
 
 # --- Creación de metapaquete linux-headers-styx ---
 rm -rf "$META_HEADERS_DIR"
@@ -59,11 +63,15 @@ cat > "$META_HEADERS_CONTROL_FILE" <<EOF
 Package: linux-headers-styx
 Version: $META_VERSION
 Architecture: $META_ARCH
+Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: $META_HEADERS_DEPENDS
 Description: Metapaquete para instalar los headers del kernel Linux Styx
 EOF
 dpkg-deb --build "$META_HEADERS_DIR"
-mv -v "$META_HEADERS_DIR.deb" .
+# Solo mover si el archivo no está ya en el destino
+if [ -f "$META_HEADERS_DIR.deb" ] && [ ! "$META_HEADERS_DIR.deb" -ef "$REPO_BASE/$META_HEADERS_DIR.deb" ]; then
+    mv -v "$META_HEADERS_DIR.deb" "$REPO_BASE/"
+fi
 
 # Mover .deb a pool/main
 if ls *.deb 1> /dev/null 2>&1; then
