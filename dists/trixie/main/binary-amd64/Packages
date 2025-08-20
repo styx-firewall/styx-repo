@@ -36,6 +36,17 @@ Description: Linux kernel headers for 6.12.42-12-styx on amd64
  .
  This is useful for people who need to build external modules
 
+Package: linux-headers-styx
+Version: 1.6
+Architecture: amd64
+Depends: linux-headers-6.12.42-12-styx
+Filename: ./pool/main/meta-linux-headers-styx.deb
+Size: 688
+MD5sum: c20f52c5cf41ae12bfdbe060651a4cff
+SHA1: 5940a5539f34753e6477dbb5b123b730001a3a54
+SHA256: c97c5e2b6e5f86733aea32c965dd2061299d8ef74112943082a21b5f4192eae3
+Description: Metapaquete para instalar los headers del kernel Linux Styx
+
 Package: linux-image-6.12.32-10-styx
 Source: linux-upstream
 Version: 10-styx
@@ -71,6 +82,17 @@ Homepage: https://www.kernel.org/
 Description: Linux kernel, version 6.12.42-12-styx
  This package contains the Linux kernel, modules and corresponding other
  files, version: 6.12.42-12-styx.
+
+Package: linux-image-styx
+Version: 1.6
+Architecture: amd64
+Depends: linux-image-6.12.42-12-styx
+Filename: ./pool/main/meta-linux-image-styx.deb
+Size: 680
+MD5sum: 79d638719c114abcd8c97b07a5dcc8ff
+SHA1: f734b7131446dc5d7217d0274182f5d4f5568665
+SHA256: 0bc2b28cf7a3dc9e6cf38f2fd9374b8e3f19e8b86b501aae77f6371c69692be0
+Description: Metapaquete para instalar el kernel Linux Styx
 
 Package: linux-libc-dev
 Source: linux-upstream

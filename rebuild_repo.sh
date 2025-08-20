@@ -109,6 +109,14 @@ if [ "$FORCE_REGENERATE_KEY" = true ] || [ ! -f "$REPO_BASE/$KEY_FILENAME" ]; th
     gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}"
 fi
 
+# --- Limpieza de temporales ---
+echo "[+] Limpiando archivos y directorios temporales..."
+# Elimina directorios temporales de metapaquetes si existen
+rm -rf "$META_DIR" "$META_HEADERS_DIR"
+# Elimina archivos .deb que hayan quedado fuera del pool/main
+find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
+echo "[+] Limpieza completada."
+
 # --- Git ---
 echo "[+] Actualizando repositorio Git..."
 git add -A
@@ -126,4 +134,3 @@ echo "   sudo apt update"
 echo
 echo "2. Opción alternativa (verificación manual):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME.asc | sudo gpg --dearmor -o /usr/share/keyrings/$KEY_FILENAME"
-echo "   # Verifica el fingerprint con: gpg --show-keys /usr/share/keyrings/$KEY_FILENAME"
