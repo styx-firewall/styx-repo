@@ -51,9 +51,14 @@ Depends: $META_DEPENDS
 Description: Metapaquete para instalar el kernel Linux Styx
 EOF
 dpkg-deb --build "$META_DIR"
-# Solo mover si el archivo no está ya en el destino
-if [ -f "$META_DIR.deb" ] && [ ! "$META_DIR.deb" -ef "$REPO_BASE/$META_DIR.deb" ]; then
-    mv -v "$META_DIR.deb" "$REPO_BASE/"
+# Mostrar el paquete generado
+if [ -f "$META_DIR.deb" ]; then
+    echo "[+] Paquete generado: $META_DIR.deb"
+    ls -lh "$META_DIR.deb"
+    # Solo mover si el archivo no está ya en el destino
+    if [ ! "$META_DIR.deb" -ef "$REPO_BASE/$META_DIR.deb" ]; then
+        mv -v "$META_DIR.deb" "$REPO_BASE/"
+    fi
 fi
 
 # --- Creación de metapaquete linux-headers-styx ---
@@ -68,9 +73,14 @@ Depends: $META_HEADERS_DEPENDS
 Description: Metapaquete para instalar los headers del kernel Linux Styx
 EOF
 dpkg-deb --build "$META_HEADERS_DIR"
-# Solo mover si el archivo no está ya en el destino
-if [ -f "$META_HEADERS_DIR.deb" ] && [ ! "$META_HEADERS_DIR.deb" -ef "$REPO_BASE/$META_HEADERS_DIR.deb" ]; then
-    mv -v "$META_HEADERS_DIR.deb" "$REPO_BASE/"
+# Mostrar el paquete generado
+if [ -f "$META_HEADERS_DIR.deb" ]; then
+    echo "[+] Paquete generado: $META_HEADERS_DIR.deb"
+    ls -lh "$META_HEADERS_DIR.deb"
+    # Solo mover si el archivo no está ya en el destino
+    if [ ! "$META_HEADERS_DIR.deb" -ef "$REPO_BASE/$META_HEADERS_DIR.deb" ]; then
+        mv -v "$META_HEADERS_DIR.deb" "$REPO_BASE/"
+    fi
 fi
 
 # Mover .deb a pool/main
