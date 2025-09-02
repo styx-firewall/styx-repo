@@ -17,14 +17,14 @@ META_HEADERS_DIR="linux-headers-styx"
 META_HEADERS_DEBIAN_DIR="$META_HEADERS_DIR/DEBIAN"
 META_HEADERS_CONTROL_FILE="$META_HEADERS_DEBIAN_DIR/control"
 
-META_HEADERS_DEPENDS="linux-headers-6.12.42-12-styx"
+META_HEADERS_DEPENDS="linux-headers-6.12.42-13-styx"
 
 # --- Creación de metapaquete linux-image-styx ---
 META_DIR="linux-image-styx"
 META_DEBIAN_DIR="$META_DIR/DEBIAN"
 META_CONTROL_FILE="$META_DEBIAN_DIR/control"
 ## Usar las variables comunes META_VERSION y META_ARCH
-META_DEPENDS="linux-image-6.12.42-12-styx"
+META_DEPENDS="linux-image-6.12.42-13-styx"
 
 # --- Verificación de clave GPG ---
 echo "[+] Verificando clave GPG..."
