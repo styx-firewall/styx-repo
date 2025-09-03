@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Configuración
+
+# Configuration
 GPG_KEY_ID="diegargon@"
 KEY_FILENAME="styx-firewall-keyring.gpg"
 REPO_BASE="."
@@ -9,37 +10,41 @@ POOL_DIR="$REPO_BASE/pool/main"
 DIST_DIR="$REPO_BASE/dists/$DIST_NAME/main/binary-amd64"
 
 
-# --- Variables comunes para metapaquetes ---
+
+# --- Common variables for metapackages ---
 META_VERSION="1.6"
 META_ARCH="amd64"
-# --- Creación de metapaquete linux-headers-styx ---
+# --- Create linux-headers-styx metapackage ---
 META_HEADERS_DIR="linux-headers-styx"
 META_HEADERS_DEBIAN_DIR="$META_HEADERS_DIR/DEBIAN"
 META_HEADERS_CONTROL_FILE="$META_HEADERS_DEBIAN_DIR/control"
 
 META_HEADERS_DEPENDS="linux-headers-6.12.42-13-styx"
 
-# --- Creación de metapaquete linux-image-styx ---
+# --- Create linux-image-styx metapackage ---
 META_DIR="linux-image-styx"
 META_DEBIAN_DIR="$META_DIR/DEBIAN"
 META_CONTROL_FILE="$META_DEBIAN_DIR/control"
-## Usar las variables comunes META_VERSION y META_ARCH
+## Use common variables META_VERSION and META_ARCH
 META_DEPENDS="linux-image-6.12.42-13-styx"
 
-# --- Verificación de clave GPG ---
-echo "[+] Verificando clave GPG..."
+
+# --- GPG key verification ---
+echo "[+] Verifying GPG key..."
 if ! gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
-    echo "[!] ERROR: No se encontró la clave GPG '$GPG_KEY_ID'"
-    echo "    Claves disponibles:"
+    echo "[!] ERROR: GPG key '$GPG_KEY_ID' not found"
+    echo "    Available keys:"
     gpg --list-secret-keys --keyid-format LONG
     exit 1
 fi
 
-# --- Estructura de directorios ---
+
+# --- Directory structure ---
 mkdir -p "$POOL_DIR"
 mkdir -p "$DIST_DIR"
 
-# --- Creación de metapaquete linux-image-styx ---
+
+# --- Create linux-image-styx metapackage ---
 rm -rf "$META_DIR"
 mkdir -p "$META_DEBIAN_DIR"
 cat > "$META_CONTROL_FILE" <<EOF
@@ -48,20 +53,21 @@ Version: $META_VERSION
 Architecture: $META_ARCH
 Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: $META_DEPENDS
-Description: Metapaquete para instalar el kernel Linux Styx
+Description: Metapackage to install the Styx Linux kernel
 EOF
 dpkg-deb --build "$META_DIR"
-# Mostrar el paquete generado
+# Show generated package
 if [ -f "$META_DIR.deb" ]; then
-    echo "[+] Paquete generado: $META_DIR.deb"
+    echo "[+] Package generated: $META_DIR.deb"
     ls -lh "$META_DIR.deb"
-    # Solo mover si el archivo no está ya en el destino
+    # Only move if the file is not already at the destination
     if [ ! "$META_DIR.deb" -ef "$REPO_BASE/$META_DIR.deb" ]; then
         mv -v "$META_DIR.deb" "$REPO_BASE/"
     fi
 fi
 
-# --- Creación de metapaquete linux-headers-styx ---
+
+# --- Create linux-headers-styx metapackage ---
 rm -rf "$META_HEADERS_DIR"
 mkdir -p "$META_HEADERS_DEBIAN_DIR"
 cat > "$META_HEADERS_CONTROL_FILE" <<EOF
@@ -70,31 +76,34 @@ Version: $META_VERSION
 Architecture: $META_ARCH
 Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: $META_HEADERS_DEPENDS
-Description: Metapaquete para instalar los headers del kernel Linux Styx
+Description: Metapackage to install the Styx Linux kernel headers
 EOF
 dpkg-deb --build "$META_HEADERS_DIR"
-# Mostrar el paquete generado
+# Show generated package
 if [ -f "$META_HEADERS_DIR.deb" ]; then
-    echo "[+] Paquete generado: $META_HEADERS_DIR.deb"
+    echo "[+] Package generated: $META_HEADERS_DIR.deb"
     ls -lh "$META_HEADERS_DIR.deb"
-    # Solo mover si el archivo no está ya en el destino
+    # Only move if the file is not already at the destination
     if [ ! "$META_HEADERS_DIR.deb" -ef "$REPO_BASE/$META_HEADERS_DIR.deb" ]; then
         mv -v "$META_HEADERS_DIR.deb" "$REPO_BASE/"
     fi
 fi
 
-# Mover .deb a pool/main
+
+# Move .deb to pool/main
 if ls *.deb 1> /dev/null 2>&1; then
     mv -v *.deb "$POOL_DIR/"
 fi
 
-# --- Generación de metadatos ---
-echo "[+] Generando Packages..."
+
+# --- Metadata generation ---
+echo "[+] Generating Packages..."
 dpkg-scanpackages --multiversion "$POOL_DIR" > "$DIST_DIR/Packages"
 gzip -k -f "$DIST_DIR/Packages"
 
-# --- Archivo Release ---
-echo "[+] Generando Release..."
+
+# --- Release file ---
+echo "[+] Generating Release..."
 cat > "$REPO_BASE/dists/$DIST_NAME/Release" <<EOF
 Origin: STYX Firewall
 Label: STYX Repository
@@ -108,47 +117,58 @@ EOF
 
 apt-ftparchive release "$REPO_BASE/dists/$DIST_NAME" >> "$REPO_BASE/dists/$DIST_NAME/Release"
 
-# --- Firma ---
-echo "[+] Firmando Release..."
+
+# --- Signing ---
+echo "[+] Signing Release..."
 rm -f "$REPO_BASE/dists/$DIST_NAME/Release.gpg" "$REPO_BASE/dists/$DIST_NAME/InRelease"
 gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$DIST_NAME/Release.gpg" "$REPO_BASE/dists/$DIST_NAME/Release"
 gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$DIST_NAME/InRelease" "$REPO_BASE/dists/$DIST_NAME/Release"
 
-# --- Clave Pública ---
+
+# --- Public Key ---
 FORCE_REGENERATE_KEY=false
 if [ "$FORCE_REGENERATE_KEY" = true ] || [ ! -f "$REPO_BASE/$KEY_FILENAME" ]; then
-    echo "[+] Exportando clave GPG..."
-    # Exporta en formato ASCII (para verificación manual)
+    echo "[+] Exporting GPG key..."
+    # Export in ASCII format (for manual verification)
     gpg --export --armor "$GPG_KEY_ID" > "$REPO_BASE/$KEY_FILENAME.asc"
-    # Exporta en formato binario (dearmored, recomendado para APT)
+    # Export in binary format (dearmored, recommended for APT)
     gpg --export "$GPG_KEY_ID" | gpg --dearmor > "$REPO_BASE/$KEY_FILENAME"
-    # Mostrar fingerprint para verificación
-    echo -e "\n🔑 Fingerprint de la clave (verifícalo):"
+    # Show fingerprint for verification
+    echo -e "\n🔑 Key fingerprint (verify it):"
     gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}"
 fi
 
-# --- Limpieza de temporales ---
-echo "[+] Limpiando archivos y directorios temporales..."
-# Elimina directorios temporales de metapaquetes si existen
+
+# --- Cleaning temporary files and directories ---
+echo "[+] Cleaning temporary files and directories..."
+# Remove temporary metapackage directories if they exist
 rm -rf "$META_DIR" "$META_HEADERS_DIR"
-# Elimina archivos .deb que hayan quedado fuera del pool/main
+# Remove .deb files left outside pool/main
 find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
-echo "[+] Limpieza completada."
+echo "[+] Cleaning completed."
+
 
 # --- Git ---
-echo "[+] Actualizando repositorio Git..."
-git add -A
-git commit -m "Update repo $(date +%Y-%m-%d)"
-git push
+echo "[+] Updating Git repository..."
+read -p "Do you want to push the changes to git? (y/n): " confirm
+if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+    git add -A
+    git commit -m "Update repo $(date +%Y-%m-%d)"
+    git push
+    echo "[+] Changes pushed to git."
+else
+    echo "[!] Git push cancelled by user."
+fi
 
-# --- Instrucciones ---
-echo -e "\n✔ Repositorio actualizado correctamente.\n"
-echo "📦 Instrucciones para usuarios:"
+
+# --- Instructions ---
+echo -e "\n✔ Repository updated successfully.\n"
+echo "📦 Instructions for users:"
 echo
-echo "1. Opción recomendada (binario, para APT):"
+echo "1. Recommended option (binary, for APT):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME | sudo tee /usr/share/keyrings/$KEY_FILENAME >/dev/null"
 echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $DIST_NAME main\" | sudo tee /etc/apt/sources.list.d/styx.list"
 echo "   sudo apt update"
 echo
-echo "2. Opción alternativa (verificación manual):"
+echo "2. Alternative option (manual verification):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME.asc | sudo gpg --dearmor -o /usr/share/keyrings/$KEY_FILENAME"
