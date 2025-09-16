@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Configuration
 GPG_KEY_ID="diegargon@"
 KEY_FILENAME="styx-firewall-keyring.gpg"
@@ -9,8 +8,6 @@ DIST_NAME="trixie"
 POOL_DIR="$REPO_BASE/pool/main"
 DIST_DIR="$REPO_BASE/dists/$DIST_NAME/main/binary-amd64"
 
-
-
 # --- Common variables for metapackages ---
 META_VERSION="1.6"
 META_ARCH="amd64"
@@ -18,16 +15,13 @@ META_ARCH="amd64"
 META_HEADERS_DIR="linux-headers-styx"
 META_HEADERS_DEBIAN_DIR="$META_HEADERS_DIR/DEBIAN"
 META_HEADERS_CONTROL_FILE="$META_HEADERS_DEBIAN_DIR/control"
-
 META_HEADERS_DEPENDS="linux-headers-6.12.42-13-styx"
-
 # --- Create linux-image-styx metapackage ---
 META_DIR="linux-image-styx"
 META_DEBIAN_DIR="$META_DIR/DEBIAN"
 META_CONTROL_FILE="$META_DEBIAN_DIR/control"
 ## Use common variables META_VERSION and META_ARCH
 META_DEPENDS="linux-image-6.12.42-13-styx"
-
 
 # --- GPG key verification ---
 echo "[+] Verifying GPG key..."
@@ -38,11 +32,9 @@ if ! gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
     exit 1
 fi
 
-
 # --- Directory structure ---
 mkdir -p "$POOL_DIR"
 mkdir -p "$DIST_DIR"
-
 
 # --- Create linux-image-styx metapackage ---
 rm -rf "$META_DIR"
@@ -66,7 +58,6 @@ if [ -f "$META_DIR.deb" ]; then
     fi
 fi
 
-
 # --- Create linux-headers-styx metapackage ---
 rm -rf "$META_HEADERS_DIR"
 mkdir -p "$META_HEADERS_DEBIAN_DIR"
@@ -89,18 +80,15 @@ if [ -f "$META_HEADERS_DIR.deb" ]; then
     fi
 fi
 
-
 # Move .deb to pool/main
 if ls *.deb 1> /dev/null 2>&1; then
     mv -v *.deb "$POOL_DIR/"
 fi
 
-
 # --- Metadata generation ---
 echo "[+] Generating Packages..."
 dpkg-scanpackages --multiversion "$POOL_DIR" > "$DIST_DIR/Packages"
 gzip -k -f "$DIST_DIR/Packages"
-
 
 # --- Release file ---
 echo "[+] Generating Release..."
@@ -117,13 +105,11 @@ EOF
 
 apt-ftparchive release "$REPO_BASE/dists/$DIST_NAME" >> "$REPO_BASE/dists/$DIST_NAME/Release"
 
-
 # --- Signing ---
 echo "[+] Signing Release..."
 rm -f "$REPO_BASE/dists/$DIST_NAME/Release.gpg" "$REPO_BASE/dists/$DIST_NAME/InRelease"
 gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$DIST_NAME/Release.gpg" "$REPO_BASE/dists/$DIST_NAME/Release"
 gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$DIST_NAME/InRelease" "$REPO_BASE/dists/$DIST_NAME/Release"
-
 
 # --- Public Key ---
 FORCE_REGENERATE_KEY=false
@@ -138,7 +124,6 @@ if [ "$FORCE_REGENERATE_KEY" = true ] || [ ! -f "$REPO_BASE/$KEY_FILENAME" ]; th
     gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}"
 fi
 
-
 # --- Cleaning temporary files and directories ---
 echo "[+] Cleaning temporary files and directories..."
 # Remove temporary metapackage directories if they exist
@@ -146,7 +131,6 @@ rm -rf "$META_DIR" "$META_HEADERS_DIR"
 # Remove .deb files left outside pool/main
 find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
 echo "[+] Cleaning completed."
-
 
 # --- Git ---
 echo "[+] Updating Git repository..."
@@ -159,7 +143,6 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
 else
     echo "[!] Git push cancelled by user."
 fi
-
 
 # --- Instructions ---
 echo -e "\n✔ Repository updated successfully.\n"
