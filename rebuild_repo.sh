@@ -153,6 +153,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         echo "[+] Restoring pool2 to pool/main..."
         rm -rf "$POOL_DIR"
         ls -al
+        mkdir -p "$REPO_BASE/pool"
         cp -a "$REPO_BASE/pool2" "$POOL_DIR"
         ls -al
         rm -rf "$REPO_BASE/pool2"
