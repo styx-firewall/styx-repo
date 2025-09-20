@@ -133,31 +133,33 @@ find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
 echo "[+] Cleaning completed."
 
 # --- Git ---
-# Guardar la URL de origin antes de posibles operaciones destructivas
+# Save the origin URL before possible destructive operations
 ORIGIN_URL=$(git remote get-url origin 2>/dev/null)
 
 echo "[+] Updating Git repository..."
 read -p "Do you want to push the changes to git? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+    # We commit changes before filter-repo to avoid rewrite without new changes
     git add -A
     git commit -m "Update repo $(date +%Y-%m-%d)"
     # --- Backup y limpieza de historial pool/main/ ---
     if [ -d "$POOL_DIR" ]; then
-        echo "[+] Haciendo backup de $POOL_DIR en $REPO_BASE/pool2..."
+    echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
         rm -rf "$REPO_BASE/pool2"
         cp -a "$POOL_DIR" "$REPO_BASE/pool2"
-        echo "[+] Ejecutando git filter-repo para limpiar historial de pool/main..."
+    echo "[+] Running git filter-repo to clean pool/main history..."
         git filter-repo --path pool/main/ --invert-paths --force
-        echo "[+] Restaurando pool2 a pool/main..."
+    echo "[+] Restoring pool2 to pool/main..."
         rm -rf "$POOL_DIR"
         cp -a "$REPO_BASE/pool2" "$POOL_DIR"
         rm -rf "$REPO_BASE/pool2"
         # Restaurar el remoto origin si se perdió
         if [ -n "$ORIGIN_URL" ] && ! git remote | grep -q '^origin$'; then
             git remote add origin "$ORIGIN_URL"
-            echo "[+] Remoto origin restaurado: $ORIGIN_URL"
+            echo "[+] Origin remote restored: $ORIGIN_URL"
         fi
     fi
+    # Add again after filter-repo
     git add -A
     git commit -m "Update repo $(date +%Y-%m-%d)"
     git push --force origin main
