@@ -152,6 +152,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         git filter-repo --path pool/main/ --invert-paths --force
         echo "[+] Restoring pool2 to pool/main..."
         rm -rf "$POOL_DIR"
+        ls -al
         cp -a "$REPO_BASE/pool2" "$POOL_DIR"
         ls -al
         rm -rf "$REPO_BASE/pool2"
