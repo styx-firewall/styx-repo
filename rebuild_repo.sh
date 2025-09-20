@@ -144,12 +144,13 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     git commit -m "Update repo $(date +%Y-%m-%d)"
     # --- Backup y limpieza de historial pool/main/ ---
     if [ -d "$POOL_DIR" ]; then
-    echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
+        echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
         rm -rf "$REPO_BASE/pool2"
         cp -a "$POOL_DIR" "$REPO_BASE/pool2"
-    echo "[+] Running git filter-repo to clean pool/main history..."
+        ls -al
+        echo "[+] Running git filter-repo to clean pool/main history..."
         git filter-repo --path pool/main/ --invert-paths --force
-    echo "[+] Restoring pool2 to pool/main..."
+        echo "[+] Restoring pool2 to pool/main..."
         rm -rf "$POOL_DIR"
         cp -a "$REPO_BASE/pool2" "$POOL_DIR"
         rm -rf "$REPO_BASE/pool2"
