@@ -1,60 +1,3 @@
-Package: linux-headers-6.12.42-12-styx
-Source: linux-upstream
-Version: 12
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-kernel-8ckxj-runner-4zcr2>
-Installed-Size: 51754
-Filename: ./pool/main/linux-headers-6.12.42-12-styx_12_amd64.deb
-Size: 9298620
-MD5sum: ca59445d3302fe4357ce7bf96275f988
-SHA1: 7d4b0190ec643109f538bb392c7d2a282e6e0b01
-SHA256: b877d53db0b0251cd354cb70f7eb30fa612933e9425f83ccb6845c9a63e36434
-Section: kernel
-Priority: optional
-Homepage: https://www.kernel.org/
-Description: Linux kernel headers for 6.12.42-12-styx on amd64
- This package provides kernel header files for 6.12.42-12-styx on amd64
- .
- This is useful for people who need to build external modules
-
-Package: linux-headers-6.12.42-13-styx
-Source: linux-upstream
-Version: 13
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-kernel-8ckxj-runner-w298q>
-Installed-Size: 51770
-Filename: ./pool/main/linux-headers-6.12.42-13-styx_13_amd64.deb
-Size: 9299128
-MD5sum: af334b7a58b511c58145b8d730121aae
-SHA1: f7ecd099976fe2ee1888166a93abfcb9e9ce0d27
-SHA256: 1c8052e2992acf266c80d29dce7a56c1dd70a1d3399659a5420e396b7a2b12f0
-Section: kernel
-Priority: optional
-Homepage: https://www.kernel.org/
-Description: Linux kernel headers for 6.12.42-13-styx on amd64
- This package provides kernel header files for 6.12.42-13-styx on amd64
- .
- This is useful for people who need to build external modules
-
-Package: linux-headers-6.12.48-14-styx
-Source: linux-upstream
-Version: 14
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-styx-qdghh-runner-zvjjs>
-Installed-Size: 51761
-Filename: ./pool/main/linux-headers-6.12.48-14-styx_14_amd64.deb
-Size: 9298980
-MD5sum: 0c75b98dc99116a9d906dc4a39b327a8
-SHA1: 8c31c1335c822426ccf4892a49ae24e98bdaef10
-SHA256: fb38dd880054b762086cee028082ef1376756ca616c68e9d1a724d870827cb85
-Section: kernel
-Priority: optional
-Homepage: https://www.kernel.org/
-Description: Linux kernel headers for 6.12.48-14-styx on amd64
- This package provides kernel header files for 6.12.48-14-styx on amd64
- .
- This is useful for people who need to build external modules
-
 Package: linux-headers-styx
 Version: 1.6
 Architecture: amd64
@@ -62,64 +5,10 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-headers-6.12.48-14-styx
 Filename: ./pool/main/linux-headers-styx.deb
 Size: 712
-MD5sum: 42bd88ff9b83dbdd296a762415327600
-SHA1: 6074c19b67b6c0d48c71bdb63190423bf6502133
-SHA256: 544b88e5be7cef9f30f2d89e49caccf49c3d6fb0c761801c973753b21fd99dcf
+MD5sum: 6f233253c566df0ab026e86749881bac
+SHA1: 85b06a01f74c48e21e3d6ad4b3031b68f32ec7c8
+SHA256: b6cad318ce0a5f4b18ecbc587808c86870f053c5b1a9c66eeceb3c6c6ebe441f
 Description: Metapackage to install the Styx Linux kernel headers
-
-Package: linux-image-6.12.42-12-styx
-Source: linux-upstream
-Version: 12
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-kernel-8ckxj-runner-4zcr2>
-Installed-Size: 134792
-Filename: ./pool/main/linux-image-6.12.42-12-styx_12_amd64.deb
-Size: 30549474
-MD5sum: 7b2dd16bac8abbccb2ef40597b394e43
-SHA1: f5d17628d503d0231f122ccc8a4ddb110f4e7186
-SHA256: 8e3e832462af019b18b3810ad758107b27627a54e901c86fda268ebef7cb48ad
-Section: kernel
-Priority: optional
-Homepage: https://www.kernel.org/
-Description: Linux kernel, version 6.12.42-12-styx
- This package contains the Linux kernel, modules and corresponding other
- files, version: 6.12.42-12-styx.
-
-Package: linux-image-6.12.42-13-styx
-Source: linux-upstream
-Version: 13
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-kernel-8ckxj-runner-w298q>
-Installed-Size: 136559
-Filename: ./pool/main/linux-image-6.12.42-13-styx_13_amd64.deb
-Size: 30849846
-MD5sum: 90c0b18fd214f3150364aeb821fe34ae
-SHA1: bd705e939e44bb4c7291382c5ff62a476180d8a0
-SHA256: 2644887a8f1ed389cd654b55f0a3e1c15a6668687179975e42cc54db4eb1ac53
-Section: kernel
-Priority: optional
-Homepage: https://www.kernel.org/
-Description: Linux kernel, version 6.12.42-13-styx
- This package contains the Linux kernel, modules and corresponding other
- files, version: 6.12.42-13-styx.
-
-Package: linux-image-6.12.48-14-styx
-Source: linux-upstream
-Version: 14
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-styx-qdghh-runner-zvjjs>
-Installed-Size: 134741
-Filename: ./pool/main/linux-image-6.12.48-14-styx_14_amd64.deb
-Size: 30503624
-MD5sum: 6270cb5670675c1907f9ef2ab660d8fb
-SHA1: 02ead2056efdaa07c8a4c8111907a97ba63d6a34
-SHA256: 2d6465e68719a57091374efeed6b088885d20bd4b2c42d79409cb734c1b6cb7e
-Section: kernel
-Priority: optional
-Homepage: https://www.kernel.org/
-Description: Linux kernel, version 6.12.48-14-styx
- This package contains the Linux kernel, modules and corresponding other
- files, version: 6.12.48-14-styx.
 
 Package: linux-image-styx
 Version: 1.6
@@ -128,103 +17,8 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-image-6.12.48-14-styx
 Filename: ./pool/main/linux-image-styx.deb
 Size: 708
-MD5sum: 479a2619f8f1bd21a01fae3534e1295c
-SHA1: 535430eece12632cfb14df947c84f672669d3e63
-SHA256: 655a21308187c8d224e18011952683851818314e9f083a013dfed28975fafcda
+MD5sum: 03cdff1393f6ec202034071e19a6d4c2
+SHA1: 6955116c90133e5d6444a961c91e10330ac9bbc5
+SHA256: 87322cca1893a335900c0e6a05531b361efa06da8e3811fb8b2e2e41da41788f
 Description: Metapackage to install the Styx Linux kernel
-
-Package: linux-libc-dev
-Source: linux-upstream
-Version: 12
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-kernel-8ckxj-runner-4zcr2>
-Installed-Size: 7191
-Provides: linux-kernel-headers
-Filename: ./pool/main/linux-libc-dev_12_amd64.deb
-Size: 1441442
-MD5sum: 30edf4815c6cae854fb405ae957ac2ee
-SHA1: b898f3fee63a1b694fd6b9225d15f5f9eef4209b
-SHA256: 2ec054df30a11d66aca02aea1484ed828064db0b10a5fcce574c6c17b479c084
-Section: devel
-Priority: optional
-Multi-Arch: same
-Homepage: https://www.kernel.org/
-Description: Linux support headers for userspace development
- This package provides userspaces headers from the Linux kernel.  These headers
- are used by the installed headers for GNU glibc and other system libraries.
-
-Package: linux-libc-dev
-Source: linux-upstream
-Version: 14
-Architecture: amd64
-Maintainer: root <root@arc-runner-set-styx-qdghh-runner-zvjjs>
-Installed-Size: 7191
-Provides: linux-kernel-headers
-Filename: ./pool/main/linux-libc-dev_14_amd64.deb
-Size: 1441418
-MD5sum: c59831f6c32685411725c68d28a0f8d5
-SHA1: fe9c105131631a26d784df64e735fa20bc005ec4
-SHA256: 98caef344cd6ae1099050ac36fbebef4569de655802f67c2b63bd81c7ebd3f68
-Section: devel
-Priority: optional
-Multi-Arch: same
-Homepage: https://www.kernel.org/
-Description: Linux support headers for userspace development
- This package provides userspaces headers from the Linux kernel.  These headers
- are used by the installed headers for GNU glibc and other system libraries.
-
-Package: styx-conf
-Version: 0.1-6
-Architecture: all
-Maintainer: diegargon <diegargon@email.com>
-Filename: ./pool/main/styx-conf-0.1-6.deb
-Size: 3412
-MD5sum: bb026c05b601d38416e072158e88a140
-SHA1: 8c3133044fc1ea81566d192aa76f7a5c0394059f
-SHA256: 13aa1a65c0707a19d7d404d6f4d3c3aab3e3513fbcdf847874953ebf36f24fb7
-Section: misc
-Priority: optional
-Description: Default configuration system files
-
-Package: styx-conf
-Version: 0.1-7
-Architecture: all
-Maintainer: diegargon <diegargon@email.com>
-Depends: ulogd2, openssh-server, logrotate, systemd, udhcpc, lighttpd, php-fpm
-Filename: ./pool/main/styx-conf-0.1-7.deb
-Size: 3452
-MD5sum: 7992406146077798a80ecd737ab75fa6
-SHA1: 882e4812d3f704b1bb5475a7b9dd739f5747aaf1
-SHA256: f02548e5b9c503a4ded292320192eca1977c237460a3cb2551ff1d8b770c7a47
-Section: misc
-Priority: optional
-Description: Default configuration system files
-
-Package: styx-conf
-Version: 0.1-8
-Architecture: all
-Maintainer: diegargon <diegargon@email.com>
-Depends: ulogd2, openssh-server, logrotate, systemd, udhcpc, lighttpd, php-fpm
-Filename: ./pool/main/styx-conf-0.1-8.deb
-Size: 3448
-MD5sum: 5057d0162643098525efa8e681fa67d4
-SHA1: 3b063f02b20dbf9cc71e597b599d108ba09df5ed
-SHA256: 946f99bee0507ce63e086d08253f29bb0f0d6596618612517515044ce68a38d0
-Section: misc
-Priority: optional
-Description: Default configuration system files
-
-Package: styx-conf
-Version: 0.1-9
-Architecture: all
-Maintainer: diegargon <diegargon@gmail.com>
-Depends: ulogd2, openssh-server, logrotate, systemd, udhcpc, lighttpd, php-fpm
-Filename: ./pool/main/styx-conf-0.1-9.deb
-Size: 3408
-MD5sum: a3551a3c4754721c13655ce97fe2c1d4
-SHA1: d0219d051c77bbe174bb6fa91e5c1819505322db
-SHA256: f2ca82697cf1c28471589b3b52e093aae2c47cc42591242e978bd594ef5fe2cb
-Section: misc
-Priority: optional
-Description: Default configuration system files
 
