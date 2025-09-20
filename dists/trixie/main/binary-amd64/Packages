@@ -40,12 +40,12 @@ Package: linux-headers-styx
 Version: 1.6
 Architecture: amd64
 Maintainer: Styx Firewall <repo@styx-firewall>
-Depends: linux-headers-6.12.42-13-styx
+Depends: linux-headers-6.12.48-14-styx
 Filename: ./pool/main/linux-headers-styx.deb
 Size: 712
-MD5sum: 5e5f941caa4601b3e797c6a330fa5625
-SHA1: 3538bf0b07555843aaad8790fcd58ec63a0cc66c
-SHA256: 552b18a8c3ed6afce1136ac45012b1bd6949565b5fb7933450d9a5597be70430
+MD5sum: b4096243208d35e2ca48a51ab0802ce7
+SHA1: d3f0b0b4e77f647a0d016d641884e3157f16927b
+SHA256: b975b2fd1808f719128549bd4247a4fe468f9a0e60e44c87e970c8663a454404
 Description: Metapackage to install the Styx Linux kernel headers
 
 Package: linux-image-6.12.42-12-styx
@@ -88,12 +88,12 @@ Package: linux-image-styx
 Version: 1.6
 Architecture: amd64
 Maintainer: Styx Firewall <repo@styx-firewall>
-Depends: linux-image-6.12.42-13-styx
+Depends: linux-image-6.12.48-14-styx
 Filename: ./pool/main/linux-image-styx.deb
 Size: 708
-MD5sum: b25e7f71395a2e256a239818df5387bd
-SHA1: d0c053adb92dc335fdc428d6f65bf7265b1d2939
-SHA256: 39b246763f89cc2b0e870417055ccc20fec9182e9b69516d52312cbfd4e3cef0
+MD5sum: 42f97b537ed7b167ee9abbf07dd7ebb0
+SHA1: ec359e4e48db58b590cc4145e0fce6eb70ae7fcb
+SHA256: 6e020bf4272ea3a0c03f9b10b1ce348df20b379291b21f0fb883bea86c37f0b9
 Description: Metapackage to install the Styx Linux kernel
 
 Package: linux-libc-dev
@@ -153,6 +153,20 @@ Size: 3448
 MD5sum: 5057d0162643098525efa8e681fa67d4
 SHA1: 3b063f02b20dbf9cc71e597b599d108ba09df5ed
 SHA256: 946f99bee0507ce63e086d08253f29bb0f0d6596618612517515044ce68a38d0
+Section: misc
+Priority: optional
+Description: Default configuration system files
+
+Package: styx-conf
+Version: 0.1-9
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: ulogd2, openssh-server, logrotate, systemd, udhcpc, lighttpd, php-fpm
+Filename: ./pool/main/styx-conf-0.1-9.deb
+Size: 3328
+MD5sum: f6022e6ff381fd46a08c8714e25fe7db
+SHA1: 8472b42c1bed5c1b79b1d2cbd9edefdc11a84bd6
+SHA256: 6112d4adac94089ed0b05bed77ce72822165947994626d3be94f22d1994b3089
 Section: misc
 Priority: optional
 Description: Default configuration system files

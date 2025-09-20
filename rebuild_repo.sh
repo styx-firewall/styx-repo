@@ -15,13 +15,13 @@ META_ARCH="amd64"
 META_HEADERS_DIR="linux-headers-styx"
 META_HEADERS_DEBIAN_DIR="$META_HEADERS_DIR/DEBIAN"
 META_HEADERS_CONTROL_FILE="$META_HEADERS_DEBIAN_DIR/control"
-META_HEADERS_DEPENDS="linux-headers-6.12.42-13-styx"
+META_HEADERS_DEPENDS="linux-headers-6.12.48-14-styx"
 # --- Create linux-image-styx metapackage ---
 META_DIR="linux-image-styx"
 META_DEBIAN_DIR="$META_DIR/DEBIAN"
 META_CONTROL_FILE="$META_DEBIAN_DIR/control"
 ## Use common variables META_VERSION and META_ARCH
-META_DEPENDS="linux-image-6.12.42-13-styx"
+META_DEPENDS="linux-image-6.12.48-14-styx"
 
 # --- GPG key verification ---
 echo "[+] Verifying GPG key..."
