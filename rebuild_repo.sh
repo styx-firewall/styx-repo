@@ -147,10 +147,11 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
         rm -rf "$REPO_BASE/pool2"
         cp -a "$POOL_DIR" "$REPO_BASE/pool2"
-        ls -al
+
         echo "[+] Running git filter-repo to clean pool/main history..."
         git filter-repo --path pool/main/ --invert-paths --force
         echo "[+] Restoring pool2 to pool/main..."
+        ls -al
         rm -rf "$POOL_DIR"
         cp -a "$REPO_BASE/pool2" "$POOL_DIR"
         rm -rf "$REPO_BASE/pool2"
