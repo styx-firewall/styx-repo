@@ -151,9 +151,9 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         echo "[+] Running git filter-repo to clean pool/main history..."
         git filter-repo --path pool/main/ --invert-paths --force
         echo "[+] Restoring pool2 to pool/main..."
-        ls -al
         rm -rf "$POOL_DIR"
         cp -a "$REPO_BASE/pool2" "$POOL_DIR"
+        ls -al
         rm -rf "$REPO_BASE/pool2"
         # Restaurar el remoto origin si se perdió
         if [ -n "$ORIGIN_URL" ] && ! git remote | grep -q '^origin$'; then
