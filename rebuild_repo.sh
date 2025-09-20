@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Downlaod the latest kernel packages from releases
-KERNEL_VERSION="6.12.48-14-styx"
 REVISION="14"
+KERNEL_VERSION="6.12.48-${REVISION}-styx"
+
 wget -c https://github.com/sty-firewall/styx-kernel/releases/download/v0.${REVISION}/linux-headers-${KERNEL_VERSION}_${REVISION}_amd64.deb
 wget -c https://github.com/styx-firewall/styx-kernel/releases/download/v0.${REVISION}/linux-image-${KERNEL_VERSION}_${REVISION}_amd64.deb
 wget -c https://github.com/styx-firewall/styx-kernel/releases/download/v0.${REVISION}/linux-libc-dev_${REVISION}_amd64.deb
