@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Downlaod the latest kernel packages from releases
-REVISION="14"
-KERNEL_VERSION="6.12.48-${REVISION}-styx"
+REVISION="15"
+KERNEL_VERSION="6.12.87-${REVISION}-styx"
 
 wget -c https://github.com/sty-firewall/styx-kernel/releases/download/v0.${REVISION}/linux-headers-${KERNEL_VERSION}_${REVISION}_amd64.deb
 wget -c https://github.com/styx-firewall/styx-kernel/releases/download/v0.${REVISION}/linux-image-${KERNEL_VERSION}_${REVISION}_amd64.deb
@@ -24,13 +24,13 @@ META_ARCH="amd64"
 META_HEADERS_DIR="linux-headers-styx"
 META_HEADERS_DEBIAN_DIR="$META_HEADERS_DIR/DEBIAN"
 META_HEADERS_CONTROL_FILE="$META_HEADERS_DEBIAN_DIR/control"
-META_HEADERS_DEPENDS="linux-headers-6.12.48-14-styx"
+META_HEADERS_DEPENDS="linux-headers-${KERNEL_VERSION}"
 # --- Create linux-image-styx metapackage ---
 META_DIR="linux-image-styx"
 META_DEBIAN_DIR="$META_DIR/DEBIAN"
 META_CONTROL_FILE="$META_DEBIAN_DIR/control"
 ## Use common variables META_VERSION and META_ARCH
-META_DEPENDS="linux-image-6.12.48-14-styx"
+META_DEPENDS="linux-image-${KERNEL_VERSION}"
 
 # --- GPG key verification ---
 echo "[+] Verifying GPG key..."
