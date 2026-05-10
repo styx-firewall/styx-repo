@@ -17,6 +17,25 @@ Description: Linux kernel headers for 6.12.48-14-styx on amd64
  .
  This is useful for people who need to build external modules
 
+Package: linux-headers-6.12.87-15-styx
+Source: linux-upstream
+Version: 15
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-qdghh-runner-v7sqc>
+Installed-Size: 51837
+Filename: ./pool/main/linux-headers-6.12.87-15-styx_15_amd64.deb
+Size: 9283812
+MD5sum: 6d0f45b192a0e22ef07eb1bfdb5678f8
+SHA1: a07de7568652f603c52a8d301e2b106bcdfe6742
+SHA256: 27840e0a0bbb6ba414478e6fda81300f703191b9725f1c9e8120bcd9853f4056
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel headers for 6.12.87-15-styx on amd64
+ This package provides kernel header files for 6.12.87-15-styx on amd64
+ .
+ This is useful for people who need to build external modules
+
 Package: linux-headers-styx
 Version: 1.6
 Architecture: amd64
@@ -24,9 +43,9 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-headers-6.12.87-15-styx
 Filename: ./pool/main/linux-headers-styx.deb
 Size: 712
-MD5sum: 630cd28562a1d9678839063be5d2d4e0
-SHA1: c1e8833dc785d3c48b4cdd0bd8b09401fdc9c0e7
-SHA256: 3877ad797e1bc9585809bdad97503da3377e7aa6a577630dde4322970b4331c0
+MD5sum: 5786e51f7d82b68d71a6ee5dfe86e79e
+SHA1: 55948639600a89227771aca255a6e063c3c39b42
+SHA256: 1e3e389a97b6bc04589fd59e481467734f592718a32419f3577aa653b04760e4
 Description: Metapackage to install the Styx Linux kernel headers
 
 Package: linux-image-6.12.48-14-styx
@@ -72,9 +91,9 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-image-6.12.87-15-styx
 Filename: ./pool/main/linux-image-styx.deb
 Size: 708
-MD5sum: a3746271eb54a3fb18a62c8757d3720f
-SHA1: b01e1edd4d655953a514d1971c95e939bda4edec
-SHA256: 4c86a97509ce9b5c54bde8b3440990d974cfae111740eaeb7d7ae42ef66e6841
+MD5sum: fde4e1a37f2d8cfd6e53c255151de6f5
+SHA1: 87604d1706a6d06a9db4e3749bf260e626c36795
+SHA256: 7000699da9976213e15309111422a273aa49cd8d79f220908c6cc366275a779f
 Description: Metapackage to install the Styx Linux kernel
 
 Package: linux-libc-dev
