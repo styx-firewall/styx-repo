@@ -5,21 +5,21 @@ Codename: trixie
 Architectures: amd64
 Components: main
 Description: STYX Firewall packages
-Date: Thu, 21 May 2026 15:13:07 +0000
-Date: Thu, 21 May 2026 15:13:07 +0000
+Date: Thu, 21 May 2026 15:15:25 +0000
+Date: Thu, 21 May 2026 15:15:25 +0000
 MD5Sum:
- bf76794403064d208b7e74a18aa735f9              226 Release
- bd92925a3bc0b2d905cebf57869d8fff             7907 main/binary-amd64/Packages
- 916f224239c339560b0a3c9eda04103d             2522 main/binary-amd64/Packages.gz
+ 5f421a2da3d28a7434c6562cc48c4378              226 Release
+ 73e081e0ead5be22f12d743dd79b2b4d             7907 main/binary-amd64/Packages
+ d57e37cf732e015c3b4e07f53149ff70             2519 main/binary-amd64/Packages.gz
 SHA1:
- b6273b985f565ae9c94d01068fcd00c7acb76b5f              226 Release
- 4e198e042c58912693433f270709dd1e29617341             7907 main/binary-amd64/Packages
- 2e9a0fc3ec7b9b599e290580d2e7040aeb441af2             2522 main/binary-amd64/Packages.gz
+ 919e9e4d30ad09c79f8a4ccb9b0ab73a7cbc0d14              226 Release
+ 06a6ebf353ce7e986de99fa3e08f18f1ebbce6f7             7907 main/binary-amd64/Packages
+ e7ed001ade30629f706a40f34fb0099099a82edc             2519 main/binary-amd64/Packages.gz
 SHA256:
- 6f80ace21bfd98f00292d1f9f35e666650a528b2b57d335ef82bc066953eb64b              226 Release
- c4b60d924169f2e883b88c9e831afa094cd5140088ad81eae6c86a961d3e2f1b             7907 main/binary-amd64/Packages
- 4fd45ff21ec1593a64649e724bfd08fb8a1e7173b4b35b826d67acc9f27902cc             2522 main/binary-amd64/Packages.gz
+ aa46edc5de77df358a5cfa65b501089467c0f617aee66fdc9aac3edc1252e1af              226 Release
+ bdbedd142737dbc7de4064cda635c88c37ca9ab46f009f8f80128d0489710a1b             7907 main/binary-amd64/Packages
+ d6156caa0a787ce5092dbbfb359dda67ab8b90d1853b1f70b58997b48706d509             2519 main/binary-amd64/Packages.gz
 SHA512:
- 29f16393287af6c8af8bfddac079d59a5e4d7dee5c2fe8746da23f25cd962d4c95d6c33075c4cee7624ce27e4d0020e54395883cfe8038945055c9dd2400dd3d              226 Release
- 356df50b49b7eb6a5fba5f50b5a5a788a72095990d9e57efa075ba1ad127324d2c63b9f9df08ddfe9a50f563ef99e991a95c994b1f3e8a7b5fadefd838de0dbf             7907 main/binary-amd64/Packages
- 09c3c5108c38474c180c69fb3c82adae7557ff9b9b3351101fdd2dddfffc030aa0d82d4ba3281a622291c6e48604bb5b70f206f41f4bc4398c0605a2a9ac4cc4             2522 main/binary-amd64/Packages.gz
+ a3fc0bb8e732cc4bd00a63bde0c36eb566764554eb565da875f0ca5e663a332d3700d623d70b15d1759d898894b8810f491f1afafd46efcacda08e2221b3b740              226 Release
+ bf5f61d1ae28871e211a467e51872eeddcc74436a14724f3965b379e6e1dc6eeb134e0229e38f3fccff540a7b3350ca1db4101f828dba5bde199c1d68efdc1b2             7907 main/binary-amd64/Packages
+ 87c378665f68d0b4bdc2eb40e67abd7dbcee67a89667e5c0272b974b54de94d787853614f4961e9c157999b6f1dbb95a7b58bce1d7f9ea5abaf8157eb936b8c0             2519 main/binary-amd64/Packages.gz
