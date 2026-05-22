@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Downlaod the latest kernel packages from releases
+# Download the latest kernel packages from releases
 REVISION="15"
 KERNEL_VERSION="6.12.87-${REVISION}-styx"
 
@@ -151,7 +151,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     # We commit changes before filter-repo to avoid rewrite without new changes
     git add -A
     git commit -m "Update repo $(date +%Y-%m-%d)"
-    #  Backup y limpieza de historial pool/main/
+    #  Backup and cleanup of pool/main/ history
     if [ -d "$POOL_DIR" ]; then
         echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
         rm -rf "$REPO_BASE/pool2"
@@ -164,7 +164,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         mkdir -p "$REPO_BASE/pool"
         cp -a "$REPO_BASE/pool2" "$POOL_DIR"
         rm -rf "$REPO_BASE/pool2"
-        # Restaurar el remoto origin si se perdió
+        # Restore origin remote if lost
         if [ -n "$ORIGIN_URL" ] && ! git remote | grep -q '^origin$'; then
             git remote add origin "$ORIGIN_URL"
             echo "[+] Origin remote restored: $ORIGIN_URL"
