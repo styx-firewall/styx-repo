@@ -276,7 +276,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
 
     echo "[+] Restoring pool2 to pool/main..."
     rm -rf "$POOL_DIR"
-    mkdir -p "$REPO_BASE/pool"
+    mkdir -p "$(dirname "$POOL_DIR")"
     cp -a "$REPO_BASE/pool2" "$POOL_DIR"
     rm -rf "$REPO_BASE/pool2"
     if [ -n "$ORIGIN_URL" ] && ! git remote | grep -q '^origin$'; then
