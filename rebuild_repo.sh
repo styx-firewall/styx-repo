@@ -60,8 +60,9 @@ KERNEL_VERSION="${KERNEL_VERSION:-6.12.87-${REVISION}-styx}"
 REPO_BASE="${REPO_BASE:-.}"
 REPO_DISTRO="${REPO_DISTRO:-trixie}"
 REPO_COMPONENT="$ENVIRONMENT"
+REPO_DIST="${REPO_DISTRO}-${REPO_COMPONENT}"
 POOL_DIR="$REPO_BASE/pool/main/$REPO_COMPONENT"
-DIST_DIR="$REPO_BASE/dists/$REPO_DISTRO/$REPO_COMPONENT/binary-amd64"
+DIST_DIR="$REPO_BASE/dists/$REPO_DIST/main/binary-amd64"
 STAGE_DIR="$REPO_BASE/stage/$REPO_COMPONENT"
 
 # Git remote — saved early so filter-repo cannot wipe it
@@ -106,7 +107,7 @@ for cmd in "${required_cmds[@]}"; do
   fi
 done
 
-echo "[+] Repo: $REPO_BASE  distro: $REPO_DISTRO  component: $REPO_COMPONENT  kernel: $KERNEL_VERSION"
+echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  kernel: $KERNEL_VERSION"
 
 download_or_fail() {
   local url="$1"
@@ -215,25 +216,25 @@ dpkg-scanpackages --multiversion "$POOL_DIR" > "$DIST_DIR/Packages"
 gzip -k -f "$DIST_DIR/Packages"
 
 echo "[+] Generating Release"
-cat > "$REPO_BASE/dists/$REPO_DISTRO/Release" <<EOF
+cat > "$REPO_BASE/dists/$REPO_DIST/Release" <<EOF
 Origin: STYX Firewall
 Label: STYX Repository
-Suite: $REPO_DISTRO
-Codename: $REPO_DISTRO
+Suite: $REPO_DIST
+Codename: $REPO_DIST
 Architectures: amd64
-Components: $REPO_COMPONENT
+Components: main
 Description: STYX Firewall packages
 Date: $(date -Ru)
 EOF
 
-apt-ftparchive release "$REPO_BASE/dists/$REPO_DISTRO" >> "$REPO_BASE/dists/$REPO_DISTRO/Release"
+apt-ftparchive release "$REPO_BASE/dists/$REPO_DIST" >> "$REPO_BASE/dists/$REPO_DIST/Release"
 
 # Signing (optional)
 if gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   echo "[+] Signing Release with key $GPG_KEY_ID"
-  rm -f "$REPO_BASE/dists/$REPO_DISTRO/Release.gpg" "$REPO_BASE/dists/$REPO_DISTRO/InRelease" || true
-  gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$REPO_DISTRO/Release.gpg" "$REPO_BASE/dists/$REPO_DISTRO/Release"
-  gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$REPO_DISTRO/InRelease" "$REPO_BASE/dists/$REPO_DISTRO/Release"
+  rm -f "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/InRelease" || true
+  gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/Release"
+  gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$REPO_DIST/InRelease" "$REPO_BASE/dists/$REPO_DIST/Release"
 else
   echo "[!] ERROR: GPG key '$GPG_KEY_ID' not found" >&2
   echo "    Available keys:"
@@ -263,7 +264,7 @@ echo "[+] Updating Git repository (interactive)"
 read -p "Do you want to push the changes to git? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
   git add -A
-  git commit -m "Update repo $REPO_DISTRO $(date +%Y-%m-%d)" || true
+  git commit -m "Update repo $REPO_DIST $(date +%Y-%m-%d)" || true
   if [ -d "$POOL_DIR" ]; then
     echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
     rm -rf "$REPO_BASE/pool2"
@@ -287,7 +288,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     fi
   fi
   git add -A
-  git commit -m "Update repo $REPO_DISTRO $(date +%Y-%m-%d)" || true
+  git commit -m "Update repo $REPO_DIST $(date +%Y-%m-%d)" || true
   if git push --force origin main; then
     echo "[+] Changes pushed to git."
   else
@@ -297,12 +298,12 @@ else
   echo "[!] Git push cancelled by user."
 fi
 
-echo -e "\n✔ Repository $REPO_DISTRO ($REPO_COMPONENT) updated successfully.\n"
+echo -e "\n✔ Repository $REPO_DIST updated successfully.\n"
 echo "📦 Instructions for users:"
 echo
 echo "1. Recommended option (binary, for APT):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME | sudo tee /usr/share/keyrings/$KEY_FILENAME >/dev/null"
-echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DISTRO $REPO_COMPONENT\" | sudo tee /etc/apt/sources.list.d/styx.list"
+echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DIST main\" | sudo tee /etc/apt/sources.list.d/styx.list"
 echo "   sudo apt update"
 echo
 echo "2. Alternative option (manual verification):"
