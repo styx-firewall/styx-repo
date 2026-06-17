@@ -64,6 +64,9 @@ POOL_DIR="$REPO_BASE/pool/main/$REPO_COMPONENT"
 DIST_DIR="$REPO_BASE/dists/$REPO_DISTRO/$REPO_COMPONENT/binary-amd64"
 STAGE_DIR="$REPO_BASE/stage/$REPO_COMPONENT"
 
+# Git remote — saved early so filter-repo cannot wipe it
+ORIGIN_URL="${ORIGIN_URL:-https://github.com/styx-firewall/styx-repo.git}"
+
 # Override kernel version per component via optional config file.
 # Create stage/<component>/kernel.conf with:
 #   REVISION=15
@@ -256,7 +259,6 @@ find "$STAGE_DIR" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
 echo "[+] Cleaning completed."
 
 # --- Git operations (interactive) ---
-ORIGIN_URL=$(git remote get-url origin 2>/dev/null || true)
 echo "[+] Updating Git repository (interactive)"
 read -p "Do you want to push the changes to git? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
@@ -286,8 +288,11 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
   fi
   git add -A
   git commit -m "Update repo $REPO_DISTRO $(date +%Y-%m-%d)" || true
-  git push --force origin main || echo "[!] git push failed"
-  echo "[+] Changes pushed to git."
+  if git push --force origin main; then
+    echo "[+] Changes pushed to git."
+  else
+    echo "[!] git push failed"
+  fi
 else
   echo "[!] Git push cancelled by user."
 fi
