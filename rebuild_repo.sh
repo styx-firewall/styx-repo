@@ -62,6 +62,17 @@ REPO_DISTRO="${REPO_DISTRO:-trixie}"
 REPO_COMPONENT="$ENVIRONMENT"
 POOL_DIR="$REPO_BASE/pool/main"
 DIST_DIR="$REPO_BASE/dists/$REPO_DISTRO/$REPO_COMPONENT/binary-amd64"
+STAGE_DIR="$REPO_BASE/stage/$REPO_COMPONENT"
+
+# Override kernel version per component via optional config file.
+# Create stage/<component>/kernel.conf with:
+#   REVISION=15
+#   KERNEL_VERSION=6.12.87-15-styx
+# If the file does not exist, the defaults above are used.
+if [ -f "$STAGE_DIR/kernel.conf" ]; then
+  echo "[+] Loading kernel overrides from $STAGE_DIR/kernel.conf"
+  source "$STAGE_DIR/kernel.conf"
+fi
 
 # Expected kernel asset filenames (used for download and verification)
 HEADER_NAME="linux-headers-${KERNEL_VERSION}_${REVISION}_amd64.deb"
@@ -128,6 +139,7 @@ download_kernel_assets() {
 echo "[+] Creating directories"
 mkdir -p "$POOL_DIR"
 mkdir -p "$DIST_DIR"
+mkdir -p "$STAGE_DIR"
 
 echo "[+] Downloading kernel assets"
 download_kernel_assets
@@ -184,18 +196,12 @@ if [ -f "$META_HEADERS_DIR.deb" ]; then
   mv -v -- "$META_HEADERS_DIR.deb" "$REPO_BASE/" || true
 fi
 
-# Move .deb files to pool/main (safe glob)
+# Move .deb files to pool/main (from repo root + staging)
 echo "[+] Moving .deb files to $POOL_DIR"
 shopt -s nullglob
-debs=( *.deb )
+debs=( *.deb "$STAGE_DIR"/*.deb )
 if [ ${#debs[@]} -gt 0 ]; then
   mv -v -- "${debs[@]}" "$POOL_DIR/"
-  # Remove any leftover copies from repo root (we published these intentionally)
-  for f in "${debs[@]}"; do
-    if [ -f "$REPO_BASE/$f" ]; then
-      rm -v -- "$REPO_BASE/$f"
-    fi
-  done
 else
   echo "[!] No .deb files found to move"
 fi
@@ -244,8 +250,9 @@ fi
 echo "[+] Cleaning temporary metapackage directories"
 rm -rf "$META_DIR" "$META_HEADERS_DIR"
 
-echo "[+] Cleaning .deb files left in repo root..."
+echo "[+] Cleaning .deb files left in repo root and staging..."
 find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
+find "$STAGE_DIR" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
 echo "[+] Cleaning completed."
 
 # --- Git operations (interactive) ---
