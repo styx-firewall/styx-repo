@@ -54,14 +54,14 @@ IFS=$'\n\t'
 # End of header
 
 ENVIRONMENT="${1:-dev}"
-REVISION="${REVISION:-14}"
-KERNEL_VERSION="${KERNEL_VERSION:-6.12.48-${REVISION}-styx}"
+REVISION="${REVISION:-15}"
+KERNEL_VERSION="${KERNEL_VERSION:-6.12.87-${REVISION}-styx}"
 
 REPO_BASE="${REPO_BASE:-.}"
-# Use clearer name `REPO_DIST`, fall back to legacy `DIST_NAME` then ENVIRONMENT
-REPO_DIST="${REPO_DIST:-${DIST_NAME:-$ENVIRONMENT}}"
+REPO_DISTRO="${REPO_DISTRO:-trixie}"
+REPO_COMPONENT="$ENVIRONMENT"
 POOL_DIR="$REPO_BASE/pool/main"
-DIST_DIR="$REPO_BASE/dists/$REPO_DIST/main/binary-amd64"
+DIST_DIR="$REPO_BASE/dists/$REPO_DISTRO/$REPO_COMPONENT/binary-amd64"
 
 # Expected kernel asset filenames (used for download and verification)
 HEADER_NAME="linux-headers-${KERNEL_VERSION}_${REVISION}_amd64.deb"
@@ -92,7 +92,7 @@ for cmd in "${required_cmds[@]}"; do
   fi
 done
 
-echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  kernel: $KERNEL_VERSION"
+echo "[+] Repo: $REPO_BASE  distro: $REPO_DISTRO  component: $REPO_COMPONENT  kernel: $KERNEL_VERSION"
 
 download_or_fail() {
   local url="$1"
@@ -206,27 +206,30 @@ dpkg-scanpackages --multiversion "$POOL_DIR" > "$DIST_DIR/Packages"
 gzip -k -f "$DIST_DIR/Packages"
 
 echo "[+] Generating Release"
-cat > "$REPO_BASE/dists/$REPO_DIST/Release" <<EOF
+cat > "$REPO_BASE/dists/$REPO_DISTRO/Release" <<EOF
 Origin: STYX Firewall
 Label: STYX Repository
-Suite: $REPO_DIST
-Codename: $REPO_DIST
+Suite: $REPO_DISTRO
+Codename: $REPO_DISTRO
 Architectures: amd64
-Components: main
+Components: $REPO_COMPONENT
 Description: STYX Firewall packages
 Date: $(date -Ru)
 EOF
 
-apt-ftparchive release "$REPO_BASE/dists/$REPO_DIST" >> "$REPO_BASE/dists/$REPO_DIST/Release"
+apt-ftparchive release "$REPO_BASE/dists/$REPO_DISTRO" >> "$REPO_BASE/dists/$REPO_DISTRO/Release"
 
 # Signing (optional)
 if gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   echo "[+] Signing Release with key $GPG_KEY_ID"
-  rm -f "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/InRelease" || true
-  gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/Release"
-  gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$REPO_DIST/InRelease" "$REPO_BASE/dists/$REPO_DIST/Release"
+  rm -f "$REPO_BASE/dists/$REPO_DISTRO/Release.gpg" "$REPO_BASE/dists/$REPO_DISTRO/InRelease" || true
+  gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$REPO_DISTRO/Release.gpg" "$REPO_BASE/dists/$REPO_DISTRO/Release"
+  gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$REPO_DISTRO/InRelease" "$REPO_BASE/dists/$REPO_DISTRO/Release"
 else
-  echo "[!] GPG key '$GPG_KEY_ID' not found; skipping signing (ok for dev/test public repos)"
+  echo "[!] ERROR: GPG key '$GPG_KEY_ID' not found" >&2
+  echo "    Available keys:"
+  gpg --list-secret-keys --keyid-format LONG
+  exit 1
 fi
 
 # Export public key if available
@@ -241,7 +244,9 @@ fi
 echo "[+] Cleaning temporary metapackage directories"
 rm -rf "$META_DIR" "$META_HEADERS_DIR"
 
-echo "[+] Note: rebuild_repo-v2.sh will NOT remove arbitrary .deb files in repo root."
+echo "[+] Cleaning .deb files left in repo root..."
+find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
+echo "[+] Cleaning completed."
 
 # --- Git operations (interactive) ---
 ORIGIN_URL=$(git remote get-url origin 2>/dev/null || true)
@@ -249,7 +254,7 @@ echo "[+] Updating Git repository (interactive)"
 read -p "Do you want to push the changes to git? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
   git add -A
-  git commit -m "Update repo $DIST_NAME $(date +%Y-%m-%d)" || true
+  git commit -m "Update repo $REPO_DISTRO $(date +%Y-%m-%d)" || true
   if [ -d "$POOL_DIR" ]; then
     echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
     rm -rf "$REPO_BASE/pool2"
@@ -273,19 +278,19 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     fi
   fi
   git add -A
-  git commit -m "Update repo $DIST_NAME $(date +%Y-%m-%d)" || true
+  git commit -m "Update repo $REPO_DISTRO $(date +%Y-%m-%d)" || true
   git push --force origin main || echo "[!] git push failed"
   echo "[+] Changes pushed to git."
 else
   echo "[!] Git push cancelled by user."
 fi
 
-echo -e "\n✔ Repository $REPO_DIST updated successfully.\n"
+echo -e "\n✔ Repository $REPO_DISTRO ($REPO_COMPONENT) updated successfully.\n"
 echo "📦 Instructions for users:"
 echo
 echo "1. Recommended option (binary, for APT):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME | sudo tee /usr/share/keyrings/$KEY_FILENAME >/dev/null"
-echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DIST main\" | sudo tee /etc/apt/sources.list.d/styx.list"
+echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DISTRO $REPO_COMPONENT\" | sudo tee /etc/apt/sources.list.d/styx.list"
 echo "   sudo apt update"
 echo
 echo "2. Alternative option (manual verification):"
