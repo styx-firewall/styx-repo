@@ -10,12 +10,12 @@ IFS=$'\n\t'
 # - Build and publish an APT repository for a given environment (dev/test/prod).
 # - Standard structure: suite=trixie, component=styx-{dev,test,prod}
 # - Downloads kernel assets, builds small metapackages, moves selected .deb files
-#   into `pool/main/<component>`, regenerates `dists/<suite>/<component>/binary-amd64/Packages`
+#   into `pool/<component>`, regenerates `dists/<suite>/<component>/binary-amd64/Packages`
 #   and `Release`, and optionally signs the Release with a GPG key.
 #
 # Key mechanics (remember):
 # 1) Place the .deb files you want to publish into the repository root (REPO_BASE).
-#    The script glob `*.deb` picks them up, moves them to `pool/main` and then
+#    The script glob `*.deb` picks them up, moves them to `pool/` and then
 #    deletes those originals from the repo root.
 # 2) Run the script with the target environment name (default `dev`):
 #      ./rebuild_repo-v3.sh dev
@@ -41,7 +41,7 @@ IFS=$'\n\t'
 # Safety notes:
 # - The script requires external commands: wget, dpkg-deb, dpkg-scanpackages,
 #   apt-ftparchive, ar, tar, gzip. It exits if they are missing.
-# - Files moved from repo root to `pool/main/<component>` are removed from the root
+# - Files moved from repo root to `pool/<component>` are removed from the root
 #   (to keep the repo clean). If you want to stage packages without deleting originals,
 #   use a temporary directory and run the script from there.
 # - The script supports dev/test/prod environments. For production, ensure the correct
@@ -61,7 +61,7 @@ cd "$REPO_BASE" || { echo "[!] Cannot cd to REPO_BASE: $REPO_BASE" >&2; exit 1; 
 REPO_DISTRO="${REPO_DISTRO:-trixie}"
 REPO_COMPONENT="styx-$ENVIRONMENT"
 REPO_DIST="$REPO_DISTRO"
-POOL_DIR="$REPO_BASE/pool/main/$REPO_COMPONENT"
+POOL_DIR="$REPO_BASE/pool/$REPO_COMPONENT"
 DIST_DIR="$REPO_BASE/dists/$REPO_DIST/$REPO_COMPONENT/binary-amd64"
 STAGE_DIR="$REPO_BASE/stage/$REPO_COMPONENT"
 
@@ -204,7 +204,7 @@ else
   exit 1
 fi
 
-# Move .deb files to pool/main (from repo root + staging)
+# Move .deb files to pool (from repo root + staging)
 echo "[+] Moving .deb files to $POOL_DIR"
 shopt -s nullglob
 debs=( *.deb "$STAGE_DIR"/*.deb )
@@ -216,7 +216,7 @@ fi
 shopt -u nullglob
 
 echo "[+] Generating Packages list"
-dpkg-scanpackages --multiversion "pool/main/$REPO_COMPONENT" > "$DIST_DIR/Packages"
+dpkg-scanpackages --multiversion "pool/$REPO_COMPONENT" > "$DIST_DIR/Packages"
 gzip -k -f "$DIST_DIR/Packages"
 
 echo "[+] Generating Release"
@@ -278,14 +278,14 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     rm -rf "$REPO_BASE/pool2"
     cp -a "$POOL_DIR" "$REPO_BASE/pool2"
 
-    echo "[+] Running git filter-repo to clean pool/main history (optional)"
+    echo "[+] Running git filter-repo to clean pool history (optional)"
     if command -v git-filter-repo >/dev/null 2>&1 || command -v git filter-repo >/dev/null 2>&1; then
-      git filter-repo --path pool/main/ --invert-paths --force || echo "[!] git filter-repo failed or not available"
+      git filter-repo --path pool/ --invert-paths --force || echo "[!] git filter-repo failed or not available"
     else
       echo "[!] git-filter-repo not available; skipping history rewrite"
     fi
 
-    echo "[+] Restoring pool2 to pool/main..."
+    echo "[+] Restoring pool2 to pool..."
     rm -rf "$POOL_DIR"
     mkdir -p "$(dirname "$POOL_DIR")"
     cp -a "$REPO_BASE/pool2" "$POOL_DIR"
