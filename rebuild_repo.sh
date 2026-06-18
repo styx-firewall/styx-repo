@@ -3,53 +3,49 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# rebuild_repo-v2.sh
-# Improved, more robust version of rebuild_repo.sh for dev/test repos.
+# rebuild_repo-v3.sh
+# Improved version of rebuild_repo.sh using standard APT repo layout.
 #
 # Purpose:
-# - Build and publish an APT repository for a given environment (dev/test).
+# - Build and publish an APT repository for a given environment (dev/test/prod).
+# - Standard structure: suite=trixie, component=styx-{dev,test,prod}
 # - Downloads kernel assets, builds small metapackages, moves selected .deb files
-#   into `pool/main`, regenerates `dists/<env>/main/binary-amd64/Packages` and
-#   `Release`, and optionally signs the Release with a GPG key.
+#   into `pool/main/<component>`, regenerates `dists/<suite>/<component>/binary-amd64/Packages`
+#   and `Release`, and optionally signs the Release with a GPG key.
 #
 # Key mechanics (remember):
 # 1) Place the .deb files you want to publish into the repository root (REPO_BASE).
 #    The script glob `*.deb` picks them up, moves them to `pool/main` and then
-#    deletes those originals from the repo root (intentional: files present in root
-#    are assumed ready to publish).
+#    deletes those originals from the repo root.
 # 2) Run the script with the target environment name (default `dev`):
-#      ./rebuild_repo-v2.sh dev
-#    This generates `dists/dev/...`. Use `./rebuild_repo-v2.sh test` for `dists/test`.
-# 3) To override kernel selection or revision, set environment variables when calling:
-#      REVISION=15 KERNEL_VERSION=6.13.2-15-styx ./rebuild_repo-v2.sh dev
-#    The script also tries fallback names for `linux-libc-dev` if the asset name
-#    published by the kernel builder differs.
-# 4) Signing: the script will sign `Release` only if the GPG private key identified
-#    by `GPG_KEY_ID` exists in the keyring. For dev/test public repos you can skip
-#    signing; for production you should ensure the correct key is available in CI.
+#      ./rebuild_repo-v3.sh dev
+#    This generates `dists/trixie/styx-dev/...`.
+#    Use `./rebuild_repo-v3.sh test` for `dists/trixie/styx-test/...`.
+# 3) To override kernel selection or revision, set environment variables:
+#      REVISION=15 KERNEL_VERSION=6.13.2-15-styx ./rebuild_repo-v3.sh dev
+# 4) Signing: signs `Release` only if the GPG key exists.
+#
+# Usage examples:
+#   ./rebuild_repo-v3.sh           # dev
+#   ./rebuild_repo-v3.sh test      # test
+#   ./rebuild_repo-v3.sh prod      # prod
 #
 # Environment variables used (can be exported or prefixed at runtime):
-#  - ENVIRONMENT or first positional arg: environment name (dev/test)
+#  - ENVIRONMENT or first positional arg: environment name (dev/test/prod)
 #  - REPO_BASE: repository root (default `.`)
+#  - REPO_DISTRO: distribution name (default `trixie`)
 #  - REVISION, KERNEL_VERSION: control kernel assets download
-#  - GPG_KEY_ID: key id/email for signing (optional for dev/test)
+#  - GPG_KEY_ID: key id/email for signing
 #  - KEY_FILENAME: name to export the public key file
 #
 # Safety notes:
 # - The script requires external commands: wget, dpkg-deb, dpkg-scanpackages,
 #   apt-ftparchive, ar, tar, gzip. It exits if they are missing.
-# - Files moved from repo root to `pool/main` are removed from the root (to
-#   keep the repo clean). If you want to stage packages without deleting originals,
+# - Files moved from repo root to `pool/main/<component>` are removed from the root
+#   (to keep the repo clean). If you want to stage packages without deleting originals,
 #   use a temporary directory and run the script from there.
-# - The script is intended for dev/test. For `prod` consider additional access
-#   controls and private artifact stores.
-#
-# Usage examples:
-#   # default (dev)
-#   ./rebuild_repo-v2.sh
-#
-#   # specify env and override revision/kernel
-#   REVISION=16 KERNEL_VERSION=6.12.50-16-styx ./rebuild_repo-v2.sh test
+# - The script supports dev/test/prod environments. For production, ensure the correct
+#   GPG signing key is available and consider additional access controls.
 #
 # End of header
 
@@ -59,10 +55,10 @@ KERNEL_VERSION="${KERNEL_VERSION:-6.12.87-${REVISION}-styx}"
 
 REPO_BASE="${REPO_BASE:-.}"
 REPO_DISTRO="${REPO_DISTRO:-trixie}"
-REPO_COMPONENT="$ENVIRONMENT"
-REPO_DIST="${REPO_DISTRO}-${REPO_COMPONENT}"
+REPO_COMPONENT="styx-$ENVIRONMENT"
+REPO_DIST="$REPO_DISTRO"
 POOL_DIR="$REPO_BASE/pool/main/$REPO_COMPONENT"
-DIST_DIR="$REPO_BASE/dists/$REPO_DIST/main/binary-amd64"
+DIST_DIR="$REPO_BASE/dists/$REPO_DIST/$REPO_COMPONENT/binary-amd64"
 STAGE_DIR="$REPO_BASE/stage/$REPO_COMPONENT"
 
 # Git remote — saved early so filter-repo cannot wipe it
@@ -107,7 +103,7 @@ for cmd in "${required_cmds[@]}"; do
   fi
 done
 
-echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  kernel: $KERNEL_VERSION"
+echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  component: $REPO_COMPONENT  kernel: $KERNEL_VERSION"
 
 download_or_fail() {
   local url="$1"
@@ -120,7 +116,6 @@ download_or_fail() {
 }
 
 download_kernel_assets() {
-  # Try canonical names for header, image and libc
   if [ ! -f "$HEADER_NAME" ]; then
     download_or_fail "$ASSET_BASE/$HEADER_NAME" || echo "[!] Warning: header not downloaded: $HEADER_NAME"
   else
@@ -222,7 +217,7 @@ Label: STYX Repository
 Suite: $REPO_DIST
 Codename: $REPO_DIST
 Architectures: amd64
-Components: main
+Components: $REPO_COMPONENT
 Description: STYX Firewall packages
 Date: $(date -Ru)
 EOF
@@ -264,7 +259,7 @@ echo "[+] Updating Git repository (interactive)"
 read -p "Do you want to push the changes to git? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
   git add -A
-  git commit -m "Update repo $REPO_DIST $(date +%Y-%m-%d)" || true
+  git commit -m "Update repo $REPO_DIST/$REPO_COMPONENT $(date +%Y-%m-%d)" || true
   if [ -d "$POOL_DIR" ]; then
     echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
     rm -rf "$REPO_BASE/pool2"
@@ -288,7 +283,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     fi
   fi
   git add -A
-  git commit -m "Update repo $REPO_DIST $(date +%Y-%m-%d)" || true
+  git commit -m "Update repo $REPO_DIST/$REPO_COMPONENT $(date +%Y-%m-%d)" || true
   if git push --force origin main; then
     echo "[+] Changes pushed to git."
   else
@@ -298,12 +293,12 @@ else
   echo "[!] Git push cancelled by user."
 fi
 
-echo -e "\n✔ Repository $REPO_DIST updated successfully.\n"
+echo -e "\n✔ Repository $REPO_DIST/$REPO_COMPONENT updated successfully.\n"
 echo "📦 Instructions for users:"
 echo
 echo "1. Recommended option (binary, for APT):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME | sudo tee /usr/share/keyrings/$KEY_FILENAME >/dev/null"
-echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DIST main\" | sudo tee /etc/apt/sources.list.d/styx.list"
+echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DIST $REPO_COMPONENT\" | sudo tee /etc/apt/sources.list.d/styx.list"
 echo "   sudo apt update"
 echo
 echo "2. Alternative option (manual verification):"
