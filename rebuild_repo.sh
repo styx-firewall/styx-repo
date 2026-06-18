@@ -54,6 +54,10 @@ REVISION="${REVISION:-15}"
 KERNEL_VERSION="${KERNEL_VERSION:-6.12.87-${REVISION}-styx}"
 
 REPO_BASE="${REPO_BASE:-.}"
+
+# Ensure all operations happen inside the repo root
+cd "$REPO_BASE" || { echo "[!] Cannot cd to REPO_BASE: $REPO_BASE" >&2; exit 1; }
+
 REPO_DISTRO="${REPO_DISTRO:-trixie}"
 REPO_COMPONENT="styx-$ENVIRONMENT"
 REPO_DIST="$REPO_DISTRO"
@@ -105,6 +109,7 @@ done
 
 echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  component: $REPO_COMPONENT  kernel: $KERNEL_VERSION"
 
+# NOTE: always call with || to handle failures (set -e is active)
 download_or_fail() {
   local url="$1"
   echo "[*] Downloading $url"
@@ -146,7 +151,7 @@ download_kernel_assets
 # Verify required kernel assets exist; fail if any are missing
 missing=()
 for f in "$HEADER_NAME" "$IMAGE_NAME" "$LIBC_NAME"; do
-  if [ ! -f "$REPO_BASE/$f" ] && [ ! -f "$f" ]; then
+  if [ ! -f "$f" ]; then
     missing+=("$f")
   fi
 done
@@ -174,7 +179,10 @@ dpkg-deb --build "$META_DIR"
 if [ -f "$META_DIR.deb" ]; then
   echo "[+] Package generated: $META_DIR.deb"
   ls -lh "$META_DIR.deb"
-  mv -v -- "$META_DIR.deb" "$REPO_BASE/" || true
+  mv -v -- "$META_DIR.deb" "$REPO_BASE/"
+else
+  echo "[!] ERROR: metapackage $META_DIR.deb was not built" >&2
+  exit 1
 fi
 
 echo "[+] Creating linux-headers-styx metapackage"
@@ -192,7 +200,10 @@ dpkg-deb --build "$META_HEADERS_DIR"
 if [ -f "$META_HEADERS_DIR.deb" ]; then
   echo "[+] Package generated: $META_HEADERS_DIR.deb"
   ls -lh "$META_HEADERS_DIR.deb"
-  mv -v -- "$META_HEADERS_DIR.deb" "$REPO_BASE/" || true
+  mv -v -- "$META_HEADERS_DIR.deb" "$REPO_BASE/"
+else
+  echo "[!] ERROR: metapackage $META_HEADERS_DIR.deb was not built" >&2
+  exit 1
 fi
 
 # Move .deb files to pool/main (from repo root + staging)
@@ -207,22 +218,26 @@ fi
 shopt -u nullglob
 
 echo "[+] Generating Packages list"
-dpkg-scanpackages --multiversion "$POOL_DIR" > "$DIST_DIR/Packages"
+dpkg-scanpackages --multiversion "pool/main/$REPO_COMPONENT" > "$DIST_DIR/Packages"
 gzip -k -f "$DIST_DIR/Packages"
 
 echo "[+] Generating Release"
-cat > "$REPO_BASE/dists/$REPO_DIST/Release" <<EOF
-Origin: STYX Firewall
-Label: STYX Repository
-Suite: $REPO_DIST
-Codename: $REPO_DIST
-Architectures: amd64
-Components: $REPO_COMPONENT
-Description: STYX Firewall packages
-Date: $(date -Ru)
-EOF
 
-apt-ftparchive release "$REPO_BASE/dists/$REPO_DIST" >> "$REPO_BASE/dists/$REPO_DIST/Release"
+# Use apt-ftparchive config to generate the complete Release in one pass
+# (avoids duplicate fields from manual cat + append)
+APT_CONF=$(mktemp /tmp/styx-apt-conf.XXXXXX)
+cat > "$APT_CONF" <<EOFCONF
+APT::FTPArchive::Release::Origin "STYX Firewall";
+APT::FTPArchive::Release::Label "STYX Repository";
+APT::FTPArchive::Release::Suite "$REPO_DIST";
+APT::FTPArchive::Release::Codename "$REPO_DIST";
+APT::FTPArchive::Release::Architectures "amd64";
+APT::FTPArchive::Release::Components "$REPO_COMPONENT";
+APT::FTPArchive::Release::Description "STYX Firewall packages";
+EOFCONF
+
+apt-ftparchive -c "$APT_CONF" release "$REPO_BASE/dists/$REPO_DIST" > "$REPO_BASE/dists/$REPO_DIST/Release"
+rm -f "$APT_CONF"
 
 # Signing (optional)
 if gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
