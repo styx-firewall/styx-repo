@@ -179,7 +179,6 @@ dpkg-deb --build "$META_DIR"
 if [ -f "$META_DIR.deb" ]; then
   echo "[+] Package generated: $META_DIR.deb"
   ls -lh "$META_DIR.deb"
-  mv -v -- "$META_DIR.deb" "$REPO_BASE/"
 else
   echo "[!] ERROR: metapackage $META_DIR.deb was not built" >&2
   exit 1
@@ -200,7 +199,6 @@ dpkg-deb --build "$META_HEADERS_DIR"
 if [ -f "$META_HEADERS_DIR.deb" ]; then
   echo "[+] Package generated: $META_HEADERS_DIR.deb"
   ls -lh "$META_HEADERS_DIR.deb"
-  mv -v -- "$META_HEADERS_DIR.deb" "$REPO_BASE/"
 else
   echo "[!] ERROR: metapackage $META_HEADERS_DIR.deb was not built" >&2
   exit 1

@@ -1,0 +1,24 @@
+Architectures: amd64
+Codename: trixie
+Components: styx-dev
+Date: Thu, 18 Jun 2026 12:02:38 +0000
+Description: STYX Firewall packages
+Label: STYX Repository
+Origin: STYX Firewall
+Suite: trixie
+MD5Sum:
+ b11e1da1fd9ea0e72a15139b1fba6fdc              192 Release
+ 098e65a1d785887b53aa83fc61f95c81             2938 styx-dev/binary-amd64/Packages
+ bf19a07ed7d4f996d1dee7de2beeb3a0             1145 styx-dev/binary-amd64/Packages.gz
+SHA1:
+ b5d86f2e9ac8540c2dd151037774ae0836bbd376              192 Release
+ 4a432b2d9ca90f87b871362bc5b0fbf726e7e85e             2938 styx-dev/binary-amd64/Packages
+ 2e990508ab87d11c6d0cf815c1b03f481c1a3633             1145 styx-dev/binary-amd64/Packages.gz
+SHA256:
+ 8440656289303bb68e504279a8a36376dd622d2a04f31a47a244e46e91597e1e              192 Release
+ daee4244c39501216485afd8fd217c401f016ef325220979ed393c6410a6ccd9             2938 styx-dev/binary-amd64/Packages
+ 7d785a42ce9f1fb0c9785458f0f101734f24c46b3f8394901426ad1e44df2759             1145 styx-dev/binary-amd64/Packages.gz
+SHA512:
+ fc39d7f3d696009e5957203866bf7b6ff4f863c2feff6927b0b7b6d132485a57c10862322d04614112dff02eb02308fdd434b14738687581afd341391a205ecd              192 Release
+ 5ad04059e4379e8771b16b9aa0bc112dc36581660c1f5ec06e89cd132dd0b302d45b97629d9e6f5ad6533ff0dde348346305075d19a0fd5b1f97bb737321c951             2938 styx-dev/binary-amd64/Packages
+ 06615cba6cbd037e61ec470e6453b3762c42f2805bff909e27c20951e398ebaf7c78df1cd59268eb556f8424729db7b258a60fe001ba01dded100497f6ecc3bd             1145 styx-dev/binary-amd64/Packages.gz

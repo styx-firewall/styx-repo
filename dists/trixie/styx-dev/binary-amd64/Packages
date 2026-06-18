@@ -1,0 +1,81 @@
+Package: linux-headers-6.12.87-15-styx
+Source: linux-upstream
+Version: 15
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-qdghh-runner-jcsh9>
+Installed-Size: 51837
+Filename: pool/main/styx-dev/linux-headers-6.12.87-15-styx_15_amd64.deb
+Size: 9285036
+MD5sum: a1a232848bc8542ea524bd582697afe1
+SHA1: 970a869b831e9f2f44d00cae8d17a084ae32f034
+SHA256: d0bed7aff49a82bcded91381f4180a20ba3fb9ff619f1c364a953120cbb68356
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel headers for 6.12.87-15-styx on amd64
+ This package provides kernel header files for 6.12.87-15-styx on amd64
+ .
+ This is useful for people who need to build external modules
+
+Package: linux-headers-styx
+Version: 1.6
+Architecture: amd64
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-headers-6.12.87-15-styx
+Filename: pool/main/styx-dev/linux-headers-styx.deb
+Size: 712
+MD5sum: 9b03efad1233ade13537623088adf624
+SHA1: 1f70cf4836d4a7a447104ebd1cd83574060da922
+SHA256: e2132c6165b7752b5fb2106db93143ca98d2493e5485714cba57437f3a469417
+Description: Metapackage to install the Styx Linux kernel headers
+
+Package: linux-image-6.12.87-15-styx
+Source: linux-upstream
+Version: 15
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-qdghh-runner-jcsh9>
+Installed-Size: 172082
+Filename: pool/main/styx-dev/linux-image-6.12.87-15-styx_15_amd64.deb
+Size: 36833810
+MD5sum: 037c0b68fb1d5562cd43724b69298836
+SHA1: 654e28525a712aeb51bee161bb1928aaebc1204f
+SHA256: 2ea2718a6a7cf93e117c1aca21a02574835dbc2c2f561b72007630cd18000004
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel, version 6.12.87-15-styx
+ This package contains the Linux kernel, modules and corresponding other
+ files, version: 6.12.87-15-styx.
+
+Package: linux-image-styx
+Version: 1.6
+Architecture: amd64
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-image-6.12.87-15-styx
+Filename: pool/main/styx-dev/linux-image-styx.deb
+Size: 708
+MD5sum: cec84ce6e6d2f989d900ba6aae0b3c4a
+SHA1: e05668eca3e64799a82125da62ee44bab9d50790
+SHA256: 6f3d09d842db3f719ffae2131b831c2749e2d3f33f156657eb3e14885c7c396a
+Description: Metapackage to install the Styx Linux kernel
+
+Package: linux-libc-dev
+Source: linux-upstream
+Version: 15
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-qdghh-runner-jcsh9>
+Installed-Size: 7192
+Provides: linux-kernel-headers
+Filename: pool/main/styx-dev/linux-libc-dev_15_amd64.deb
+Size: 1441024
+MD5sum: 863aca2ecc856e0ba5f75fbe87dab4f2
+SHA1: be9fc49d24fa2ce658f5dd816764158a6dc1fbd2
+SHA256: fd967142348f05dabb59fb126e42fa325211e55f48fef0f2c10d5025f5e90364
+Section: devel
+Priority: optional
+Multi-Arch: same
+Homepage: https://www.kernel.org/
+Description: Linux support headers for userspace development
+ This package provides userspaces headers from the Linux kernel.  These headers
+ are used by the installed headers for GNU glibc and other system libraries.
+
