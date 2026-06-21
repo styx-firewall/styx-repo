@@ -1,24 +1,24 @@
 Architectures: amd64
 Codename: trixie
 Components: styx-dev
-Date: Thu, 18 Jun 2026 13:13:43 +0000
+Date: Sun, 21 Jun 2026 16:31:54 +0000
 Description: STYX Firewall packages
 Label: STYX Repository
 Origin: STYX Firewall
 Suite: trixie
 MD5Sum:
- 2e4fbe93fdc7f24124209239c40c18d1              192 Release
- 8826dbafcfb3846325de2e835f9f68ac             4756 styx-dev/binary-amd64/Packages
- 51321c330574261fe81a1cd5b721fb1e             1816 styx-dev/binary-amd64/Packages.gz
+ b76ba27b92b2993c8b6d9883786bd847              192 Release
+ 55201a159eb538149de2af9ee2636f3a             4756 styx-dev/binary-amd64/Packages
+ 0b09c460cab2e6bcf670fd78ef9092b2             1820 styx-dev/binary-amd64/Packages.gz
 SHA1:
- 714f7df5a486a71042761309fd8bbbfd9de5e949              192 Release
- 034902dd433caadb3801ba33c0d4b56e1af9933b             4756 styx-dev/binary-amd64/Packages
- 050b1bcdad4d530e200badad9dde68ba7657a71e             1816 styx-dev/binary-amd64/Packages.gz
+ cb9e7a61471f5872e7fc1aa42bcd3b71cafbb1ba              192 Release
+ e062f4b5f864e9d81689f70abba78c3ca553f545             4756 styx-dev/binary-amd64/Packages
+ 404bffa4a534e2248d96871af22e7eb4a942c899             1820 styx-dev/binary-amd64/Packages.gz
 SHA256:
- 0bd03da5ea6974b4179f7ffb19f39d2bc885385b9863baf0880598ff13138458              192 Release
- 9ad75905eca43bdbcd16982326133656ef4fd54c62c471790be783f019b84d4c             4756 styx-dev/binary-amd64/Packages
- 01c866d51fe2bca4ea6c382e347da6d8324bcdc1bb98319369bbc83ea82edbf7             1816 styx-dev/binary-amd64/Packages.gz
+ 61fb53f50bbb096b6c93edf705fbbdd59bd69593106115a7066effa4a96ee3f3              192 Release
+ 4e11cbbbd7994caced2d00506a278566f55591346fbd440cbbc5b07fe6a56491             4756 styx-dev/binary-amd64/Packages
+ 5973706bbad222f73b24be23a64c619e266006498e38525285cbdafca742e6d6             1820 styx-dev/binary-amd64/Packages.gz
 SHA512:
- a042338791f1c8770d6988131560f426b8fb84f89055c0ca1867a12dfd614624d20f04a312824dad73a6c1423cffe331cac7c6ad372ce01301be9284afb13772              192 Release
- 0820cb31b9d27da005a4ba50a148c6869337132153ab899fe715bd7a145836d624648df352d00a82e481c621ad34b5b9982055cd0a4d575ad0e86d2b5cf80926             4756 styx-dev/binary-amd64/Packages
- 3912a7c8afc43d0b8b462068aab06e94a8b1c7c891ff35e2c9725954296dc6369eaab57841f3a90374a33bd00c3d9d0551c33490f32da23a6197349a08e149c0             1816 styx-dev/binary-amd64/Packages.gz
+ 5cec9cecd6eca4e425dd66c158cd029e7d9759c5e79e2c48ff05f542759db2a4b543e851163c391102453d2e314db7a61b20bae26a27deedaa6c6999e5653af4              192 Release
+ 5bf00ec125a63ee8e979fb76443606e13843c6218c5a948d45d046e0bb438d719652a9cd461850f2c10198d21bc27ceb070b8ac5b35989d19078283903a384df             4756 styx-dev/binary-amd64/Packages
+ fd708e0bb5560e986368a2e07dbcc9396d70235dc2a1e9e6cdcc9f12e0dad210b9dc9c2b2a7d415445704fba0f9faed5bb8df230efb31467f1033f5b1a5aa997             1820 styx-dev/binary-amd64/Packages.gz
