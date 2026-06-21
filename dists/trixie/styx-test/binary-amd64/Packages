@@ -1,0 +1,137 @@
+Package: linux-headers-6.12.87-15-styx
+Source: linux-upstream
+Version: 15
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-qdghh-runner-jcsh9>
+Installed-Size: 51837
+Filename: pool/styx-test/linux-headers-6.12.87-15-styx_15_amd64.deb
+Size: 9285036
+MD5sum: a1a232848bc8542ea524bd582697afe1
+SHA1: 970a869b831e9f2f44d00cae8d17a084ae32f034
+SHA256: d0bed7aff49a82bcded91381f4180a20ba3fb9ff619f1c364a953120cbb68356
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel headers for 6.12.87-15-styx on amd64
+ This package provides kernel header files for 6.12.87-15-styx on amd64
+ .
+ This is useful for people who need to build external modules
+
+Package: linux-headers-styx
+Version: 1.6
+Architecture: amd64
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-headers-6.12.87-15-styx
+Filename: pool/styx-test/linux-headers-styx.deb
+Size: 712
+MD5sum: e9cea3908e23553084b9f5df6add029a
+SHA1: eeed60b46f797acf8062a19c7ffa5f97d6bc0048
+SHA256: 8305ad6e116a82f77858fa486d41c9cb0d782caa93402610639d77c9ecbef137
+Description: Metapackage to install the Styx Linux kernel headers
+
+Package: linux-image-6.12.87-15-styx
+Source: linux-upstream
+Version: 15
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-qdghh-runner-jcsh9>
+Installed-Size: 172082
+Filename: pool/styx-test/linux-image-6.12.87-15-styx_15_amd64.deb
+Size: 36833810
+MD5sum: 037c0b68fb1d5562cd43724b69298836
+SHA1: 654e28525a712aeb51bee161bb1928aaebc1204f
+SHA256: 2ea2718a6a7cf93e117c1aca21a02574835dbc2c2f561b72007630cd18000004
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel, version 6.12.87-15-styx
+ This package contains the Linux kernel, modules and corresponding other
+ files, version: 6.12.87-15-styx.
+
+Package: linux-image-styx
+Version: 1.6
+Architecture: amd64
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-image-6.12.87-15-styx
+Filename: pool/styx-test/linux-image-styx.deb
+Size: 708
+MD5sum: 0ee3a1d0b221e84a93fe78a91ce130e0
+SHA1: 23a1b97088b01cabcd422eb9b063c381b236408a
+SHA256: f8eaac0a67e1c4bfe874845bd587b1f12689f0f3308f3b66738db177fbae67b2
+Description: Metapackage to install the Styx Linux kernel
+
+Package: linux-libc-dev
+Source: linux-upstream
+Version: 15
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-qdghh-runner-jcsh9>
+Installed-Size: 7192
+Provides: linux-kernel-headers
+Filename: pool/styx-test/linux-libc-dev_15_amd64.deb
+Size: 1441024
+MD5sum: 863aca2ecc856e0ba5f75fbe87dab4f2
+SHA1: be9fc49d24fa2ce658f5dd816764158a6dc1fbd2
+SHA256: fd967142348f05dabb59fb126e42fa325211e55f48fef0f2c10d5025f5e90364
+Section: devel
+Priority: optional
+Multi-Arch: same
+Homepage: https://www.kernel.org/
+Description: Linux support headers for userspace development
+ This package provides userspaces headers from the Linux kernel.  These headers
+ are used by the installed headers for GNU glibc and other system libraries.
+
+Package: styx-conf
+Version: 0.1-13
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: ulogd2, openssh-server, logrotate, systemd, udhcpc, lighttpd, php-fpm
+Filename: pool/styx-test/styx-conf-0.1-13.deb
+Size: 11668
+MD5sum: e7440f9bb5fa5275bae1da3554db4318
+SHA1: 403663fea97655ee2c6d090a2ac400230258d808
+SHA256: 134f0922a5d583122607a00abc7a0a18fb864ff4d37312c41e18651d1c95b7ea
+Section: misc
+Priority: optional
+Description: Default configuration system files
+
+Package: styx-firewall
+Version: 0.1-13
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway (>= 0.1-13), styx-ui (>= 0.1-13), iptables, nftables
+Filename: pool/styx-test/styx-firewall-0.1-13.deb
+Size: 756
+MD5sum: e3403eaf218146bb273d31ba27c66ab7
+SHA1: efcaeef33d7448a7ed7913fe57347e449d2439f0
+SHA256: 79ba96c5f13d3ef8c7899ea1f5100c1f58b2226c1f9b633176629f418926a6fb
+Section: metapackages
+Priority: optional
+Description: Meta-package that installs styx-gateway, styx-ui and other firewall tools.
+
+Package: styx-gateway
+Version: 0.1-13
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-conf
+Filename: pool/styx-test/styx-gateway-0.1-13.deb
+Size: 14983592
+MD5sum: 2d13f221015a6e6bf4edc694f30717ae
+SHA1: ad874385a3db0b426265e75cd4f00ac9ae3344eb
+SHA256: 9a3c14cbbd6409891cd485ca34d254cb35f92a662a1aea5f9716cb028a3bfa56
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
+Package: styx-ui
+Version: 0.1-13
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-test/styx-ui-0.1-13.deb
+Size: 4295328
+MD5sum: 409ba82cae8e35d2bb3434adde012688
+SHA1: c3afd555c2c272c83d306616f0c3f755794c3193
+SHA256: 00717afd303067a8ff995db1795d36f129e82db9faa3bab1b297e42694fd2fac
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
