@@ -3,53 +3,41 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# rebuild_repo-v3.sh
-# Improved version of rebuild_repo.sh using standard APT repo layout.
+# rebuild_repo.sh
+# Build and publish an APT repository for ALL environments (dev, test, prod).
 #
 # Purpose:
-# - Build and publish an APT repository for a given environment (dev/test/prod).
-# - Standard structure: suite=trixie, component=styx-{dev,test,prod}
-# - Downloads kernel assets, builds small metapackages, moves selected .deb files
-#   into `pool/<component>`, regenerates `dists/<suite>/<component>/binary-amd64/Packages`
-#   and `Release`, and optionally signs the Release with a GPG key.
+# - Standard structure: suite=trixie, components=styx-{dev,test,prod}
+# - Processes ALL three environments in a single run.
+# - Pulls packages from stage/<component>/ if they exist.
+# - Downloads kernel assets, builds small metapackages, moves .deb files
+#   into each component's `pool/<component>/`, regenerates
+#   `dists/<suite>/<component>/binary-amd64/Packages` and a combined
+#   `Release`, then signs the Release with a GPG key.
 #
-# Key mechanics (remember):
-# 1) Place the .deb files you want to publish into the repository root (REPO_BASE).
-#    The script glob `*.deb` picks them up, moves them to `pool/` and then
-#    deletes those originals from the repo root.
-# 2) Run the script with the target environment name (default `dev`):
-#      ./rebuild_repo-v3.sh dev
-#    This generates `dists/trixie/styx-dev/...`.
-#    Use `./rebuild_repo-v3.sh test` for `dists/trixie/styx-test/...`.
-# 3) To override kernel selection or revision, set environment variables:
-#      REVISION=15 KERNEL_VERSION=6.13.2-15-styx ./rebuild_repo-v3.sh dev
-# 4) Signing: signs `Release` only if the GPG key exists.
+# Key mechanics:
+# 1) Place per-environment .deb files in:
+#      stage/styx-dev/
+#      stage/styx-test/
+#      stage/styx-prod/
+#    The script moves them to the corresponding pool/<component>/.
+# 2) Kernel assets are downloaded once and shared across all components.
+# 3) Metapackages (linux-image-styx, linux-headers-styx) are built once
+#    and copied to all components.
 #
-# Usage examples:
-#   ./rebuild_repo-v3.sh           # dev
-#   ./rebuild_repo-v3.sh test      # test
-#   ./rebuild_repo-v3.sh prod      # prod
+# Usage:
+#   ./rebuild_repo.sh
 #
-# Environment variables used (can be exported or prefixed at runtime):
-#  - ENVIRONMENT or first positional arg: environment name (dev/test/prod)
-#  - REPO_BASE: repository root (default `.`)
-#  - REPO_DISTRO: distribution name (default `trixie`)
-#  - REVISION, KERNEL_VERSION: control kernel assets download
-#  - GPG_KEY_ID: key id/email for signing
-#  - KEY_FILENAME: name to export the public key file
-#
-# Safety notes:
-# - The script requires external commands: wget, dpkg-deb, dpkg-scanpackages,
-#   apt-ftparchive, ar, tar, gzip. It exits if they are missing.
-# - Files moved from repo root to `pool/<component>` are removed from the root
-#   (to keep the repo clean). If you want to stage packages without deleting originals,
-#   use a temporary directory and run the script from there.
-# - The script supports dev/test/prod environments. For production, ensure the correct
-#   GPG signing key is available and consider additional access controls.
+# Environment variables (optional):
+#   REPO_BASE       - repository root (default: .)
+#   REPO_DISTRO     - distribution name (default: trixie)
+#   REVISION        - kernel revision (default: 15)
+#   KERNEL_VERSION  - kernel version (default: 6.12.87-${REVISION}-styx)
+#   GPG_KEY_ID      - key id/email for signing (default: diegargon@)
+#   KEY_FILENAME    - exported public key filename
 #
 # End of header
 
-ENVIRONMENT="${1:-dev}"
 REVISION="${REVISION:-15}"
 KERNEL_VERSION="${KERNEL_VERSION:-6.12.87-${REVISION}-styx}"
 
@@ -59,24 +47,13 @@ REPO_BASE="${REPO_BASE:-.}"
 cd "$REPO_BASE" || { echo "[!] Cannot cd to REPO_BASE: $REPO_BASE" >&2; exit 1; }
 
 REPO_DISTRO="${REPO_DISTRO:-trixie}"
-REPO_COMPONENT="styx-$ENVIRONMENT"
 REPO_DIST="$REPO_DISTRO"
-POOL_DIR="$REPO_BASE/pool/$REPO_COMPONENT"
-DIST_DIR="$REPO_BASE/dists/$REPO_DIST/$REPO_COMPONENT/binary-amd64"
-STAGE_DIR="$REPO_BASE/stage/$REPO_COMPONENT"
+
+# All three environments — always processed
+COMPONENTS=("styx-dev" "styx-test" "styx-prod")
 
 # Git remote — saved early so filter-repo cannot wipe it
 ORIGIN_URL="${ORIGIN_URL:-https://github.com/styx-firewall/styx-repo.git}"
-
-# Override kernel version per component via optional config file.
-# Create stage/<component>/kernel.conf with:
-#   REVISION=15
-#   KERNEL_VERSION=6.12.87-15-styx
-# If the file does not exist, the defaults above are used.
-if [ -f "$STAGE_DIR/kernel.conf" ]; then
-  echo "[+] Loading kernel overrides from $STAGE_DIR/kernel.conf"
-  source "$STAGE_DIR/kernel.conf"
-fi
 
 # Expected kernel asset filenames (used for download and verification)
 HEADER_NAME="linux-headers-${KERNEL_VERSION}_${REVISION}_amd64.deb"
@@ -107,7 +84,8 @@ for cmd in "${required_cmds[@]}"; do
   fi
 done
 
-echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  component: $REPO_COMPONENT  kernel: $KERNEL_VERSION"
+echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  kernel: $KERNEL_VERSION"
+echo "[+] Will process components: ${COMPONENTS[*]}"
 
 # NOTE: always call with || to handle failures (set -e is active)
 download_or_fail() {
@@ -120,33 +98,27 @@ download_or_fail() {
   return 0
 }
 
-download_kernel_assets() {
-  if [ ! -f "$HEADER_NAME" ]; then
-    download_or_fail "$ASSET_BASE/$HEADER_NAME" || echo "[!] Warning: header not downloaded: $HEADER_NAME"
-  else
-    echo "[+] Found local $HEADER_NAME"
-  fi
-
-  if [ ! -f "$IMAGE_NAME" ]; then
-    download_or_fail "$ASSET_BASE/$IMAGE_NAME" || echo "[!] Warning: image not downloaded: $IMAGE_NAME"
-  else
-    echo "[+] Found local $IMAGE_NAME"
-  fi
-
-  if [ ! -f "$LIBC_NAME" ]; then
-    download_or_fail "$ASSET_BASE/$LIBC_NAME" || echo "[!] Warning: linux-libc-dev not downloaded: $LIBC_NAME"
-  else
-    echo "[+] Found local $LIBC_NAME"
-  fi
-}
-
-echo "[+] Creating directories"
-mkdir -p "$POOL_DIR"
-mkdir -p "$DIST_DIR"
-mkdir -p "$STAGE_DIR"
-
+# ---------------------------------------------------------------------------
+# 1. Download kernel assets (shared across all components)
+# ---------------------------------------------------------------------------
 echo "[+] Downloading kernel assets"
-download_kernel_assets
+if [ ! -f "$HEADER_NAME" ]; then
+  download_or_fail "$ASSET_BASE/$HEADER_NAME" || echo "[!] Warning: header not downloaded: $HEADER_NAME"
+else
+  echo "[+] Found local $HEADER_NAME"
+fi
+
+if [ ! -f "$IMAGE_NAME" ]; then
+  download_or_fail "$ASSET_BASE/$IMAGE_NAME" || echo "[!] Warning: image not downloaded: $IMAGE_NAME"
+else
+  echo "[+] Found local $IMAGE_NAME"
+fi
+
+if [ ! -f "$LIBC_NAME" ]; then
+  download_or_fail "$ASSET_BASE/$LIBC_NAME" || echo "[!] Warning: linux-libc-dev not downloaded: $LIBC_NAME"
+else
+  echo "[+] Found local $LIBC_NAME"
+fi
 
 # Verify required kernel assets exist; fail if any are missing
 missing=()
@@ -164,6 +136,9 @@ if [ ${#missing[@]} -gt 0 ]; then
   exit 1
 fi
 
+# ---------------------------------------------------------------------------
+# 2. Build metapackages (shared across all components)
+# ---------------------------------------------------------------------------
 echo "[+] Creating linux-image-styx metapackage"
 rm -rf "$META_DIR"
 mkdir -p "$META_DEBIAN_DIR"
@@ -204,25 +179,73 @@ else
   exit 1
 fi
 
-# Move .deb files to pool (from repo root + staging)
-echo "[+] Moving .deb files to $POOL_DIR"
-shopt -s nullglob
-debs=( *.deb "$STAGE_DIR"/*.deb )
-if [ ${#debs[@]} -gt 0 ]; then
-  mv -v -- "${debs[@]}" "$POOL_DIR/"
-else
-  echo "[!] No .deb files found to move"
-fi
-shopt -u nullglob
+# ---------------------------------------------------------------------------
+# 3. Process each component
+# ---------------------------------------------------------------------------
+ACTIVE_COMPONENTS=()
 
-echo "[+] Generating Packages list"
-dpkg-scanpackages --multiversion "pool/$REPO_COMPONENT" > "$DIST_DIR/Packages"
-gzip -k -f "$DIST_DIR/Packages"
+for COMP in "${COMPONENTS[@]}"; do
+  echo ""
+  echo "---- Processing component: $COMP ----"
 
-echo "[+] Generating Release"
+  POOL_DIR="$REPO_BASE/pool/$COMP"
+  DIST_DIR="$REPO_BASE/dists/$REPO_DIST/$COMP/binary-amd64"
+  STAGE_DIR="$REPO_BASE/stage/$COMP"
 
-# Use apt-ftparchive config to generate the complete Release in one pass
-# (avoids duplicate fields from manual cat + append)
+  # Override kernel version per component via optional config file.
+  # Create stage/<component>/kernel.conf with:
+  #   REVISION=15
+  #   KERNEL_VERSION=6.12.87-15-styx
+  # If the file does not exist, the defaults above are used.
+  if [ -f "$STAGE_DIR/kernel.conf" ]; then
+    echo "[+] Loading kernel overrides from $STAGE_DIR/kernel.conf"
+    source "$STAGE_DIR/kernel.conf"
+  fi
+
+  mkdir -p "$POOL_DIR" "$DIST_DIR" "$STAGE_DIR"
+
+  # 3a. Copy kernel assets into this component's pool
+  echo "[+] Copying kernel assets to pool/$COMP/"
+  cp -v "$REPO_BASE/$HEADER_NAME" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$IMAGE_NAME" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$LIBC_NAME" "$POOL_DIR/"
+
+  # 3b. Copy metapackages into this component's pool
+  echo "[+] Copying metapackages to pool/$COMP/"
+  cp -v "$REPO_BASE/$META_DIR.deb" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$META_HEADERS_DIR.deb" "$POOL_DIR/"
+
+  # 3c. Move stage packages if they exist
+  if [ -d "$STAGE_DIR" ]; then
+    shopt -s nullglob
+    stage_debs=( "$STAGE_DIR"/*.deb )
+    shopt -u nullglob
+    if [ ${#stage_debs[@]} -gt 0 ]; then
+      echo "[+] Moving ${#stage_debs[@]} package(s) from stage/$COMP/ to pool/$COMP/"
+      mv -v -- "${stage_debs[@]}" "$POOL_DIR/"
+    else
+      echo "[*] No .deb files in stage/$COMP/ (kernel + metapackages only)"
+    fi
+  else
+    echo "[*] stage/$COMP/ does not exist (kernel + metapackages only)"
+  fi
+
+  # 3d. Generate Packages
+  echo "[+] Generating Packages for $COMP"
+  dpkg-scanpackages --multiversion "pool/$COMP" > "$DIST_DIR/Packages"
+  gzip -k -f "$DIST_DIR/Packages"
+
+  ACTIVE_COMPONENTS+=("$COMP")
+done
+
+# ---------------------------------------------------------------------------
+# 4. Generate combined Release for all active components
+# ---------------------------------------------------------------------------
+echo ""
+echo "---- Generating combined Release for: ${ACTIVE_COMPONENTS[*]} ----"
+
+COMPONENT_LIST=$(IFS=,; echo "${ACTIVE_COMPONENTS[*]}")
+
 APT_CONF=$(mktemp /tmp/styx-apt-conf.XXXXXX)
 cat > "$APT_CONF" <<EOFCONF
 APT::FTPArchive::Release::Origin "STYX Firewall";
@@ -230,14 +253,16 @@ APT::FTPArchive::Release::Label "STYX Repository";
 APT::FTPArchive::Release::Suite "$REPO_DIST";
 APT::FTPArchive::Release::Codename "$REPO_DIST";
 APT::FTPArchive::Release::Architectures "amd64";
-APT::FTPArchive::Release::Components "$REPO_COMPONENT";
+APT::FTPArchive::Release::Components "$COMPONENT_LIST";
 APT::FTPArchive::Release::Description "STYX Firewall packages";
 EOFCONF
 
 apt-ftparchive -c "$APT_CONF" release "$REPO_BASE/dists/$REPO_DIST" > "$REPO_BASE/dists/$REPO_DIST/Release"
 rm -f "$APT_CONF"
 
-# Signing (optional)
+# ---------------------------------------------------------------------------
+# 5. Sign Release
+# ---------------------------------------------------------------------------
 if gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   echo "[+] Signing Release with key $GPG_KEY_ID"
   rm -f "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/InRelease" || true
@@ -259,24 +284,31 @@ if gpg --list-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}" || true
 fi
 
+# ---------------------------------------------------------------------------
+# 6. Cleanup
+# ---------------------------------------------------------------------------
 echo "[+] Cleaning temporary metapackage directories"
 rm -rf "$META_DIR" "$META_HEADERS_DIR"
 
 echo "[+] Cleaning .deb files left in repo root and staging..."
 find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
-find "$STAGE_DIR" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
+for COMP in "${COMPONENTS[@]}"; do
+  find "$REPO_BASE/stage/$COMP" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
+done
 echo "[+] Cleaning completed."
 
-# --- Git operations (interactive) ---
+# ---------------------------------------------------------------------------
+# 7. Git operations (interactive)
+# ---------------------------------------------------------------------------
 echo "[+] Updating Git repository (interactive)"
 read -p "Do you want to push the changes to git? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
   git add -A
-  git commit -m "Update repo $REPO_DIST/$REPO_COMPONENT $(date +%Y-%m-%d)" || true
-  if [ -d "$POOL_DIR" ]; then
-    echo "[+] Backing up $POOL_DIR to $REPO_BASE/pool2..."
+  git commit -m "Update repo $REPO_DIST [${COMPONENT_LIST}] $(date +%Y-%m-%d)" || true
+  if [ -d "$REPO_BASE/pool" ]; then
+    echo "[+] Backing up pool/ to pool2/..."
     rm -rf "$REPO_BASE/pool2"
-    cp -a "$POOL_DIR" "$REPO_BASE/pool2"
+    cp -a "$REPO_BASE/pool" "$REPO_BASE/pool2"
 
     echo "[+] Running git filter-repo to clean pool history (optional)"
     if command -v git-filter-repo >/dev/null 2>&1 || command -v git filter-repo >/dev/null 2>&1; then
@@ -285,10 +317,10 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
       echo "[!] git-filter-repo not available; skipping history rewrite"
     fi
 
-    echo "[+] Restoring pool2 to pool..."
-    rm -rf "$POOL_DIR"
-    mkdir -p "$(dirname "$POOL_DIR")"
-    cp -a "$REPO_BASE/pool2" "$POOL_DIR"
+    echo "[+] Restoring pool2/ to pool/"
+    rm -rf "$REPO_BASE/pool"
+    mkdir -p "$REPO_BASE/pool"
+    cp -a "$REPO_BASE/pool2"/* "$REPO_BASE/pool/"
     rm -rf "$REPO_BASE/pool2"
     if [ -n "$ORIGIN_URL" ] && ! git remote | grep -q '^origin$'; then
       git remote add origin "$ORIGIN_URL"
@@ -296,7 +328,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     fi
   fi
   git add -A
-  git commit -m "Update repo $REPO_DIST/$REPO_COMPONENT $(date +%Y-%m-%d)" || true
+  git commit -m "Update repo $REPO_DIST [${COMPONENT_LIST}] $(date +%Y-%m-%d)" || true
   if git push --force origin main; then
     echo "[+] Changes pushed to git."
   else
@@ -306,12 +338,16 @@ else
   echo "[!] Git push cancelled by user."
 fi
 
-echo -e "\n✔ Repository $REPO_DIST/$REPO_COMPONENT updated successfully.\n"
+echo -e "\n✔ Repository updated successfully.\n"
+echo "   Distribution: $REPO_DIST"
+echo "   Components:   ${ACTIVE_COMPONENTS[*]}"
+echo "   Kernel:       $KERNEL_VERSION"
+echo ""
 echo "📦 Instructions for users:"
 echo
 echo "1. Recommended option (binary, for APT):"
 echo "   curl -fsSL https://styx-firewall.github.io/styx-repo/$KEY_FILENAME | sudo tee /usr/share/keyrings/$KEY_FILENAME >/dev/null"
-echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DIST $REPO_COMPONENT\" | sudo tee /etc/apt/sources.list.d/styx.list"
+echo "   echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/$KEY_FILENAME] https://styx-firewall.github.io/styx-repo $REPO_DIST styx-dev styx-test styx-prod\" | sudo tee /etc/apt/sources.list.d/styx.list"
 echo "   sudo apt update"
 echo
 echo "2. Alternative option (manual verification):"
