@@ -24,9 +24,9 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-headers-6.12.87-15-styx
 Filename: pool/styx-test/linux-headers-styx.deb
 Size: 712
-MD5sum: 8f76aad0f9964d685a70ecb3e780d632
-SHA1: a8c1e1acd9d2f3f3405468fbb3de20656ca8ada5
-SHA256: d018eb72b998c333eb9a3daa424071dfc361fdd2647f7309b26c9460433d00b9
+MD5sum: 873157a9d438edb6f9d7150ea83ab538
+SHA1: 9d1c68032851728c2f6a411769f573839b848aca
+SHA256: 947393425410af23d3d84b5b4abff278e932d3759f956eeb7b4bc470836bc1ad
 Description: Metapackage to install the Styx Linux kernel headers
 
 Package: linux-image-6.12.87-15-styx
@@ -54,9 +54,9 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-image-6.12.87-15-styx
 Filename: pool/styx-test/linux-image-styx.deb
 Size: 708
-MD5sum: b2322ae8e6073d22fbe83bb12599a0d1
-SHA1: 11f982496cfcc7d81bbd981cc27e56a6c44e2efc
-SHA256: 03a5fc18924d7290a15fc23d6163048429e97eb9f1446322758c977a1ad492ea
+MD5sum: 5929a4a3b6250782b77af3d275a7a1f2
+SHA1: 8bfd509918035bf6fc5c026a9ea6094036c1f00c
+SHA256: ce56597af327c05e8481f730c3c0f6bc5342dbbfdd238a686ec989f3ba7c1a49
 Description: Metapackage to install the Styx Linux kernel
 
 Package: linux-libc-dev
