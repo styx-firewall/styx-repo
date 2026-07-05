@@ -24,9 +24,9 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-headers-6.12.87-15-styx
 Filename: pool/styx-test/linux-headers-styx.deb
 Size: 712
-MD5sum: 89216b9ff23aca48bce99775bf4a26b3
-SHA1: d203627eba0932e774591f5c3b540ee918be11ac
-SHA256: 5ead12e4b36ea199d3c6d0907c1d974b561e81b7f51c580bffcea023bf2ba4e4
+MD5sum: 9f56c88f30d8a8dd40fdc10a641bd489
+SHA1: b5b41d13ddb100f265999d4af590f83655c04786
+SHA256: a05a3332ba425467e3d2a19fb66190269e82899205514b0cf554f68fd3665d94
 Description: Metapackage to install the Styx Linux kernel headers
 
 Package: linux-image-6.12.87-15-styx
@@ -54,9 +54,9 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-image-6.12.87-15-styx
 Filename: pool/styx-test/linux-image-styx.deb
 Size: 708
-MD5sum: 6dd9fb13b8c626f0df408dcebdbe0b4b
-SHA1: d92536b23c6bdc6c9c3e6f75623c57e6b93b90d7
-SHA256: 98a96c1fab81110763450c1713e7c8ab069698d02aa51de9e9164ce328793880
+MD5sum: d994509d0bc4071058d4c5af50e25985
+SHA1: 3496ac33266cad991e8ed32845dfd7013ec05c97
+SHA256: 9045a12a463bfb61a710ea55adfc18b3725f85498f7bc2468241b69c3cf1236c
 Description: Metapackage to install the Styx Linux kernel
 
 Package: linux-libc-dev
@@ -113,10 +113,10 @@ Architecture: all
 Maintainer: diegargon <diegargon@gmail.com>
 Depends: ulogd2, openssh-server, logrotate, systemd, udhcpc, lighttpd, php-fpm
 Filename: pool/styx-test/styx-conf-0.1-17.deb
-Size: 11740
-MD5sum: 5207920827c45812ac33e6b10c01d1c3
-SHA1: a69cc92cd08257f937885c1a15aa700d14bb9baf
-SHA256: 04348eb85eebab3d89650abcce62b9415f6c58e1163db89bad458e02646fcec5
+Size: 11728
+MD5sum: d84052eec0f33f1b7ba39901917f7b6d
+SHA1: 0fdb78344ce9ed29c9879d449d3bd3930297c979
+SHA256: 2371a84d86e1c455c7b3adf0db8881db48c0581adde04030e28d0b2d1e3b1c0d
 Section: misc
 Priority: optional
 Description: Default configuration system files
@@ -156,9 +156,9 @@ Maintainer: diegargon <diegargon@gmail.com>
 Depends: styx-gateway (>= 0.1-17), styx-ui (>= 0.1-17), nftables
 Filename: pool/styx-test/styx-firewall-0.1-17.deb
 Size: 752
-MD5sum: ced3ea0f5dadedb958a33f278cbb9247
-SHA1: 318d4f2afb110563d04f1844a1726071154ba2a1
-SHA256: e70bc8b97eab24bbb977c5ec1d28b301e7c95aa042b4e9103a662335feddfedd
+MD5sum: a6fa5ccdf1315e2daafb74af9c6e98b8
+SHA1: a40fe861ac60bf1a980bada7e2f7344d87269112
+SHA256: 86bb0bb363e56fac2714eea09d47a5db4fa3fdd127ee1e0e409d4f94e584a18a
 Section: metapackages
 Priority: optional
 Description: Meta-package that installs styx-gateway, styx-ui and other firewall tools.
@@ -197,10 +197,10 @@ Architecture: amd64
 Maintainer: diegargon <diegargon@gmail.com>
 Depends: styx-conf
 Filename: pool/styx-test/styx-gateway-0.1-17.deb
-Size: 15034712
-MD5sum: 7fb25325bda98e66b1088d2d5a378733
-SHA1: 53d380b536cd194e23f5fe9dee5958cb45a62625
-SHA256: 9e0fdb722cd82fd39b2f9c229af07d7a1ad33af97711426e42bb2d24338a9cb4
+Size: 15036908
+MD5sum: 90552c89473c7c3f31c437eea0dcaa0a
+SHA1: 01e935a586e69068cd9fe8e4c0d3e226c4ee0c78
+SHA256: ccc8f2dc133aae05f920b4cca7cf087f800468f87185041b48e998ec6f1ad4ae
 Section: utils
 Priority: optional
 Description: Styx Gateway Python executable
@@ -239,10 +239,10 @@ Architecture: all
 Maintainer: diegargon <diegargon@gmail.com>
 Depends: styx-gateway, php-msgpack
 Filename: pool/styx-test/styx-ui-0.1-17.deb
-Size: 4302752
-MD5sum: 4d2b490f1eeb9c9075d934c55949e9fa
-SHA1: 6f74fdac6cd4020a8d295d67f281b4c798c965b1
-SHA256: 698f4c0381a297240001df381c8a31432b5c65f069fac71511220382a5ed9f41
+Size: 4302716
+MD5sum: b09173ea350a08168353feefaae584f8
+SHA1: 87e5bf5f93c3b62619abfa1baa8a880b06de9f55
+SHA256: 4086687dad3cc559d16edfbb1ff099ac5ceb92f8da240dd2a09e9a26cfb13ba2
 Section: web
 Priority: optional
 Description: Web frontend for Styx.
