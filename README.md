@@ -7,7 +7,7 @@
 1. Recommended option (binary, for APT):
    curl -fsSL https://styx-firewall.github.io/styx-repo/styx-firewall-keyring.gpg | sudo tee /usr/share/keyrings/styx-firewall-keyring.gpg >/dev/null
 
-   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/styx-firewall-keyring.gpg] https://styx-firewall.github.io/styx-repo trixie styx-dev" | sudo tee /etc/apt/sources.list.d/styx.list
+   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/styx-firewall-keyring.gpg] https://styx-firewall.github.io/styx-repo trixie styx-test" | sudo tee /etc/apt/sources.list.d/styx.list
    sudo apt update
 
 2. Alternative option (manual verification):

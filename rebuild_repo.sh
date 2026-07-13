@@ -31,15 +31,34 @@ IFS=$'\n\t'
 # Environment variables (optional):
 #   REPO_BASE       - repository root (default: .)
 #   REPO_DISTRO     - distribution name (default: trixie)
-#   REVISION        - kernel revision (default: 15)
-#   KERNEL_VERSION  - kernel version (default: 6.12.87-${REVISION}-styx)
 #   GPG_KEY_ID      - key id/email for signing (default: diegargon@)
 #   KEY_FILENAME    - exported public key filename
 #
+# Per-component kernel overrides (optional).
+# Revision is derived automatically from the version string (e.g. 6.12.87-15-styx → revision 15).
+#   DEV_KERNEL_VERSION   - kernel version for styx-dev  (default: 6.12.87-15-styx)
+#   TEST_KERNEL_VERSION  - kernel version for styx-test (default: 6.12.87-15-styx)
+#   PROD_KERNEL_VERSION  - kernel version for styx-prod (default: 6.12.87-15-styx)
+#
+# Per-component GitHub release tag.
+# Override via environment: DEV_KERNEL_TAG=v6.12.95-16-styx ./rebuild_repo.sh
+#   DEV_KERNEL_TAG       - release tag for styx-dev  (default: v16)
+#   TEST_KERNEL_TAG      - release tag for styx-test (default: v0.15)
+#   PROD_KERNEL_TAG      - release tag for styx-prod (default: v0.15)
+#
 # End of header
 
-REVISION="${REVISION:-15}"
-KERNEL_VERSION="${KERNEL_VERSION:-6.12.87-${REVISION}-styx}"
+# Per-component kernel version.
+# Override via environment: DEV_KERNEL_VERSION=6.12.87-16-styx ./rebuild_repo.sh
+DEV_KERNEL_VERSION="${DEV_KERNEL_VERSION:-6.12.95-16-styx}"
+TEST_KERNEL_VERSION="${TEST_KERNEL_VERSION:-6.12.87-15-styx}"
+PROD_KERNEL_VERSION="${PROD_KERNEL_VERSION:-6.12.87-15-styx}"
+
+# Per-component GitHub release tag.
+# Override via environment: DEV_KERNEL_TAG=v6.12.95-16-styx ./rebuild_repo.sh
+DEV_KERNEL_TAG="${DEV_KERNEL_TAG:-6.12.95-16-styx}"
+TEST_KERNEL_TAG="${TEST_KERNEL_TAG:-v0.15}"
+PROD_KERNEL_TAG="${PROD_KERNEL_TAG:-v0.15}"
 
 REPO_BASE="${REPO_BASE:-.}"
 
@@ -55,26 +74,17 @@ COMPONENTS=("styx-dev" "styx-test" "styx-prod")
 # Git remote — saved early so filter-repo cannot wipe it
 ORIGIN_URL="${ORIGIN_URL:-https://github.com/styx-firewall/styx-repo.git}"
 
-# Expected kernel asset filenames (used for download and verification)
-HEADER_NAME="linux-headers-${KERNEL_VERSION}_${REVISION}_amd64.deb"
-IMAGE_NAME="linux-image-${KERNEL_VERSION}_${REVISION}_amd64.deb"
-LIBC_NAME="linux-libc-dev_${REVISION}_amd64.deb"
-
 GPG_KEY_ID="${GPG_KEY_ID:-diegargon@}"
 KEY_FILENAME="${KEY_FILENAME:-styx-firewall-keyring.gpg}"
 
-META_VERSION="1.6"
+META_VERSION_BASE="1.6"
 META_ARCH="amd64"
 META_HEADERS_DIR="linux-headers-styx"
 META_HEADERS_DEBIAN_DIR="$META_HEADERS_DIR/DEBIAN"
 META_HEADERS_CONTROL_FILE="$META_HEADERS_DEBIAN_DIR/control"
-META_HEADERS_DEPENDS="linux-headers-${KERNEL_VERSION}"
 META_DIR="linux-image-styx"
 META_DEBIAN_DIR="$META_DIR/DEBIAN"
 META_CONTROL_FILE="$META_DEBIAN_DIR/control"
-META_DEPENDS="linux-image-${KERNEL_VERSION}"
-
-ASSET_BASE="https://github.com/styx-firewall/styx-kernel/releases/download/v0.${REVISION}"
 
 required_cmds=(wget dpkg-deb dpkg-scanpackages apt-ftparchive ar tar gzip)
 for cmd in "${required_cmds[@]}"; do
@@ -84,7 +94,8 @@ for cmd in "${required_cmds[@]}"; do
   fi
 done
 
-echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST  kernel: $KERNEL_VERSION"
+echo "[+] Repo: $REPO_BASE  dist: $REPO_DIST"
+echo "[+] Kernel versions: dev=$DEV_KERNEL_VERSION  test=$TEST_KERNEL_VERSION  prod=$PROD_KERNEL_VERSION"
 echo "[+] Will process components: ${COMPONENTS[*]}"
 
 # NOTE: always call with || to handle failures (set -e is active)
@@ -98,90 +109,8 @@ download_or_fail() {
   return 0
 }
 
-# ---------------------------------------------------------------------------
-# 1. Download kernel assets (shared across all components)
-# ---------------------------------------------------------------------------
-echo "[+] Downloading kernel assets"
-if [ ! -f "$HEADER_NAME" ]; then
-  download_or_fail "$ASSET_BASE/$HEADER_NAME" || echo "[!] Warning: header not downloaded: $HEADER_NAME"
-else
-  echo "[+] Found local $HEADER_NAME"
-fi
+# Process each component
 
-if [ ! -f "$IMAGE_NAME" ]; then
-  download_or_fail "$ASSET_BASE/$IMAGE_NAME" || echo "[!] Warning: image not downloaded: $IMAGE_NAME"
-else
-  echo "[+] Found local $IMAGE_NAME"
-fi
-
-if [ ! -f "$LIBC_NAME" ]; then
-  download_or_fail "$ASSET_BASE/$LIBC_NAME" || echo "[!] Warning: linux-libc-dev not downloaded: $LIBC_NAME"
-else
-  echo "[+] Found local $LIBC_NAME"
-fi
-
-# Verify required kernel assets exist; fail if any are missing
-missing=()
-for f in "$HEADER_NAME" "$IMAGE_NAME" "$LIBC_NAME"; do
-  if [ ! -f "$f" ]; then
-    missing+=("$f")
-  fi
-done
-if [ ${#missing[@]} -gt 0 ]; then
-  echo "[!] ERROR: missing required kernel assets:" >&2
-  for m in "${missing[@]}"; do
-    echo "    - $m" >&2
-  done
-  echo "    Ensure the kernel builder publishes these assets or set REVISION/KERNEL_VERSION appropriately." >&2
-  exit 1
-fi
-
-# ---------------------------------------------------------------------------
-# 2. Build metapackages (shared across all components)
-# ---------------------------------------------------------------------------
-echo "[+] Creating linux-image-styx metapackage"
-rm -rf "$META_DIR"
-mkdir -p "$META_DEBIAN_DIR"
-cat > "$META_CONTROL_FILE" <<EOF
-Package: linux-image-styx
-Version: $META_VERSION
-Architecture: $META_ARCH
-Maintainer: Styx Firewall <repo@styx-firewall>
-Depends: $META_DEPENDS
-Description: Metapackage to install the Styx Linux kernel
-EOF
-dpkg-deb --build "$META_DIR"
-if [ -f "$META_DIR.deb" ]; then
-  echo "[+] Package generated: $META_DIR.deb"
-  ls -lh "$META_DIR.deb"
-else
-  echo "[!] ERROR: metapackage $META_DIR.deb was not built" >&2
-  exit 1
-fi
-
-echo "[+] Creating linux-headers-styx metapackage"
-rm -rf "$META_HEADERS_DIR"
-mkdir -p "$META_HEADERS_DEBIAN_DIR"
-cat > "$META_HEADERS_CONTROL_FILE" <<EOF
-Package: linux-headers-styx
-Version: $META_VERSION
-Architecture: $META_ARCH
-Maintainer: Styx Firewall <repo@styx-firewall>
-Depends: $META_HEADERS_DEPENDS
-Description: Metapackage to install the Styx Linux kernel headers
-EOF
-dpkg-deb --build "$META_HEADERS_DIR"
-if [ -f "$META_HEADERS_DIR.deb" ]; then
-  echo "[+] Package generated: $META_HEADERS_DIR.deb"
-  ls -lh "$META_HEADERS_DIR.deb"
-else
-  echo "[!] ERROR: metapackage $META_HEADERS_DIR.deb was not built" >&2
-  exit 1
-fi
-
-# ---------------------------------------------------------------------------
-# 3. Process each component
-# ---------------------------------------------------------------------------
 ACTIVE_COMPONENTS=()
 
 for COMP in "${COMPONENTS[@]}"; do
@@ -192,30 +121,120 @@ for COMP in "${COMPONENTS[@]}"; do
   DIST_DIR="$REPO_BASE/dists/$REPO_DIST/$COMP/binary-amd64"
   STAGE_DIR="$REPO_BASE/stage/$COMP"
 
-  # Override kernel version per component via optional config file.
-  # Create stage/<component>/kernel.conf with:
-  #   REVISION=15
-  #   KERNEL_VERSION=6.12.87-15-styx
-  # If the file does not exist, the defaults above are used.
-  if [ -f "$STAGE_DIR/kernel.conf" ]; then
-    echo "[+] Loading kernel overrides from $STAGE_DIR/kernel.conf"
-    source "$STAGE_DIR/kernel.conf"
-  fi
+  # Resolve per-component kernel configuration
+  case "$COMP" in
+    styx-dev)
+      COMP_KERNEL_VERSION="$DEV_KERNEL_VERSION"
+      COMP_KERNEL_TAG="$DEV_KERNEL_TAG"
+      ;;
+    styx-test)
+      COMP_KERNEL_VERSION="$TEST_KERNEL_VERSION"
+      COMP_KERNEL_TAG="$TEST_KERNEL_TAG"
+      ;;
+    styx-prod)
+      COMP_KERNEL_VERSION="$PROD_KERNEL_VERSION"
+      COMP_KERNEL_TAG="$PROD_KERNEL_TAG"
+      ;;
+  esac
+
+  # Derive revision from kernel version (6.12.87-15-styx → 15)
+  COMP_KERNEL_REVISION=$(echo "$COMP_KERNEL_VERSION" | sed 's/.*-\([0-9]\+\)-styx$/\1/')
+
+  # Derive asset filenames and URLs for this component
+  COMP_HEADER_NAME="linux-headers-${COMP_KERNEL_VERSION}_${COMP_KERNEL_REVISION}_amd64.deb"
+  COMP_IMAGE_NAME="linux-image-${COMP_KERNEL_VERSION}_${COMP_KERNEL_REVISION}_amd64.deb"
+  COMP_LIBC_NAME="linux-libc-dev_${COMP_KERNEL_REVISION}_amd64.deb"
+  COMP_ASSET_BASE="https://github.com/styx-firewall/styx-kernel/releases/download/${COMP_KERNEL_TAG}"
+  COMP_META_VERSION="${META_VERSION_BASE}-${COMP_KERNEL_REVISION}"
+
+  echo "[+] Kernel for $COMP: $COMP_KERNEL_VERSION (revision $COMP_KERNEL_REVISION)"
 
   mkdir -p "$POOL_DIR" "$DIST_DIR" "$STAGE_DIR"
 
-  # 3a. Copy kernel assets into this component's pool
+  # Download kernel assets for this component
+  echo "[+] Downloading kernel assets for $COMP"
+  for f in "$COMP_HEADER_NAME" "$COMP_IMAGE_NAME" "$COMP_LIBC_NAME"; do
+    if [ ! -f "$f" ]; then
+      download_or_fail "$COMP_ASSET_BASE/$f" || echo "[!] Warning: download failed: $f"
+    else
+      echo "[+] Found local $f"
+    fi
+  done
+
+  # Verify required kernel assets exist; fail if any are missing
+  missing=()
+  for f in "$COMP_HEADER_NAME" "$COMP_IMAGE_NAME" "$COMP_LIBC_NAME"; do
+    if [ ! -f "$f" ]; then
+      missing+=("$f")
+    fi
+  done
+  if [ ${#missing[@]} -gt 0 ]; then
+    echo "[!] ERROR: missing required kernel assets for $COMP:" >&2
+    for m in "${missing[@]}"; do
+      echo "    - $m" >&2
+    done
+    echo "    Ensure the kernel builder publishes these assets or set ${COMP^^}_KERNEL_VERSION/${COMP^^}_KERNEL_REVISION appropriately." >&2
+    exit 1
+  fi
+
+  # Build metapackages for this component
+  echo "[+] Creating linux-image-styx metapackage for $COMP (version $COMP_META_VERSION)"
+  rm -rf "$META_DIR"
+  mkdir -p "$META_DEBIAN_DIR"
+  cat > "$META_CONTROL_FILE" <<EOF
+Package: linux-image-styx
+Version: $COMP_META_VERSION
+Architecture: $META_ARCH
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-image-${COMP_KERNEL_VERSION}
+Description: Metapackage to install the Styx Linux kernel
+EOF
+  META_IMAGE_DEB="linux-image-styx_${COMP_META_VERSION}_amd64.deb"
+  dpkg-deb --build "$META_DIR" "$REPO_BASE/$META_IMAGE_DEB"
+  if [ -f "$REPO_BASE/$META_IMAGE_DEB" ]; then
+    echo "[+] Package generated: $META_IMAGE_DEB"
+    ls -lh "$REPO_BASE/$META_IMAGE_DEB"
+  else
+    echo "[!] ERROR: metapackage $META_IMAGE_DEB was not built" >&2
+    exit 1
+  fi
+
+  echo "[+] Creating linux-headers-styx metapackage for $COMP (version $COMP_META_VERSION)"
+  rm -rf "$META_HEADERS_DIR"
+  mkdir -p "$META_HEADERS_DEBIAN_DIR"
+  cat > "$META_HEADERS_CONTROL_FILE" <<EOF
+Package: linux-headers-styx
+Version: $COMP_META_VERSION
+Architecture: $META_ARCH
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-headers-${COMP_KERNEL_VERSION}
+Description: Metapackage to install the Styx Linux kernel headers
+EOF
+  META_HEADERS_DEB="linux-headers-styx_${COMP_META_VERSION}_amd64.deb"
+  dpkg-deb --build "$META_HEADERS_DIR" "$REPO_BASE/$META_HEADERS_DEB"
+  if [ -f "$REPO_BASE/$META_HEADERS_DEB" ]; then
+    echo "[+] Package generated: $META_HEADERS_DEB"
+    ls -lh "$REPO_BASE/$META_HEADERS_DEB"
+  else
+    echo "[!] ERROR: metapackage $META_HEADERS_DEB was not built" >&2
+    exit 1
+  fi
+
+  # Copy kernel assets into this component's pool
   echo "[+] Copying kernel assets to pool/$COMP/"
-  cp -v "$REPO_BASE/$HEADER_NAME" "$POOL_DIR/"
-  cp -v "$REPO_BASE/$IMAGE_NAME" "$POOL_DIR/"
-  cp -v "$REPO_BASE/$LIBC_NAME" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$COMP_HEADER_NAME" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$COMP_IMAGE_NAME" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$COMP_LIBC_NAME" "$POOL_DIR/"
 
-  # 3b. Copy metapackages into this component's pool
+  # Copy metapackages into this component's pool
   echo "[+] Copying metapackages to pool/$COMP/"
-  cp -v "$REPO_BASE/$META_DIR.deb" "$POOL_DIR/"
-  cp -v "$REPO_BASE/$META_HEADERS_DIR.deb" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$META_IMAGE_DEB" "$POOL_DIR/"
+  cp -v "$REPO_BASE/$META_HEADERS_DEB" "$POOL_DIR/"
 
-  # 3c. Move stage packages if they exist
+  # Clean up metapackage build directories for this component
+  rm -rf "$META_DIR" "$META_HEADERS_DIR"
+
+  # Move stage packages if they exist
   if [ -d "$STAGE_DIR" ]; then
     shopt -s nullglob
     stage_debs=( "$STAGE_DIR"/*.deb )
@@ -230,7 +249,7 @@ for COMP in "${COMPONENTS[@]}"; do
     echo "[*] stage/$COMP/ does not exist (kernel + metapackages only)"
   fi
 
-  # 3d. Generate Packages
+  # Generate Packages
   echo "[+] Generating Packages for $COMP"
   dpkg-scanpackages --multiversion "pool/$COMP" > "$DIST_DIR/Packages"
   gzip -k -f "$DIST_DIR/Packages"
@@ -238,9 +257,9 @@ for COMP in "${COMPONENTS[@]}"; do
   ACTIVE_COMPONENTS+=("$COMP")
 done
 
-# ---------------------------------------------------------------------------
-# 4. Generate combined Release for all active components
-# ---------------------------------------------------------------------------
+
+# Generate combined Release for all active components
+
 echo ""
 echo "---- Generating combined Release for: ${ACTIVE_COMPONENTS[*]} ----"
 
@@ -260,9 +279,7 @@ EOFCONF
 apt-ftparchive -c "$APT_CONF" release "$REPO_BASE/dists/$REPO_DIST" > "$REPO_BASE/dists/$REPO_DIST/Release"
 rm -f "$APT_CONF"
 
-# ---------------------------------------------------------------------------
-# 5. Sign Release
-# ---------------------------------------------------------------------------
+# Sign Release
 if gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   echo "[+] Signing Release with key $GPG_KEY_ID"
   rm -f "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/InRelease" || true
@@ -284,11 +301,7 @@ if gpg --list-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}" || true
 fi
 
-# ---------------------------------------------------------------------------
-# 6. Cleanup
-# ---------------------------------------------------------------------------
-echo "[+] Cleaning temporary metapackage directories"
-rm -rf "$META_DIR" "$META_HEADERS_DIR"
+# Cleanup
 
 echo "[+] Cleaning .deb files left in repo root and staging..."
 find "$REPO_BASE" -maxdepth 1 -type f -name '*.deb' -exec rm -v {} \;
@@ -297,9 +310,7 @@ for COMP in "${COMPONENTS[@]}"; do
 done
 echo "[+] Cleaning completed."
 
-# ---------------------------------------------------------------------------
-# 7. Git operations (interactive)
-# ---------------------------------------------------------------------------
+# Git operations (interactive)
 echo "[+] Updating Git repository (interactive)"
 read -p "Do you want to push the changes to git? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
@@ -341,7 +352,9 @@ fi
 echo -e "\n✔ Repository updated successfully.\n"
 echo "   Distribution: $REPO_DIST"
 echo "   Components:   ${ACTIVE_COMPONENTS[*]}"
-echo "   Kernel:       $KERNEL_VERSION"
+echo "   Kernel dev:   $DEV_KERNEL_VERSION"
+echo "   Kernel test:  $TEST_KERNEL_VERSION"
+echo "   Kernel prod:  $PROD_KERNEL_VERSION"
 echo ""
 echo "📦 Instructions for users:"
 echo
