@@ -36,6 +36,25 @@ Description: Linux kernel headers for 6.12.95-16-styx on amd64
  .
  This is useful for people who need to build external modules
 
+Package: linux-headers-6.12.95-17-styx
+Source: linux-upstream
+Version: 17
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-2604-nm8zf-runner-jjnmq>
+Installed-Size: 53997
+Filename: pool/styx-dev/linux-headers-6.12.95-17-styx_17_amd64.deb
+Size: 10083316
+MD5sum: 1f0cc46a3aa6206aad3a8e9bec929a34
+SHA1: 4c92a90a98e81622d73dc5216622574271515826
+SHA256: 628764ebf49e5f287779f73f0a283664180376137ca7af88f5b6597f45a8932a
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel headers for 6.12.95-17-styx on amd64
+ This package provides kernel header files for 6.12.95-17-styx on amd64
+ .
+ This is useful for people who need to build external modules
+
 Package: linux-headers-styx
 Version: 1.6-15
 Architecture: amd64
@@ -58,6 +77,18 @@ Size: 716
 MD5sum: c389f9ce6f32c0ab7895a4074180d714
 SHA1: b8c51e6f4d71566aeb483d6285ce85b3c57fabba
 SHA256: 89585740104034467a4b266c76fb34a1b097fb6ea9c0d3d2f663825fe1ae000b
+Description: Metapackage to install the Styx Linux kernel headers
+
+Package: linux-headers-styx
+Version: 1.6-17
+Architecture: amd64
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-headers-6.12.95-17-styx
+Filename: pool/styx-dev/linux-headers-styx_1.6-17_amd64.deb
+Size: 716
+MD5sum: 0bf3c76399238750a8f5dc7b97acdc24
+SHA1: 1b7b2636a4c77b2a54a5735e3739bffed1cd3bc5
+SHA256: 23091229b4829d4f19d5f5a68125b1d1978a10c29435114b258fa4e388281929
 Description: Metapackage to install the Styx Linux kernel headers
 
 Package: linux-image-6.12.87-15-styx
@@ -96,6 +127,24 @@ Description: Linux kernel, version 6.12.95-16-styx
  This package contains the Linux kernel, modules and corresponding other
  files, version: 6.12.95-16-styx.
 
+Package: linux-image-6.12.95-17-styx
+Source: linux-upstream
+Version: 17
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-2604-nm8zf-runner-jjnmq>
+Installed-Size: 195200
+Filename: pool/styx-dev/linux-image-6.12.95-17-styx_17_amd64.deb
+Size: 42641436
+MD5sum: 0eecff0d4b7f4d353bc3c53aadf55857
+SHA1: 8e5c17d43683c09d6b513ee8599e29d61f570f30
+SHA256: e60d9801bc90505fd2435d6aabc1be35c603b63e17c448dcf2fb3d95a37ea9a8
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel, version 6.12.95-17-styx
+ This package contains the Linux kernel, modules and corresponding other
+ files, version: 6.12.95-17-styx.
+
 Package: linux-image-styx
 Version: 1.6-15
 Architecture: amd64
@@ -118,6 +167,18 @@ Size: 712
 MD5sum: 33ebc677b438d3bb4adc08c556a3a4c1
 SHA1: 76444be22364d816ed3717ae4823458549474595
 SHA256: 42fee7f2d2360707b7ff32457340fbda5c2af4aeb5969ed9014c0d5079e2f0ae
+Description: Metapackage to install the Styx Linux kernel
+
+Package: linux-image-styx
+Version: 1.6-17
+Architecture: amd64
+Maintainer: Styx Firewall <repo@styx-firewall>
+Depends: linux-image-6.12.95-17-styx
+Filename: pool/styx-dev/linux-image-styx_1.6-17_amd64.deb
+Size: 712
+MD5sum: 04378f035b9c548659b51e3c0c3f9b54
+SHA1: 94344a166e14a345b2d2d114dea15be1028eced8
+SHA256: a96cd844b7b4b943389561c282ebeb4bc181b1d835f8a55f0ca887588f99bab8
 Description: Metapackage to install the Styx Linux kernel
 
 Package: linux-libc-dev
@@ -152,6 +213,26 @@ Size: 1442452
 MD5sum: 086d2961e122f24ad57bc4bd3566d14a
 SHA1: 7049b7b50b128df0780e570ac1fdb2559cd2a38b
 SHA256: beecfe0b1850ca99f3af62202d332140572c05dd77ddcce142bbfeea4b1d4f73
+Section: devel
+Priority: optional
+Multi-Arch: same
+Homepage: https://www.kernel.org/
+Description: Linux support headers for userspace development
+ This package provides userspaces headers from the Linux kernel.  These headers
+ are used by the installed headers for GNU glibc and other system libraries.
+
+Package: linux-libc-dev
+Source: linux-upstream
+Version: 17
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-2604-nm8zf-runner-jjnmq>
+Installed-Size: 7192
+Provides: linux-kernel-headers
+Filename: pool/styx-dev/linux-libc-dev_17_amd64.deb
+Size: 1442410
+MD5sum: 01bf7d7d8fe8f0a7b92b646bba60c55f
+SHA1: 1326d816d84934512a7fa8cd60d8ebf5aa19e5bf
+SHA256: f3931e60b47385c732ed66be345a1803c256adabea524d6a19909cc19748c29b
 Section: devel
 Priority: optional
 Multi-Arch: same
