@@ -51,8 +51,8 @@ IFS=$'\n\t'
 # Per-component kernel version.
 # Override via environment: DEV_KERNEL_VERSION=6.12.87-16-styx ./rebuild_repo.sh
 DEV_KERNEL_VERSION="${DEV_KERNEL_VERSION:-6.12.95-17-styx}"
-TEST_KERNEL_VERSION="${TEST_KERNEL_VERSION:-6.12.87-15-styx}"
-PROD_KERNEL_VERSION="${PROD_KERNEL_VERSION:-6.12.87-15-styx}"
+TEST_KERNEL_VERSION="${TEST_KERNEL_VERSION:-6.12.95-17-styx}"
+PROD_KERNEL_VERSION="${PROD_KERNEL_VERSION:-6.12.95-17-styx}"
 
 # Per-component GitHub release tag.
 # Override via environment: DEV_KERNEL_TAG=v6.12.95-16-styx ./rebuild_repo.sh
