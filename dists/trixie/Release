@@ -1,40 +1,40 @@
 Architectures: amd64
 Codename: trixie
 Components: styx-dev,styx-test,styx-prod
-Date: Fri, 07 Aug 2026 07:58:25 +0000
+Date: Fri, 07 Aug 2026 20:34:29 +0000
 Description: STYX Firewall packages
 Label: STYX Repository
 Origin: STYX Firewall
 Suite: trixie
 MD5Sum:
- 97a926e5118c3e676a2a34854d451ed6              212 Release
- 2003c049305f474e35a1c7f2ad63ff3f             6091 styx-dev/binary-amd64/Packages
- 22fe205d51cfd1d93f49f5e2426a1a01             2173 styx-dev/binary-amd64/Packages.gz
- 110614b63ad9325b423ccb1343a73920             2966 styx-prod/binary-amd64/Packages
- 7fa1ba7db7decc7a505ff66376e2e475             1147 styx-prod/binary-amd64/Packages.gz
- 8ca8eefd9bec5a08749196215608eef3             5189 styx-test/binary-amd64/Packages
- 8a87dfaf52c0b57812509250f8ef35ad             1882 styx-test/binary-amd64/Packages.gz
+ 04ac6dc6591900606116d271c2f6b321              212 Release
+ fa2cd883975d938cdc1510925228d89e             6925 styx-dev/binary-amd64/Packages
+ 1df124b13ce84fbac50eaa34631e073b             2382 styx-dev/binary-amd64/Packages.gz
+ 0d8ea2d26912a289c352bd578dace827             2966 styx-prod/binary-amd64/Packages
+ 43178a5a209c84f4495cbc924f3f21a8             1148 styx-prod/binary-amd64/Packages.gz
+ 97125d84a44d7fbd62d81abca2234b46             5189 styx-test/binary-amd64/Packages
+ 1fa2bc2a836706fed01c5798e34d142b             1879 styx-test/binary-amd64/Packages.gz
 SHA1:
- 624c13a3ac59941de4434e13ef09c8517b1baf4f              212 Release
- c605d3408b768f013d63a39bc44b1e9acba571de             6091 styx-dev/binary-amd64/Packages
- 95c8af8e2459c5e0b014e6207822cfaf01417250             2173 styx-dev/binary-amd64/Packages.gz
- 802e207a0ddb0da87e1eec7f63058172b9149c1e             2966 styx-prod/binary-amd64/Packages
- f42c60da17f4f4ea4ce31c948971d3bcfd1ca2a2             1147 styx-prod/binary-amd64/Packages.gz
- 1d18950335c006025c2055b4daceef7e9bb00edc             5189 styx-test/binary-amd64/Packages
- 0143c7fbfe1158d6a7b1a922587597b7dcdb122e             1882 styx-test/binary-amd64/Packages.gz
+ d7ef702c955e2c8f18d8bab730ef3dec7190107c              212 Release
+ b025ccf9a9b0fd817b5cf44d861bcf8bb0507bae             6925 styx-dev/binary-amd64/Packages
+ 66f4f1184b4614698176d0e9e8e5764d47a5e211             2382 styx-dev/binary-amd64/Packages.gz
+ eb4726e35fafa9802c374d04877cc1cf5e651a1e             2966 styx-prod/binary-amd64/Packages
+ 99cc813a0eccd219b905cfc9b5c9394186e368b9             1148 styx-prod/binary-amd64/Packages.gz
+ 5079c2654e050ce39c9b6c48d07e0de6daa52772             5189 styx-test/binary-amd64/Packages
+ 6fcc9591e640ff67da7487c0aab4b9a8beb47898             1879 styx-test/binary-amd64/Packages.gz
 SHA256:
- f1a4367e44b8bbb3b509c114bedf34f6bf4710c3e152b74feb7e000b0101bf02              212 Release
- 33be6ab85506d9c5f1b135d6eb30f08ecc1d031b377f03996c06e20f58c9a721             6091 styx-dev/binary-amd64/Packages
- 80e17586506043c22917f5d1aa906392eec381f68ac9568665600737f1ff8396             2173 styx-dev/binary-amd64/Packages.gz
- da057be487c4abc4857031e29038d334a4d39179571ee24bf09555d5ddd4fcb4             2966 styx-prod/binary-amd64/Packages
- 95426f32761b363efa60eb7ec89a2709516083a9f9fd5dc8579fcc5ea8e8f39f             1147 styx-prod/binary-amd64/Packages.gz
- 4f7a0a737e4807f43e1d897af264befb7a9a2c5363bcd67faf9124de9459c813             5189 styx-test/binary-amd64/Packages
- 84862cd305a9d7eb8010e306f870f759dcba2df8047dfd4eb4d0c7fe09f437ce             1882 styx-test/binary-amd64/Packages.gz
+ 5f2514bc8b0fb081d96ca1cb0dcf944a9bb5b3532851facafdf3090ed90eaa79              212 Release
+ ef51a66b25edcea9ce28bbbcb1e35a6a96fd2a789f378404ca14d66db8e58530             6925 styx-dev/binary-amd64/Packages
+ aaf0ed7375895fecd7566a223c0bfa25eedf4ae5cc081d12b48490ece6e6a700             2382 styx-dev/binary-amd64/Packages.gz
+ 389e54aaf0f8ebf613e347dedc2b46f372f23306ef41f5ed4ea1840d87d3a941             2966 styx-prod/binary-amd64/Packages
+ 43efa9e711caa5134256669dc3eb30d665d7488f8d94345db0845329e55964c4             1148 styx-prod/binary-amd64/Packages.gz
+ 2f398ef716b425be181c030440d8561be2f5feefcc85f5bfb126f063b55581d7             5189 styx-test/binary-amd64/Packages
+ b6dfd1208e73c98894ce6dab502b0d3964d1641796a48e1c341b8fe79292a05c             1879 styx-test/binary-amd64/Packages.gz
 SHA512:
- 8ae1f96c5ce514eb0b5970423f0105cea621f37a6f1547e614f3028117f43a9c9edf72d7b1cc179eb63312a0ad6501b4ad5422e795ce682913579a5c6b5d5682              212 Release
- 4b614a2ca64d68be374b33a84235ee131e9b96c13f51538169bcd0d5b2444a83601a1ccafcd26acd956a2ef6926e42870df2fee817011487b91d46a9e095782e             6091 styx-dev/binary-amd64/Packages
- aa1b265bdd9a9faf84102e2030214fc4fe3596daec6d9d55a55f5a6dbd7cfa834437e1d4afdb574869cf904c2151baa47405181b743b8d9ab598c3c3ac7f9454             2173 styx-dev/binary-amd64/Packages.gz
- bdd44b9d4191141eecfbba91c5c872bea4e844bc071dc5c0836373ac70437149a8d440d10d110e5cd74a341f58d649b77a4601b6ac3eb9bcfdfbb0358e505f15             2966 styx-prod/binary-amd64/Packages
- 0da5f29fef204210f667d222ba426d8cbfdb67f3215a139d71808eb169bd795cbae16ad5a14ae9798d5196b12781724049c354d55f777d8805fccb6c9d7b8f05             1147 styx-prod/binary-amd64/Packages.gz
- f7c81f373c4a6b1930da3071894aba680c411c9a51afc6e72ac110efdc194276180f5ecff2043b1907b987d91ab7c6fae16c93f38342911dc0d8c8205675d09f             5189 styx-test/binary-amd64/Packages
- 3c9beed61eb75a6f349892a168b8e17b8f13e80a92fddbc33d573c65181a7721e59d4198de65d7e46339ca10b6dc134b1ecd89648d78f0dc4d878c0d727e82e3             1882 styx-test/binary-amd64/Packages.gz
+ 08ba591c8b58c79124fe4d1d9517294c7f3b3ce901ab3151cc6838fe13e342e19946a2107c9c253185747265db5d8b6af1326e980e0498607c748e08b4dab27a              212 Release
+ 203e29b6526e5241cbea84b6443c9ef4fd1ea7fec445f4f280b1d8c2c297042cd0a428dbce94c93f712aec5470d3d2430a734d4ec9bf1e7cb6365fc35d33488c             6925 styx-dev/binary-amd64/Packages
+ 2a6665079ed67165246ebe200b124c29d736f32706b06b3375beacbf322faaba29b773a3140e89eec8bfbc42e7ae1f347f475e3d3cc0ee1a5d5e1bee63715985             2382 styx-dev/binary-amd64/Packages.gz
+ bec6961db32de02009730a1511fa3be3a2ca2f9f9057fb33b49ec94adf5743192d6235f4bb9bb43872f4175818570b8d81284c5ca3ffeed43c394fbd6bf2d7ed             2966 styx-prod/binary-amd64/Packages
+ a48b8c706f66a6cdd644c2a5de6c39902ff584f44fdbf29867ca0cf0b94cd5784720a75c7df6b307b119129ffdf36ef98a16ba5ba10921552ce85bc10c24aabb             1148 styx-prod/binary-amd64/Packages.gz
+ 81e54c30aaabee8eb60dbf6380f0af0875c0ef2707d1874233b646b5869bc89ee17edd8eb3d5b91db883ec8725227d2d33e218e60cf93f63dcfd3f5d7438d3a3             5189 styx-test/binary-amd64/Packages
+ 8d784977df87566c2a03852a8813f998465bd07e4464eb0b4097809900795b58b5e6e2aabc0967545255b79b47f37ff7c66cbb46f9bbab765b6d1d91033f5f88             1879 styx-test/binary-amd64/Packages.gz
