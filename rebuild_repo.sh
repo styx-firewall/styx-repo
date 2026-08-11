@@ -33,6 +33,9 @@ IFS=$'\n\t'
 #   REPO_DISTRO     - distribution name (default: trixie)
 #   GPG_KEY_ID      - key id/email for signing (default: diegargon@)
 #   KEY_FILENAME    - exported public key filename
+#   REBUILD_MODE    - "full" (default): rewrite git history to remove old pool/ blobs.
+#                     "update": skip history rewrite, just add/commit/push.
+#                     Usage: REBUILD_MODE=update ./rebuild_repo.sh
 #
 # Per-component kernel overrides (optional).
 # Revision is derived automatically from the version string (e.g. 6.12.87-15-styx → revision 15).
@@ -59,6 +62,8 @@ PROD_KERNEL_VERSION="${PROD_KERNEL_VERSION:-6.12.95-17-styx}"
 DEV_KERNEL_TAG="${DEV_KERNEL_TAG:-6.12.95-17-styx}"
 TEST_KERNEL_TAG="${TEST_KERNEL_TAG:-v0.15}"
 PROD_KERNEL_TAG="${PROD_KERNEL_TAG:-v0.15}"
+
+REBUILD_MODE="${REBUILD_MODE:-update}"
 
 REPO_BASE="${REPO_BASE:-.}"
 
@@ -151,37 +156,50 @@ for COMP in "${COMPONENTS[@]}"; do
 
   mkdir -p "$POOL_DIR" "$DIST_DIR" "$STAGE_DIR"
 
-  # Download kernel assets for this component
-  echo "[+] Downloading kernel assets for $COMP"
-  for f in "$COMP_HEADER_NAME" "$COMP_IMAGE_NAME" "$COMP_LIBC_NAME"; do
-    if [ ! -f "$f" ]; then
-      download_or_fail "$COMP_ASSET_BASE/$f" || echo "[!] Warning: download failed: $f"
-    else
-      echo "[+] Found local $f"
-    fi
-  done
+  # In update mode, skip kernel download + metapackage build if all 5 debs
+  # already exist in pool/ (same versions, unchanged).  In full mode always rebuild.
+  META_IMAGE_DEB="linux-image-styx_${COMP_META_VERSION}_amd64.deb"
+  META_HEADERS_DEB="linux-headers-styx_${COMP_META_VERSION}_amd64.deb"
 
-  # Verify required kernel assets exist; fail if any are missing
-  missing=()
-  for f in "$COMP_HEADER_NAME" "$COMP_IMAGE_NAME" "$COMP_LIBC_NAME"; do
-    if [ ! -f "$f" ]; then
-      missing+=("$f")
-    fi
-  done
-  if [ ${#missing[@]} -gt 0 ]; then
-    echo "[!] ERROR: missing required kernel assets for $COMP:" >&2
-    for m in "${missing[@]}"; do
-      echo "    - $m" >&2
+  if [ "$REBUILD_MODE" = "update" ] && \
+     [ -f "$POOL_DIR/$COMP_HEADER_NAME" ] && \
+     [ -f "$POOL_DIR/$COMP_IMAGE_NAME" ] && \
+     [ -f "$POOL_DIR/$COMP_LIBC_NAME" ] && \
+     [ -f "$POOL_DIR/$META_IMAGE_DEB" ] && \
+     [ -f "$POOL_DIR/$META_HEADERS_DEB" ]; then
+    echo "[*] REBUILD_MODE=update -- all kernel debs already in pool/$COMP/, skipping download & metapackage build"
+  else
+    # Download kernel assets for this component
+    echo "[+] Downloading kernel assets for $COMP"
+    for f in "$COMP_HEADER_NAME" "$COMP_IMAGE_NAME" "$COMP_LIBC_NAME"; do
+      if [ ! -f "$f" ]; then
+        download_or_fail "$COMP_ASSET_BASE/$f" || echo "[!] Warning: download failed: $f"
+      else
+        echo "[+] Found local $f"
+      fi
     done
-    echo "    Ensure the kernel builder publishes these assets or set ${COMP^^}_KERNEL_VERSION/${COMP^^}_KERNEL_REVISION appropriately." >&2
-    exit 1
-  fi
 
-  # Build metapackages for this component
-  echo "[+] Creating linux-image-styx metapackage for $COMP (version $COMP_META_VERSION)"
-  rm -rf "$META_DIR"
-  mkdir -p "$META_DEBIAN_DIR"
-  cat > "$META_CONTROL_FILE" <<EOF
+    # Verify required kernel assets exist; fail if any are missing
+    missing=()
+    for f in "$COMP_HEADER_NAME" "$COMP_IMAGE_NAME" "$COMP_LIBC_NAME"; do
+      if [ ! -f "$f" ]; then
+        missing+=("$f")
+      fi
+    done
+    if [ ${#missing[@]} -gt 0 ]; then
+      echo "[!] ERROR: missing required kernel assets for $COMP:" >&2
+      for m in "${missing[@]}"; do
+        echo "    - $m" >&2
+      done
+      echo "    Ensure the kernel builder publishes these assets or set ${COMP^^}_KERNEL_VERSION/${COMP^^}_KERNEL_REVISION appropriately." >&2
+      exit 1
+    fi
+
+    # Build metapackages for this component
+    echo "[+] Creating linux-image-styx metapackage for $COMP (version $COMP_META_VERSION)"
+    rm -rf "$META_DIR"
+    mkdir -p "$META_DEBIAN_DIR"
+    cat > "$META_CONTROL_FILE" <<EOF
 Package: linux-image-styx
 Version: $COMP_META_VERSION
 Architecture: $META_ARCH
@@ -189,20 +207,19 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-image-${COMP_KERNEL_VERSION}
 Description: Metapackage to install the Styx Linux kernel
 EOF
-  META_IMAGE_DEB="linux-image-styx_${COMP_META_VERSION}_amd64.deb"
-  dpkg-deb --build "$META_DIR" "$REPO_BASE/$META_IMAGE_DEB"
-  if [ -f "$REPO_BASE/$META_IMAGE_DEB" ]; then
-    echo "[+] Package generated: $META_IMAGE_DEB"
-    ls -lh "$REPO_BASE/$META_IMAGE_DEB"
-  else
-    echo "[!] ERROR: metapackage $META_IMAGE_DEB was not built" >&2
-    exit 1
-  fi
+    dpkg-deb --build "$META_DIR" "$REPO_BASE/$META_IMAGE_DEB"
+    if [ -f "$REPO_BASE/$META_IMAGE_DEB" ]; then
+      echo "[+] Package generated: $META_IMAGE_DEB"
+      ls -lh "$REPO_BASE/$META_IMAGE_DEB"
+    else
+      echo "[!] ERROR: metapackage $META_IMAGE_DEB was not built" >&2
+      exit 1
+    fi
 
-  echo "[+] Creating linux-headers-styx metapackage for $COMP (version $COMP_META_VERSION)"
-  rm -rf "$META_HEADERS_DIR"
-  mkdir -p "$META_HEADERS_DEBIAN_DIR"
-  cat > "$META_HEADERS_CONTROL_FILE" <<EOF
+    echo "[+] Creating linux-headers-styx metapackage for $COMP (version $COMP_META_VERSION)"
+    rm -rf "$META_HEADERS_DIR"
+    mkdir -p "$META_HEADERS_DEBIAN_DIR"
+    cat > "$META_HEADERS_CONTROL_FILE" <<EOF
 Package: linux-headers-styx
 Version: $COMP_META_VERSION
 Architecture: $META_ARCH
@@ -210,30 +227,29 @@ Maintainer: Styx Firewall <repo@styx-firewall>
 Depends: linux-headers-${COMP_KERNEL_VERSION}
 Description: Metapackage to install the Styx Linux kernel headers
 EOF
-  META_HEADERS_DEB="linux-headers-styx_${COMP_META_VERSION}_amd64.deb"
-  dpkg-deb --build "$META_HEADERS_DIR" "$REPO_BASE/$META_HEADERS_DEB"
-  if [ -f "$REPO_BASE/$META_HEADERS_DEB" ]; then
-    echo "[+] Package generated: $META_HEADERS_DEB"
-    ls -lh "$REPO_BASE/$META_HEADERS_DEB"
-  else
-    echo "[!] ERROR: metapackage $META_HEADERS_DEB was not built" >&2
-    exit 1
+    dpkg-deb --build "$META_HEADERS_DIR" "$REPO_BASE/$META_HEADERS_DEB"
+    if [ -f "$REPO_BASE/$META_HEADERS_DEB" ]; then
+      echo "[+] Package generated: $META_HEADERS_DEB"
+      ls -lh "$REPO_BASE/$META_HEADERS_DEB"
+    else
+      echo "[!] ERROR: metapackage $META_HEADERS_DEB was not built" >&2
+      exit 1
+    fi
+
+    # Copy kernel assets into this component's pool
+    echo "[+] Copying kernel assets to pool/$COMP/"
+    cp -v "$REPO_BASE/$COMP_HEADER_NAME" "$POOL_DIR/"
+    cp -v "$REPO_BASE/$COMP_IMAGE_NAME" "$POOL_DIR/"
+    cp -v "$REPO_BASE/$COMP_LIBC_NAME" "$POOL_DIR/"
+
+    # Copy metapackages into this component's pool
+    echo "[+] Copying metapackages to pool/$COMP/"
+    cp -v "$REPO_BASE/$META_IMAGE_DEB" "$POOL_DIR/"
+    cp -v "$REPO_BASE/$META_HEADERS_DEB" "$POOL_DIR/"
+
+    # Clean up metapackage build directories for this component
+    rm -rf "$META_DIR" "$META_HEADERS_DIR"
   fi
-
-  # Copy kernel assets into this component's pool
-  echo "[+] Copying kernel assets to pool/$COMP/"
-  cp -v "$REPO_BASE/$COMP_HEADER_NAME" "$POOL_DIR/"
-  cp -v "$REPO_BASE/$COMP_IMAGE_NAME" "$POOL_DIR/"
-  cp -v "$REPO_BASE/$COMP_LIBC_NAME" "$POOL_DIR/"
-
-  # Copy metapackages into this component's pool
-  echo "[+] Copying metapackages to pool/$COMP/"
-  cp -v "$REPO_BASE/$META_IMAGE_DEB" "$POOL_DIR/"
-  cp -v "$REPO_BASE/$META_HEADERS_DEB" "$POOL_DIR/"
-
-  # Clean up metapackage build directories for this component
-  rm -rf "$META_DIR" "$META_HEADERS_DIR"
-
   # Move stage packages if they exist
   if [ -d "$STAGE_DIR" ]; then
     shopt -s nullglob
@@ -317,25 +333,29 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
   git add -A
   git commit -m "Update repo $REPO_DIST [${COMPONENT_LIST}] $(date +%Y-%m-%d)" || true
   if [ -d "$REPO_BASE/pool" ]; then
-    echo "[+] Backing up pool/ to pool2/..."
-    rm -rf "$REPO_BASE/pool2"
-    cp -a "$REPO_BASE/pool" "$REPO_BASE/pool2"
+    if [ "$REBUILD_MODE" = "full" ]; then
+      echo "[+] Backing up pool/ to pool2/..."
+      rm -rf "$REPO_BASE/pool2"
+      cp -a "$REPO_BASE/pool" "$REPO_BASE/pool2"
 
-    echo "[+] Running git filter-repo to clean pool history (optional)"
-    if command -v git-filter-repo >/dev/null 2>&1 || command -v git filter-repo >/dev/null 2>&1; then
-      git filter-repo --path pool/ --invert-paths --force || echo "[!] git filter-repo failed or not available"
+      echo "[+] Running git filter-repo to clean pool history"
+      if command -v git-filter-repo >/dev/null 2>&1 || command -v git filter-repo >/dev/null 2>&1; then
+        git filter-repo --path pool/ --invert-paths --force || echo "[!] git filter-repo failed"
+      else
+        echo "[!] git-filter-repo not available; skipping history rewrite"
+      fi
+
+      echo "[+] Restoring pool2/ to pool/"
+      rm -rf "$REPO_BASE/pool"
+      mkdir -p "$REPO_BASE/pool"
+      cp -a "$REPO_BASE/pool2"/* "$REPO_BASE/pool/"
+      rm -rf "$REPO_BASE/pool2"
+      if [ -n "$ORIGIN_URL" ] && ! git remote | grep -q '^origin$'; then
+        git remote add origin "$ORIGIN_URL"
+        echo "[+] Origin remote restored: $ORIGIN_URL"
+      fi
     else
-      echo "[!] git-filter-repo not available; skipping history rewrite"
-    fi
-
-    echo "[+] Restoring pool2/ to pool/"
-    rm -rf "$REPO_BASE/pool"
-    mkdir -p "$REPO_BASE/pool"
-    cp -a "$REPO_BASE/pool2"/* "$REPO_BASE/pool/"
-    rm -rf "$REPO_BASE/pool2"
-    if [ -n "$ORIGIN_URL" ] && ! git remote | grep -q '^origin$'; then
-      git remote add origin "$ORIGIN_URL"
-      echo "[+] Origin remote restored: $ORIGIN_URL"
+      echo "[*] REBUILD_MODE=update -- skipping git filter-repo (no history rewrite)"
     fi
   fi
   git add -A
