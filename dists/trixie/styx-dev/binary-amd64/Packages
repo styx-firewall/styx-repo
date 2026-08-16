@@ -279,6 +279,19 @@ Section: utils
 Priority: optional
 Description: Styx Gateway Python executable
 
+Package: styx-gateway
+Version: 0.46.52-1
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Filename: pool/styx-dev/styx-gateway-0.46.52-1.deb
+Size: 16370084
+MD5sum: 3d2b6d8e365c255f9e8f1e8425af3bdf
+SHA1: 452ce898604c3ed9e221f9640ee25b0808fb6023
+SHA256: a101cc6ab2bf8c413b544627cfeca032f0d8facd772087ceb52e232885196dac
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
 Package: styx-ui
 Version: 0.39.10-1
 Architecture: all
