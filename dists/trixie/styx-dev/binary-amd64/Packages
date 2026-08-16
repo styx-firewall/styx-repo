@@ -111,12 +111,12 @@ Package: styx-firewall
 Version: 0.3-2
 Architecture: all
 Maintainer: diegargon <diegargon@gmail.com>
-Depends: styx-gateway (>= 0.46.25-1), styx-ui (>= 0.39.16-1), nftables
+Depends: styx-gateway (>= 0.46.45-1), styx-ui (>= 0.39.25-1), nftables
 Filename: pool/styx-dev/styx-firewall-0.3-2.deb
 Size: 760
-MD5sum: 2e7c9445d58adb2331eb0aef6351f25f
-SHA1: e6465b1b68ff1307bcac68025019e66541fe522e
-SHA256: ae3fe91361a9b7907767f96107b9b6ccd526f35ea51b27462dbf7d2bb163e5cd
+MD5sum: 05ee63a2517f33197248fe16bb7476b2
+SHA1: 119b179c009c74f0b8d68c728a25ecc05f1f3e6c
+SHA256: 1528607c85c3492856df89e63ff05c2917790882fcc709a87f67758fba0125b4
 Section: metapackages
 Priority: optional
 Description: Meta-package that installs styx-gateway, styx-ui and other firewall tools.
@@ -212,6 +212,19 @@ Section: utils
 Priority: optional
 Description: Styx Gateway Python executable
 
+Package: styx-gateway
+Version: 0.46.45-1
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Filename: pool/styx-dev/styx-gateway-0.46.45-1.deb
+Size: 16364728
+MD5sum: 31810dc493b1ad950416ad5ef687e90c
+SHA1: 49d5de8b1b662a8a9cd82a0ebdecaf2fb0876ff5
+SHA256: 9ab27a5d641c307ea43433a77184389da75128c64f858dc109d5403937adedf4
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
 Package: styx-ui
 Version: 0.39.10-1
 Architecture: all
@@ -264,6 +277,20 @@ Size: 4305004
 MD5sum: a860e4b6aab3df437c80bcefbdb9abcb
 SHA1: ad1c8050e75d064787b2519245795aa5c2105f2d
 SHA256: 23bb36263fc05828dc2f961eede786e0d4e4ca18819c03bf99cb49293220bca2
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
+Package: styx-ui
+Version: 0.39.25-1
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-dev/styx-ui-0.39.25-1.deb
+Size: 4304920
+MD5sum: a7c9d883b2235611e70ba0be36ee7884
+SHA1: 50386d5087fe134b581b57d35ebd9fdc80fb95b5
+SHA256: e87d56b92c299c4e88837377cc71211bd7c427044ee7c207c80aac0a81f89c2b
 Section: web
 Priority: optional
 Description: Web frontend for Styx.
