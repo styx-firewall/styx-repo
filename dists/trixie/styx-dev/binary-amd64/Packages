@@ -204,10 +204,10 @@ Version: 0.46.61-1
 Architecture: amd64
 Maintainer: diegargon <diegargon@gmail.com>
 Filename: pool/styx-dev/styx-gateway-0.46.61-1.deb
-Size: 16397160
-MD5sum: bdf1cc02743d86cbabd706f6b000a917
-SHA1: 5c46db8e3d8004743a9dd8a2f13688e6016ac52d
-SHA256: 618fd20cb2d6d301b5e2d31c8f3f6609b4fe28c405e487e58c5b05a04a89921c
+Size: 16395436
+MD5sum: e83ac5191c785e48878e6d17a479a5dc
+SHA1: 2a0b41ad4bb88bdfda28d4e4a70fc9d7b994a0dd
+SHA256: c4ab5e670e8cb3eb341254dc7722e629ad1812a3fe6e4ddc5de2a1c405df2bf5
 Section: utils
 Priority: optional
 Description: Styx Gateway Python executable
