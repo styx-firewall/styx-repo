@@ -238,6 +238,19 @@ Section: utils
 Priority: optional
 Description: Styx Gateway Python executable
 
+Package: styx-gateway
+Version: 0.46.71-1
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Filename: pool/styx-dev/styx-gateway-0.46.71-1.deb
+Size: 16414316
+MD5sum: 6b6e318732c38ca20495c74a473eda59
+SHA1: 7851165391c44ebfe1bb1f679bf62018226e5a76
+SHA256: 090940f4cb8463b24df10f7c386b58b2c8b2543af6ee244811124a94d6c24594
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
 Package: styx-ui
 Version: 0.39.27-1
 Architecture: all
@@ -318,6 +331,20 @@ Size: 4306920
 MD5sum: 41bf4537a24ff65829b0658ee3fb6978
 SHA1: 56bbfba7863a1e3972e64d3b9482a1d38b0ef71a
 SHA256: 210f90051c7036f43eed91c2f24c9423741df6bb8e4d553c6ccaad3aa2e87f28
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
+Package: styx-ui
+Version: 0.39.35-1
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-dev/styx-ui-0.39.35-1.deb
+Size: 4307040
+MD5sum: 160efe7edbf2de53fee9789ed1f428a0
+SHA1: a660fc92c135336536e663436034ad2145ee4f09
+SHA256: 569bc780831d091ccc7dd08f4c05771fd299220f1df526ff0648466ec92dcf52
 Section: web
 Priority: optional
 Description: Web frontend for Styx.
