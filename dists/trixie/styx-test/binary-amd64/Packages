@@ -231,3 +231,17 @@ Section: web
 Priority: optional
 Description: Web frontend for Styx.
 
+Package: styx-ui
+Version: 0.39.32-1
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-test/styx-ui-0.39.32-1.deb
+Size: 4307064
+MD5sum: 394c9936205128a7037020e25be6f72f
+SHA1: a04abd2a206e55bf5ebd64176248e665fe017a44
+SHA256: 5d25a51f9fd925a36a1b7169b18304537ba39de2fc79f6a69c35891a70c4afb0
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
