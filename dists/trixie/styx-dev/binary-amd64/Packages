@@ -111,12 +111,12 @@ Package: styx-firewall
 Version: 0.3-4
 Architecture: all
 Maintainer: diegargon <diegargon@gmail.com>
-Depends: styx-gateway (>= 0.46.49-1), styx-ui (>= 0.39.27-1), nftables
+Depends: styx-gateway (>= 0.46.129-1), styx-ui (>= 0.39.80-1), nftables
 Filename: pool/styx-dev/styx-firewall-0.3-4.deb
 Size: 764
-MD5sum: feb332a2c64f175580f3d9c3a99b03fb
-SHA1: 6cd2b6808d7e814ac4b23858e9e2f0461d8528db
-SHA256: 43b90a441f7a36fc6af2d28c60b4c5ce8f23529410b26f01c036c26d404a04ea
+MD5sum: 91781caeda94e15bac3833b69670b1f0
+SHA1: 3804a722372f743e6ce221a39714d4bab0616647
+SHA256: 94b435b0f1294529f28f587be557490ad9d31406fec851a033d393d758640e9b
 Section: metapackages
 Priority: optional
 Description: Meta-package that installs styx-gateway, styx-ui and other firewall tools.
@@ -169,6 +169,19 @@ Size: 16560932
 MD5sum: 975ecfb974ead69a5ed429cac678dd0d
 SHA1: 367c70f8ee0277fcbb6e75e78eea03ffdba518e2
 SHA256: c1c816605b62eae43461065362246a30b62ed6c7c2e6db566b94a277b0e68760
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
+Package: styx-gateway
+Version: 0.46.129-1
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Filename: pool/styx-dev/styx-gateway-0.46.129-1.deb
+Size: 16592376
+MD5sum: a75a444c47acf6c42c1e3a3b05e21bf4
+SHA1: 06a857007d767b728caa524e72d904347bf33eaf
+SHA256: c136590d4e1f48261014b1f617de2f86dfe708d2122d7b629c096423c5ab1847
 Section: utils
 Priority: optional
 Description: Styx Gateway Python executable
@@ -574,6 +587,20 @@ Size: 4345144
 MD5sum: 2623ace6117efb4c46e10f8777ee08e7
 SHA1: 8454ee03a54025b1fa147c4018ceb353b479649a
 SHA256: 77866976fcfeafb6611c8679e0afaca7e26b3e96792cd16eb198ef4ba32b2e4b
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
+Package: styx-ui
+Version: 0.39.80-1
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-dev/styx-ui-0.39.80-1.deb
+Size: 4353740
+MD5sum: 08befcc0c95b3596a59d7499b64e5750
+SHA1: c2dc2942ffee3173e89e3e42f21907264523e049
+SHA256: 9c46b21fef87e54cd3927a7178c6705127090c60da84eb223ecb1f737e57c276
 Section: web
 Priority: optional
 Description: Web frontend for Styx.
