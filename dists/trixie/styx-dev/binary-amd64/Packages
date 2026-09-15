@@ -111,12 +111,12 @@ Package: styx-firewall
 Version: 0.3-4
 Architecture: all
 Maintainer: diegargon <diegargon@gmail.com>
-Depends: styx-gateway (>= 0.46.129-1), styx-ui (>= 0.39.80-1), nftables
+Depends: styx-gateway (>= 0.47.33-1), styx-ui (>= 0.40.23-1), nftables
 Filename: pool/styx-dev/styx-firewall-0.3-4.deb
-Size: 764
-MD5sum: 91781caeda94e15bac3833b69670b1f0
-SHA1: 3804a722372f743e6ce221a39714d4bab0616647
-SHA256: 94b435b0f1294529f28f587be557490ad9d31406fec851a033d393d758640e9b
+Size: 760
+MD5sum: 5d3ba7ed071434a32329311ecf409a33
+SHA1: 2ff8a4fea9cdd74a9f9a494f2e2b352f4af4f1ea
+SHA256: f90e4185290e2eaf41e6256995d3f355f9dfdeb7ef0431b7df9ddbad5b704cff
 Section: metapackages
 Priority: optional
 Description: Meta-package that installs styx-gateway, styx-ui and other firewall tools.
@@ -278,6 +278,19 @@ Priority: optional
 Description: Styx Gateway Python executable
 
 Package: styx-gateway
+Version: 0.47.33-1
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Filename: pool/styx-dev/styx-gateway-0.47.33-1.deb
+Size: 16921716
+MD5sum: ce4c79f07422a7d8c99e6227e2d3d092
+SHA1: 94517510b89fc3cf8219458a0a23f69269ff6199
+SHA256: 3ec7795784662d3916a76cc14278c301e3baa68cbf0aa7ab8fdc00e2654ee5e1
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
+Package: styx-gateway
 Version: 0.47.7-1
 Architecture: amd64
 Maintainer: diegargon <diegargon@gmail.com>
@@ -356,6 +369,20 @@ Size: 4386080
 MD5sum: 0a3cd79d2422a736c077140fa7af229b
 SHA1: 34f862cae098e18261905661f610813a24748c39
 SHA256: 61e0cec5e651bef3c1b25cf537e4fbba9e7000b2826f5470ed27f60f9eb04762
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
+Package: styx-ui
+Version: 0.40.23-1
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-dev/styx-ui-0.40.23-1.deb
+Size: 4410708
+MD5sum: 8fd2f0f9b14054816adb028601016e6e
+SHA1: 4c8f86ab17b54a2ba5471f288ecc29cb515eb2ac
+SHA256: f3db19d0a4ea214c647ce37ec333052d0ed51363ef51fd2e82eafcba53d2b3aa
 Section: web
 Priority: optional
 Description: Web frontend for Styx.
