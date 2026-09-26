@@ -37,31 +37,12 @@ IFS=$'\n\t'
 #                     "update": skip history rewrite, just add/commit/push.
 #                     Usage: REBUILD_MODE=update ./rebuild_repo.sh
 #
-# Per-component kernel overrides (optional).
-# Revision is derived automatically from the version string (e.g. 6.12.87-15-styx → revision 15).
-#   DEV_KERNEL_VERSION   - kernel version for styx-dev  (default: 6.12.87-15-styx)
-#   TEST_KERNEL_VERSION  - kernel version for styx-test (default: 6.12.87-15-styx)
-#   PROD_KERNEL_VERSION  - kernel version for styx-prod (default: 6.12.87-15-styx)
-#
-# Per-component GitHub release tag.
-# Override via environment: DEV_KERNEL_TAG=v6.12.95-16-styx ./rebuild_repo.sh
-#   DEV_KERNEL_TAG       - release tag for styx-dev  (default: v16)
-#   TEST_KERNEL_TAG      - release tag for styx-test (default: v0.15)
-#   PROD_KERNEL_TAG      - release tag for styx-prod (default: v0.15)
-#
 # End of header
 
-# Per-component kernel version.
-# Override via environment: DEV_KERNEL_VERSION=6.12.87-16-styx ./rebuild_repo.sh
+# Per-component kernel version (override via environment).
 DEV_KERNEL_VERSION="${DEV_KERNEL_VERSION:-6.12.95-17-styx}"
 TEST_KERNEL_VERSION="${TEST_KERNEL_VERSION:-6.12.95-17-styx}"
 PROD_KERNEL_VERSION="${PROD_KERNEL_VERSION:-6.12.95-17-styx}"
-
-# Per-component GitHub release tag.
-# Override via environment: DEV_KERNEL_TAG=v6.12.95-16-styx ./rebuild_repo.sh
-DEV_KERNEL_TAG="${DEV_KERNEL_TAG:-6.12.95-17-styx}"
-TEST_KERNEL_TAG="${TEST_KERNEL_TAG:-v0.15}"
-PROD_KERNEL_TAG="${PROD_KERNEL_TAG:-v0.15}"
 
 REBUILD_MODE="${REBUILD_MODE:-update}"
 
@@ -130,15 +111,12 @@ for COMP in "${COMPONENTS[@]}"; do
   case "$COMP" in
     styx-dev)
       COMP_KERNEL_VERSION="$DEV_KERNEL_VERSION"
-      COMP_KERNEL_TAG="$DEV_KERNEL_TAG"
       ;;
     styx-test)
       COMP_KERNEL_VERSION="$TEST_KERNEL_VERSION"
-      COMP_KERNEL_TAG="$TEST_KERNEL_TAG"
       ;;
     styx-prod)
       COMP_KERNEL_VERSION="$PROD_KERNEL_VERSION"
-      COMP_KERNEL_TAG="$PROD_KERNEL_TAG"
       ;;
   esac
 
@@ -149,7 +127,7 @@ for COMP in "${COMPONENTS[@]}"; do
   COMP_HEADER_NAME="linux-headers-${COMP_KERNEL_VERSION}_${COMP_KERNEL_REVISION}_amd64.deb"
   COMP_IMAGE_NAME="linux-image-${COMP_KERNEL_VERSION}_${COMP_KERNEL_REVISION}_amd64.deb"
   COMP_LIBC_NAME="linux-libc-dev_${COMP_KERNEL_REVISION}_amd64.deb"
-  COMP_ASSET_BASE="https://github.com/styx-firewall/styx-kernel/releases/download/${COMP_KERNEL_TAG}"
+  COMP_ASSET_BASE="https://github.com/styx-firewall/styx-kernel/releases/download/${COMP_KERNEL_VERSION}"
   COMP_META_VERSION="${META_VERSION_BASE}-${COMP_KERNEL_REVISION}"
 
   echo "[+] Kernel for $COMP: $COMP_KERNEL_VERSION (revision $COMP_KERNEL_REVISION)"
