@@ -111,12 +111,12 @@ Package: styx-firewall
 Version: 0.3-4
 Architecture: all
 Maintainer: diegargon <diegargon@gmail.com>
-Depends: styx-gateway (>= 0.47.33-1), styx-ui (>= 0.40.23-1), nftables
+Depends: styx-gateway (>= 0.48.24-1), styx-ui (>= 0.41.9-1), nftables
 Filename: pool/styx-dev/styx-firewall-0.3-4.deb
 Size: 760
-MD5sum: 5d3ba7ed071434a32329311ecf409a33
-SHA1: 2ff8a4fea9cdd74a9f9a494f2e2b352f4af4f1ea
-SHA256: f90e4185290e2eaf41e6256995d3f355f9dfdeb7ef0431b7df9ddbad5b704cff
+MD5sum: 19e10d1ce5b6c9c1a8d40a429c058232
+SHA1: f7750a34bc187dfc724f54889d326e71ce78a7a3
+SHA256: e8b7cbfb3aaa1246ed237f55c8d7f2e6d9e6171b8d7ae0c0db5e8794c92e8d9c
 Section: metapackages
 Priority: optional
 Description: Meta-package that installs styx-gateway, styx-ui and other firewall tools.
@@ -329,6 +329,19 @@ Section: utils
 Priority: optional
 Description: Styx Gateway Python executable
 
+Package: styx-gateway
+Version: 0.48.24-1
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Filename: pool/styx-dev/styx-gateway-0.48.24-1.deb
+Size: 17186636
+MD5sum: f17242c61b67e401038bd6ad485824d5
+SHA1: ef58894aa8b8b43d0b424bb46a11a0aa3e2609a8
+SHA256: dc6bd0a4177bd928a1b7003b58476a8b80ac0950c49bcf7f335ed310200855ef
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
 Package: styx-ui
 Version: 0.39.80-1
 Architecture: all
@@ -479,6 +492,20 @@ Size: 4436548
 MD5sum: ada86d25141e0b8fad47df1d92c8f772
 SHA1: 2e79afd976b598384abb534f3d6d436c2cf13f64
 SHA256: f46a482edde8f78ffd255fb757ad5db48a25c4c5065de33dc12c9c8db70ba995
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
+Package: styx-ui
+Version: 0.41.9-1
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-dev/styx-ui-0.41.9-1.deb
+Size: 4452004
+MD5sum: 2a288a0ebc9e4310d8ce9bde76e86eaa
+SHA1: 00f5234af3629e7f542463b27edb8319a7e363de
+SHA256: b7e07bf68ec63af840c535daf47d500841475281f428e76d684921310fcb30ef
 Section: web
 Priority: optional
 Description: Web frontend for Styx.
