@@ -1,3 +1,22 @@
+Package: linux-headers-6.12.111-18-styx
+Source: linux-upstream
+Version: 18
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-2604-qznsc-runner-swwtd>
+Installed-Size: 54062
+Filename: pool/styx-dev/linux-headers-6.12.111-18-styx_18_amd64.deb
+Size: 10094938
+MD5sum: cbc8b72950e902e6d22ad9f6f867a9c0
+SHA1: 819227b479fa750d1c2bd42e9c2ca5edf0a1bd89
+SHA256: a079ca8035d2ca8f57af93adb4b59d6a7802b51c5b6aa3da8a9a540c5564afcb
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel headers for 6.12.111-18-styx on amd64
+ This package provides kernel header files for 6.12.111-18-styx on amd64
+ .
+ This is useful for people who need to build external modules
+
 Package: linux-headers-6.12.95-17-styx
 Source: linux-upstream
 Version: 17
@@ -28,6 +47,24 @@ MD5sum: 41eff1f74c6298c7cadccbaa22d3b9ca
 SHA1: 29102937601009dba8b189f1c27f37333c8662f2
 SHA256: c99fcf9492341a9a1bd38a951593248c94de736858dc36c91cf0ce2dda0ebfd9
 Description: Metapackage to install the Styx Linux kernel headers
+
+Package: linux-image-6.12.111-18-styx
+Source: linux-upstream
+Version: 18
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-2604-qznsc-runner-swwtd>
+Installed-Size: 195280
+Filename: pool/styx-dev/linux-image-6.12.111-18-styx_18_amd64.deb
+Size: 42627746
+MD5sum: aaf85f4b043f5f2b2112d08acafe38b0
+SHA1: f45154953afae2aaa29f530c7dd32b4cafed6009
+SHA256: a9a9816b69b51472a1578b9bf0133177c8becab77d1a73071d80087c4bab7bce
+Section: kernel
+Priority: optional
+Homepage: https://www.kernel.org/
+Description: Linux kernel, version 6.12.111-18-styx
+ This package contains the Linux kernel, modules and corresponding other
+ files, version: 6.12.111-18-styx.
 
 Package: linux-image-6.12.95-17-styx
 Source: linux-upstream
@@ -71,6 +108,26 @@ Size: 1442410
 MD5sum: 01bf7d7d8fe8f0a7b92b646bba60c55f
 SHA1: 1326d816d84934512a7fa8cd60d8ebf5aa19e5bf
 SHA256: f3931e60b47385c732ed66be345a1803c256adabea524d6a19909cc19748c29b
+Section: devel
+Priority: optional
+Multi-Arch: same
+Homepage: https://www.kernel.org/
+Description: Linux support headers for userspace development
+ This package provides userspaces headers from the Linux kernel.  These headers
+ are used by the installed headers for GNU glibc and other system libraries.
+
+Package: linux-libc-dev
+Source: linux-upstream
+Version: 18
+Architecture: amd64
+Maintainer: root <root@arc-runner-set-styx-2604-qznsc-runner-swwtd>
+Installed-Size: 7194
+Provides: linux-kernel-headers
+Filename: pool/styx-dev/linux-libc-dev_18_amd64.deb
+Size: 1442808
+MD5sum: fca0683158b0f11e4430e8a0bfd0cdb8
+SHA1: 19bc6756ea5fe387b27f974ade928169170edbdc
+SHA256: 21654abfcdb781335dd5f6965ecfc6c0c888a51c128ec904e1d25613abcbc336
 Section: devel
 Priority: optional
 Multi-Arch: same
