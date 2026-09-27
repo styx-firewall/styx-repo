@@ -40,7 +40,7 @@ IFS=$'\n\t'
 # End of header
 
 # Per-component kernel version (override via environment).
-DEV_KERNEL_VERSION="${DEV_KERNEL_VERSION:-6.12.95-17-styx}"
+DEV_KERNEL_VERSION="${DEV_KERNEL_VERSION:-6.12.111-18-styx}"
 TEST_KERNEL_VERSION="${TEST_KERNEL_VERSION:-6.12.95-17-styx}"
 PROD_KERNEL_VERSION="${PROD_KERNEL_VERSION:-6.12.95-17-styx}"
 
