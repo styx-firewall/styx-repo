@@ -192,12 +192,12 @@ Package: styx-firewall
 Version: 0.3-4
 Architecture: all
 Maintainer: diegargon <diegargon@gmail.com>
-Depends: styx-gateway (>= 0.48.24-1), styx-ui (>= 0.41.9-1), nftables
+Depends: styx-gateway (>= 0.49.13-1), styx-ui (>= 0.42.11-1), nftables
 Filename: pool/styx-dev/styx-firewall-0.3-4.deb
 Size: 760
-MD5sum: 19e10d1ce5b6c9c1a8d40a429c058232
-SHA1: f7750a34bc187dfc724f54889d326e71ce78a7a3
-SHA256: e8b7cbfb3aaa1246ed237f55c8d7f2e6d9e6171b8d7ae0c0db5e8794c92e8d9c
+MD5sum: 6d8a71c8d532a99371b2b2dbbda1f968
+SHA1: 4be5ce218b0a991fd82cc550f30cb8f2fe26af2d
+SHA256: dcebee81f0ef20818a4812158507ae3a1b97dca0ce40ba1b321ddc3dfb9c9e51
 Section: metapackages
 Priority: optional
 Description: Meta-package that installs styx-gateway, styx-ui and other firewall tools.
@@ -450,6 +450,19 @@ Priority: optional
 Description: Styx Gateway Python executable
 
 Package: styx-gateway
+Version: 0.49.13-1
+Architecture: amd64
+Maintainer: diegargon <diegargon@gmail.com>
+Filename: pool/styx-dev/styx-gateway-0.49.13-1.deb
+Size: 20349876
+MD5sum: ffff1b1de443016bcca1b41282345779
+SHA1: b55e5e724839be32b75ca886bcf390add0df5abe
+SHA256: 37e23494fd7d13ab74e44774e331b9dbedb78246d5fe30a3d3e9a9639d6ddb8c
+Section: utils
+Priority: optional
+Description: Styx Gateway Python executable
+
+Package: styx-gateway
 Version: 0.49.5-1
 Architecture: amd64
 Maintainer: diegargon <diegargon@gmail.com>
@@ -680,6 +693,20 @@ Size: 4452004
 MD5sum: 2a288a0ebc9e4310d8ce9bde76e86eaa
 SHA1: 00f5234af3629e7f542463b27edb8319a7e363de
 SHA256: b7e07bf68ec63af840c535daf47d500841475281f428e76d684921310fcb30ef
+Section: web
+Priority: optional
+Description: Web frontend for Styx.
+
+Package: styx-ui
+Version: 0.42.11-1
+Architecture: all
+Maintainer: diegargon <diegargon@gmail.com>
+Depends: styx-gateway, php-msgpack
+Filename: pool/styx-dev/styx-ui-0.42.11-1.deb
+Size: 4411400
+MD5sum: c46d970bb4b6e1b10878320f7a018e69
+SHA1: 2daf11902327d9f7f1e8446de3425b4c90d5abc3
+SHA256: 2de7da8d2cc5d5b1e6ac3f04665b53319aafe9bfd4f875ad522d3d41ccdb1749
 Section: web
 Priority: optional
 Description: Web frontend for Styx.
