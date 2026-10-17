@@ -13,7 +13,8 @@ IFS=$'\n\t'
 # - Downloads kernel assets, builds small metapackages, moves .deb files
 #   into each component's `pool/<component>/`, regenerates
 #   `dists/<suite>/<component>/binary-amd64/Packages` and a combined
-#   `Release`, then signs the Release with a GPG key.
+#   `Release`, then signs the Release with a GPG key and verifies signatures
+#   and checksums, aborting before any commit/push if something is wrong.
 #
 # Key mechanics:
 # 1) Place per-environment .deb files in:
@@ -276,9 +277,12 @@ rm -f "$APT_CONF"
 # Sign Release
 if gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   echo "[+] Signing Release with key $GPG_KEY_ID"
-  rm -f "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/InRelease" || true
-  gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$REPO_DIST/Release.gpg" "$REPO_BASE/dists/$REPO_DIST/Release"
-  gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$REPO_DIST/InRelease" "$REPO_BASE/dists/$REPO_DIST/Release"
+  # Sign to temporary files and only replace the published signatures once
+  # both succeed: a failed signing must not leave the repo unsigned.
+  gpg --yes --batch --default-key "$GPG_KEY_ID" -abs -o "$REPO_BASE/dists/$REPO_DIST/Release.gpg.new" "$REPO_BASE/dists/$REPO_DIST/Release"
+  gpg --yes --batch --default-key "$GPG_KEY_ID" --clearsign -o "$REPO_BASE/dists/$REPO_DIST/InRelease.new" "$REPO_BASE/dists/$REPO_DIST/Release"
+  mv -f "$REPO_BASE/dists/$REPO_DIST/Release.gpg.new" "$REPO_BASE/dists/$REPO_DIST/Release.gpg"
+  mv -f "$REPO_BASE/dists/$REPO_DIST/InRelease.new" "$REPO_BASE/dists/$REPO_DIST/InRelease"
 else
   echo "[!] ERROR: GPG key '$GPG_KEY_ID' not found" >&2
   echo "    Available keys:"
@@ -294,6 +298,84 @@ if gpg --list-keys "$GPG_KEY_ID" >/dev/null 2>&1; then
   echo -e "\n🔑 Key fingerprint (verify it):"
   gpg --fingerprint "$GPG_KEY_ID" | grep -E "([0-9A-F]{4} ?){10}" || true
 fi
+
+# Verify the repo is signed and internally consistent before anything gets
+# committed or pushed.  Aborts with an error on any failure so a broken repo
+# is never published.
+verify_repo() {
+  local dist_dir="$REPO_BASE/dists/$REPO_DIST"
+  local release_file="$dist_dir/Release"
+  local errors=0
+  local hash size path comp
+
+  echo "[+] Verifying repository before publishing"
+
+  # 1) Signatures must exist and validate against Release
+  for f in InRelease Release.gpg; do
+    if [ ! -f "$dist_dir/$f" ]; then
+      echo "[!] ERROR: missing signature file: $f" >&2
+      errors=$((errors + 1))
+    fi
+  done
+  if ! gpg --verify "$dist_dir/Release.gpg" "$release_file" >/dev/null 2>&1; then
+    echo "[!] ERROR: Release.gpg does not verify against Release" >&2
+    errors=$((errors + 1))
+  fi
+  if ! gpg --verify "$dist_dir/InRelease" >/dev/null 2>&1; then
+    echo "[!] ERROR: InRelease signature verification failed" >&2
+    errors=$((errors + 1))
+  fi
+
+  # 2) Every SHA256 entry in Release must match the file on disk.
+  #    The "Release" self-entry is skipped: apt-ftparchive hashes the file
+  #    content before the checksum sections, so it never matches the final file.
+  if [ -f "$release_file" ]; then
+    while read -r hash size path; do
+      [ -n "$path" ] || continue
+      [ "$path" = "Release" ] && continue
+      if [ ! -f "$dist_dir/$path" ]; then
+        echo "[!] ERROR: Release references missing file: $path" >&2
+        errors=$((errors + 1))
+        continue
+      fi
+      if [ "$size" != "$(stat -c %s "$dist_dir/$path")" ]; then
+        echo "[!] ERROR: size mismatch for $path: Release says $size, disk has $(stat -c %s "$dist_dir/$path")" >&2
+        errors=$((errors + 1))
+        continue
+      fi
+      if ! printf '%s  %s\n' "$hash" "$dist_dir/$path" | sha256sum -c --quiet --status - 2>/dev/null; then
+        echo "[!] ERROR: SHA256 mismatch for $path" >&2
+        errors=$((errors + 1))
+      fi
+    done < <(awk '/^SHA256:$/{sha=1; next} sha && /^[A-Za-z0-9]+:$/{exit} sha && NF{print}' "$release_file")
+  else
+    echo "[!] ERROR: missing Release file" >&2
+    errors=$((errors + 1))
+  fi
+
+  # 3) Each component must have a non-empty Packages index.  An empty one
+  #    passes the checksum test (it is hashed correctly) yet breaks apt.
+  for comp in "${ACTIVE_COMPONENTS[@]}"; do
+    if [ ! -s "$dist_dir/$comp/binary-amd64/Packages" ] || [ ! -s "$dist_dir/$comp/binary-amd64/Packages.gz" ]; then
+      echo "[!] ERROR: Packages index empty or missing for component $comp" >&2
+      errors=$((errors + 1))
+    fi
+  done
+
+  # 4) The public keyring files clients install must exist and be non-empty
+  if [ ! -s "$REPO_BASE/$KEY_FILENAME" ] || [ ! -s "$REPO_BASE/$KEY_FILENAME.asc" ]; then
+    echo "[!] ERROR: public key export ($KEY_FILENAME / $KEY_FILENAME.asc) missing or empty" >&2
+    errors=$((errors + 1))
+  fi
+
+  if [ "$errors" -gt 0 ]; then
+    echo "[!] ERROR: repository verification failed ($errors problem(s)); nothing will be committed or pushed" >&2
+    exit 1
+  fi
+  echo "[+] Verification OK: repository is signed and consistent"
+}
+
+verify_repo
 
 # Cleanup
 
